@@ -83,7 +83,7 @@ const F2 = "'Barlow', sans-serif";
 
 // ─── LABEL ─────────────────────────────────────────────────────────────────
 function Label({ children }) {
-  return <p style={{ fontFamily: F1, fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", color: "#F07030", marginBottom: "0.75rem" }}>{children}</p>;
+  return <p style={{ fontFamily: "'Barlow Condensed', sans-serif" , fontSize: 30, fontWeight: 900, letterSpacing: "0.12em", color: "#F07030", marginBottom: "1rem", fontStyle: "normal" }}>{children}</p>;
 }
 
 // ─── NAV ───────────────────────────────────────────────────────────────────
