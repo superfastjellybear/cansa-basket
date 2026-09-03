@@ -37,6 +37,16 @@ const INSTAGRAM = "https://www.instagram.com/cansa_basket_06740";
 const FORM_INIT  = { name: "", email: "", message: "" };
 
 // ─── HOOKS ─────────────────────────────────────────────────────────────────
+
+function useWindowWidth() {
+  const [width, setWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
+  useEffect(() => {
+    const fn = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", fn);
+    return () => window.removeEventListener("resize", fn);
+  }, []);
+  return width;
+}
 function useScrollY() {
   const [y, setY] = useState(0);
   useEffect(() => {
@@ -79,6 +89,8 @@ function Label({ children }) {
 // ─── NAV ───────────────────────────────────────────────────────────────────
 function Nav() {
   const [open, setOpen] = useState(false);
+  const w = useWindowWidth();
+  const isMobile = w < 768;
   const links = [
     { label: "Le club",        href: "#club" },
     { label: "Catégories",     href: "#categories" },
@@ -94,7 +106,7 @@ function Nav() {
       </motion.div>
 
       {/* Desktop links */}
-      <div style={{ display: "flex", gap: "1.5rem" }}>
+      <div style={{ display: isMobile ? "none" : "flex", gap: "1.5rem" }}>
         {links.map((l, i) => (
           <motion.a key={l.label} href={l.href} style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none", fontSize: 13, fontFamily: F2, fontWeight: 500 }}
             initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 + i * 0.05, duration: 0.4 }}
@@ -103,6 +115,31 @@ function Nav() {
           </motion.a>
         ))}
       </div>
+
+      {/* Mobile hamburger */}
+      {isMobile && (
+        <div>
+          <button onClick={() => setOpen(!open)} style={{ background: "none", border: "none", cursor: "pointer", color: "white", padding: 4 }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              {open ? <><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></> : <><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></>}
+            </svg>
+          </button>
+          <AnimatePresence>
+            {open && (
+              <motion.div style={{ position: "absolute", top: 56, left: 0, right: 0, background: "#07102E", borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", flexDirection: "column", padding: "0.5rem 0", zIndex: 100 }}
+                initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
+                {links.map((l) => (
+                  <a key={l.label} href={l.href} onClick={() => setOpen(false)}
+                    style={{ fontFamily: F2, fontSize: 14, color: "rgba(255,255,255,0.75)", textDecoration: "none", padding: "0.75rem 2rem" }}
+                    onMouseEnter={e => e.target.style.color = "white"} onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.75)"}>
+                    {l.label}
+                  </a>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      )}
     </motion.nav>
   );
 }
@@ -110,6 +147,7 @@ function Nav() {
 // ─── HERO ──────────────────────────────────────────────────────────────────
 function Hero() {
   const [hovered, setHovered] = useState(false);
+  const isMobile = useWindowWidth() < 768;
   return (
     <section style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden", background: "linear-gradient(160deg, #080E1F 0%, #0F1A3A 50%, #080E1F 100%)" }}>
       {/* Vidéo de fond */}
@@ -128,7 +166,7 @@ function Hero() {
         initial={{ opacity: 0, scale: 0.7 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
         <motion.img src={LOGO_B64} alt="CANSA Basket"
-          style={{ width: 300, height: "auto", filter: "drop-shadow(0 6px 32px rgba(0,0,0,0.7))" }}
+          style={{ width: isMobile ? 200 : 300, height: "auto", filter: "drop-shadow(0 6px 32px rgba(0,0,0,0.7))" }}
           animate={{ y: hovered ? -10 : 0, scale: hovered ? 1.04 : 1 }} transition={{ duration: 0.35, ease: "easeOut" }} />
       </motion.div>
 
@@ -184,6 +222,7 @@ function StatsStrip() {
 function About() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const isMobile = useWindowWidth() < 768;
   const cards = [
     { icon: "🏀", title: "Club formateur", sub: "FFBB — formation et compétition" },
     { icon: "📍", title: "Châteauneuf", sub: "Gymnase Bois de St Jeaume" },
@@ -191,8 +230,8 @@ function About() {
     { icon: "🦅", title: "Esprit collectif", sub: "Respect · Progression · Plaisir" },
   ];
   return (
-    <section id="club" style={{ padding: "6rem 4rem", background: "white" }} ref={ref}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}>
+    <section id="club" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "white" }} ref={ref}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "2rem" : "4rem", alignItems: "center" }}>
         <motion.div variants={slideIn("left")} initial="hidden" animate={inView ? "visible" : "hidden"}>
           <Label>Le club</Label>
           <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 54, color: "#1A2D82", lineHeight: 1.1, marginBottom: "1.5rem" }}>Fondé en 2008,<br />passion basket</h2>
@@ -285,8 +324,9 @@ function CategoryCard({ cat, index, active, setActive }) {
 // ─── CATEGORIES ────────────────────────────────────────────────────────────
 function Categories() {
   const [active, setActive] = useState(null);
+  const isMobile = useWindowWidth() < 768;
   return (
-    <section id="categories" style={{ padding: "6rem 4rem", background: "#0D1A4A" }}>
+    <section id="categories" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "#0D1A4A" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <Anim>
           <Label>Nos équipes</Label>
@@ -294,7 +334,7 @@ function Categories() {
           <p style={{ fontFamily: F2, fontSize: 16, color: "rgba(255,255,255,0.4)", maxWidth: 460, marginBottom: "0.5rem" }}>Une place pour chaque joueur et joueuse, dès 7 ans.</p>
           <p style={{ fontFamily: F2, fontSize: 13, color: "rgba(255,255,255,0.25)", maxWidth: 460, marginBottom: "3rem" }}>Cliquez sur une catégorie pour découvrir le coach, les horaires et le niveau de compétition.</p>
         </Anim>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.75rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)", gap: "0.75rem" }}>
           {CATEGORIES.map((cat, i) => <CategoryCard key={cat.name} cat={cat} index={i} active={active} setActive={setActive} />)}
         </div>
         <Anim delay={0.3}>
@@ -314,14 +354,15 @@ function Categories() {
 // ─── NEWS ──────────────────────────────────────────────────────────────────
 function News() {
   const [active, setActive] = useState(null);
+  const isMobile = useWindowWidth() < 768;
   return (
-    <section id="actu" style={{ padding: "6rem 4rem", background: "white" }}>
+    <section id="actu" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "white" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <Anim>
           <Label>Actualités</Label>
           <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "#1A2D82", marginBottom: "3rem" }}>Dernières nouvelles</h2>
         </Anim>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "1.5rem" }}>
           {NEWS.map((item, i) => (
             <Anim key={item.title} delay={i * 0.1}>
               <motion.article
@@ -387,20 +428,21 @@ function RunningBanner() {
 function Inscriptions() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const isMobile = useWindowWidth() < 768;
   const steps = [
     { n: "01", title: "Choisissez votre catégorie", text: "U7 à Séniors, ou Loisirs — consultez la section catégories pour connaître celle de votre enfant selon son année de naissance." },
     { n: "02", title: "Rendez-vous sur Hello Asso", text: "Notre page Hello Asso centralise toutes les inscriptions. Sélectionnez la catégorie et complétez le dossier en ligne." },
     { n: "03", title: "Fournissez les documents", text: "Certificat médical ou questionnaire de santé, photo d'identité, et attestation d'assurance si nécessaire." },
   ];
   return (
-    <section id="inscriptions" style={{ padding: "6rem 4rem", background: "#f4f6fb" }} ref={ref}>
+    <section id="inscriptions" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "#f4f6fb" }} ref={ref}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <motion.div variants={slideIn("left")} initial="hidden" animate={inView ? "visible" : "hidden"}>
           <Label>Rejoindre le club</Label>
           <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "#1A2D82", marginBottom: "0.75rem" }}>Inscriptions</h2>
           <p style={{ fontFamily: F2, fontSize: 16, color: "#4A5568", maxWidth: 480, lineHeight: 1.7, marginBottom: "3.5rem" }}>Les inscriptions pour la saison 2026/27 sont ouvertes. Tout se fait en ligne via Hello Asso en quelques minutes.</p>
         </motion.div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem", marginBottom: "3rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "1.5rem", marginBottom: "3rem" }}>
           {steps.map((s, i) => (
             <Anim key={s.n} delay={i * 0.12}>
               <motion.div style={{ background: "white", borderRadius: 12, padding: "1.5rem", border: "1px solid #e8ecf4" }}
@@ -429,6 +471,7 @@ function Inscriptions() {
 function Boutique() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const isMobile = useWindowWidth() < 768;
   const items = [
     { icon: "👕", label: "Maillots",    sub: "Aux couleurs du club" },
     { icon: "🎒", label: "Sacs",        sub: "Collection CANSA" },
@@ -436,8 +479,8 @@ function Boutique() {
     { icon: "💧", label: "Gourdes",     sub: "Équipement quotidien" },
   ];
   return (
-    <section id="boutique" style={{ padding: "6rem 4rem", background: "#0D1A4A" }} ref={ref}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}>
+    <section id="boutique" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "#0D1A4A" }} ref={ref}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "2rem" : "4rem", alignItems: "center" }}>
         <motion.div variants={slideIn("left")} initial="hidden" animate={inView ? "visible" : "hidden"}>
           <Label>Goodies officiels</Label>
           <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "white", lineHeight: 1, marginBottom: "1rem" }}>Boutique<br />du club</h2>
@@ -471,6 +514,7 @@ function Boutique() {
 function Contact() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const isMobile = useWindowWidth() < 768;
   const [form, setForm] = useState(FORM_INIT);
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
@@ -490,12 +534,12 @@ function Contact() {
     { icon: "👤", label: "Présidente", value: "Nathalie Abrahamme-Mestre" },
   ];
   return (
-    <section id="contact" style={{ padding: "6rem 4rem", background: "#1A2D82", position: "relative", overflow: "hidden" }} ref={ref}>
+    <section id="contact" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "#1A2D82", position: "relative", overflow: "hidden" }} ref={ref}>
       <video autoPlay muted loop playsInline
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", pointerEvents: "none" }}
         src="/Video/hero-Cansa.mp4" />
       <div style={{ position: "absolute", inset: 0, background: "rgba(8,14,31,0.82)", pointerEvents: "none" }} />
-      <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start", position: "relative", zIndex: 1 }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "2rem" : "4rem", alignItems: "start", position: "relative", zIndex: 1 }}>
         <div>
           <motion.div variants={fadeUp} custom={0} initial="hidden" animate={inView ? "visible" : "hidden"}>
             <Label>Contact</Label>
