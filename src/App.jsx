@@ -162,7 +162,7 @@ function Hero() {
     setMuted(!muted);
   };
   return (
-    <section style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden", background: "linear-gradient(160deg, #080E1F 0%, #0F1A3A 50%, #080E1F 100%)" }}>
+    <section style={{ position: "relative", minHeight: "100vh", paddingTop: 56, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden", background: "linear-gradient(160deg, #080E1F 0%, #0F1A3A 50%, #080E1F 100%)" }}>
       {/* Vidéo de fond */}
       <video
         autoPlay muted loop playsInline
@@ -179,24 +179,24 @@ function Hero() {
         initial={{ opacity: 0, scale: 0.7 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
         <motion.img src={LOGO_B64} alt="CANSA Basket"
-          style={{ width: isMobile ? 200 : 300, height: "auto", filter: "drop-shadow(0 6px 32px rgba(0,0,0,0.7))" }}
+          style={{ width: isMobile ? 240 : 420, height: "auto", filter: "drop-shadow(0 6px 32px rgba(0,0,0,0.7))" }}
           animate={{ y: hovered ? -10 : 0, scale: hovered ? 1.04 : 1 }} transition={{ duration: 0.35, ease: "easeOut" }} />
       </motion.div>
 
       <div style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 1.5rem" }}>
-        <motion.p style={{ fontFamily: F1, fontWeight: 700, fontSize: 14, color: "#5B9BD5", letterSpacing: "0.22em", marginBottom: "1rem" }}
+        <motion.p style={{ fontFamily: F1, fontWeight: 700, fontSize: isMobile ? 13 : 17, color: "#5B9BD5", letterSpacing: "0.22em", marginBottom: "1.25rem" }}
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.35 }}>
           CHÂTEAUNEUF-DE-GRASSE
         </motion.p>
-        <motion.p style={{ fontFamily: F1, fontWeight: 600, fontSize: 20, color: "rgba(255,255,255,0.8)", maxWidth: 500, lineHeight: 1.4, marginBottom: "0.5rem", margin: "0 auto 0.5rem" }}
+        <motion.p style={{ fontFamily: F1, fontWeight: 600, fontSize: isMobile ? 18 : 24, color: "rgba(255,255,255,0.8)", maxWidth: 560, lineHeight: 1.4, marginBottom: "0.5rem", margin: "0 auto 0.5rem" }}
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.48 }}>
           Communauté Agglomération Nord Sophia Antipolis Basket
         </motion.p>
-        <motion.p style={{ fontFamily: F2, fontSize: 14, color: "rgba(255,255,255,0.35)", maxWidth: 380, lineHeight: 1.6, margin: "0 auto 1.5rem" }}
+        <motion.p style={{ fontFamily: F2, fontSize: isMobile ? 13 : 16, color: "rgba(255,255,255,0.35)", maxWidth: 420, lineHeight: 1.6, margin: "0 auto 1.75rem" }}
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.58 }}>
           Entraînements au Gymnase Bois St. Jeaume · Châteauneuf
         </motion.p>
-        <motion.p style={{ fontFamily: F1, fontWeight: 700, fontSize: 16, color: "#F07030", letterSpacing: "0.12em" }}
+        <motion.p style={{ fontFamily: F1, fontWeight: 700, fontSize: isMobile ? 15 : 19, color: "#F07030", letterSpacing: "0.12em" }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.68 }}>
           INSCRIPTIONS OUVERTES — DÈS 7 ANS
         </motion.p>
