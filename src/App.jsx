@@ -154,11 +154,27 @@ function Hero() {
   useEffect(() => {
     if (!audioRef.current) return;
     audioRef.current.volume = 0.5;
-    audioRef.current.muted = false;
+
+    const unlock = () => {
+      if (!audioRef.current) return;
+      audioRef.current.muted = false;
+      audioRef.current.play().catch(() => setMuted(true));
+      document.removeEventListener("click", unlock);
+      document.removeEventListener("touchstart", unlock);
+    };
+
+    // Tente l'autoplay direct
     audioRef.current.play().catch(() => {
-      // Autoplay bloqué par le navigateur — l'utilisateur devra cliquer
+      // Bloqué — on attend le premier geste utilisateur
       setMuted(true);
+      document.addEventListener("click", unlock);
+      document.addEventListener("touchstart", unlock);
     });
+
+    return () => {
+      document.removeEventListener("click", unlock);
+      document.removeEventListener("touchstart", unlock);
+    };
   }, []);
 
   const toggleSound = () => {
