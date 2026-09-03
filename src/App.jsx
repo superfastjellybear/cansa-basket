@@ -148,8 +148,18 @@ function Nav() {
 function Hero() {
   const [hovered, setHovered] = useState(false);
   const isMobile = useWindowWidth() < 768;
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false);
   const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (!audioRef.current) return;
+    audioRef.current.volume = 0.5;
+    audioRef.current.muted = false;
+    audioRef.current.play().catch(() => {
+      // Autoplay bloqué par le navigateur — l'utilisateur devra cliquer
+      setMuted(true);
+    });
+  }, []);
 
   const toggleSound = () => {
     if (!audioRef.current) return;
@@ -210,7 +220,7 @@ function Hero() {
       </motion.div>
 
       {/* Audio player */}
-      <audio ref={audioRef} src="/Music/Arena Walkout.mp3" loop preload="none" muted />
+      <audio ref={audioRef} src="/Music/Arena Walkout.mp3" loop preload="auto" />
 
       {/* Sound toggle button */}
       <motion.button
