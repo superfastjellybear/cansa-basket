@@ -100,14 +100,17 @@ function Hero() {
   const [hovered, setHovered] = useState(false);
   return (
     <section style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden", background: "linear-gradient(160deg, #080E1F 0%, #0F1A3A 50%, #080E1F 100%)" }}>
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.04 }}>
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          <defs><pattern id="court" width="100" height="100" patternUnits="userSpaceOnUse"><rect width="100" height="100" fill="none" stroke="white" strokeWidth="0.8"/><circle cx="50" cy="50" r="30" fill="none" stroke="white" strokeWidth="0.8"/></pattern></defs>
-          <rect width="100%" height="100%" fill="url(#court)"/>
-        </svg>
-      </div>
-      <motion.div style={{ position: "absolute", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(240,112,48,0.08) 0%, transparent 65%)", top: "38%", left: "50%", x: "-50%", y: "-50%", pointerEvents: "none" }}
-        animate={{ scale: [1, 1.08, 1], opacity: [0.6, 1, 0.6] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} />
+      {/* Vidéo de fond */}
+      <video
+        autoPlay muted loop playsInline
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", pointerEvents: "none" }}
+        src="/Video/hero-Cansa.mp4"
+      />
+      {/* Overlay sombre pour lisibilité */}
+      <div style={{ position: "absolute", inset: 0, background: "rgba(8,14,31,0.78)", pointerEvents: "none" }} />
+      {/* Halo orange discret */}
+      <motion.div style={{ position: "absolute", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(240,112,48,0.07) 0%, transparent 65%)", top: "38%", left: "50%", x: "-50%", y: "-50%", pointerEvents: "none" }}
+        animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.9, 0.5] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} />
 
       <motion.div style={{ position: "relative", zIndex: 10, marginBottom: "1.5rem", cursor: "pointer" }}
         initial={{ opacity: 0, scale: 0.7 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
