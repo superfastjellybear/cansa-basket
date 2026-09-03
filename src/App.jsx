@@ -148,6 +148,19 @@ function Nav() {
 function Hero() {
   const [hovered, setHovered] = useState(false);
   const isMobile = useWindowWidth() < 768;
+  const [muted, setMuted] = useState(true);
+  const audioRef = useRef(null);
+
+  const toggleSound = () => {
+    if (!audioRef.current) return;
+    if (muted) {
+      audioRef.current.play().catch(() => {});
+      audioRef.current.muted = false;
+    } else {
+      audioRef.current.muted = true;
+    }
+    setMuted(!muted);
+  };
   return (
     <section style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden", background: "linear-gradient(160deg, #080E1F 0%, #0F1A3A 50%, #080E1F 100%)" }}>
       {/* Vidéo de fond */}
@@ -195,6 +208,38 @@ function Hero() {
         <motion.div style={{ width: 1, height: 36, background: "rgba(255,255,255,0.15)", originY: 0 }}
           animate={{ scaleY: [0.2, 1, 0.2], opacity: [0.15, 0.5, 0.15] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }} />
       </motion.div>
+
+      {/* Audio player */}
+      <audio ref={audioRef} src="/Music/Arena Walkout.mp3" loop preload="none" muted />
+
+      {/* Sound toggle button */}
+      <motion.button
+        onClick={toggleSound}
+        style={{
+          position: "absolute", bottom: 32, right: 32,
+          background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
+          borderRadius: 99, padding: "0.5rem 1rem",
+          display: "flex", alignItems: "center", gap: 8,
+          cursor: "pointer", color: "white", zIndex: 20,
+          fontFamily: F2, fontSize: 12, fontWeight: 500, letterSpacing: "0.08em",
+        }}
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
+        whileHover={{ background: "rgba(255,255,255,0.15)" }}
+        whileTap={{ scale: 0.95 }}>
+        {muted ? (
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+          </svg>
+        ) : (
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          </svg>
+        )}
+        {muted ? "SON OFF" : "SON ON"}
+      </motion.button>
     </section>
   );
 }
