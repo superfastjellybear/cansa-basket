@@ -644,44 +644,125 @@ function Inscriptions() {
   );
 }
 
+// ─── BOUTIQUE DATA ─────────────────────────────────────────────────────────
+const PRODUITS = [
+  { name: "Jogging", sub: "Pantalon molleton navy", cover: "/boutique/prod-jogging.webp", media: ["/boutique/prod-jogging.webp"] },
+  { name: "Survêtement", sub: "Veste + pantalon rayé navy", cover: "/boutique/prod-survetement.webp", media: ["/boutique/prod-survetement.webp"] },
+  { name: "Tenue d'entraînement", sub: "Maillot + short réversible", cover: "/boutique/prod-tenue.webp", media: ["/boutique/prod-tenue.webp"] },
+  { name: "Teddy / Varsity", sub: "Veste college navy & blanc", cover: "/boutique/prod-teddy-front.webp", media: ["/boutique/prod-teddy-front.webp", "/boutique/prod-sac-teddy.webp", "/boutique/prod-sac-teddy2.webp"] },
+  { name: "Hoodie Zip", sub: "Sweat à capuche zippé navy", cover: "/boutique/prod-hoodie.webp", media: ["/boutique/prod-hoodie.webp", { type: "video", src: "/boutique/CansaZipper.mp4" }] },
+  { name: "Sac à dos", sub: "Sac navy avec logo CANSA", cover: "/boutique/prod-sac-gourde.webp", media: ["/boutique/prod-sac-gourde.webp", "/boutique/prod-sac-teddy.webp", "/boutique/prod-sac-teddy2.webp"] },
+  { name: "Accessoires", sub: "Casquette · Claquettes · Pack", cover: "/boutique/prod-accessoires.webp", media: ["/boutique/prod-accessoires.webp"] },
+];
+
 // ─── BOUTIQUE ──────────────────────────────────────────────────────────────
 function Boutique() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const isMobile = useWindowWidth() < 768;
-  const items = [
-    { icon: "👕", label: "Maillots",    sub: "Aux couleurs du club" },
-    { icon: "🎒", label: "Sacs",        sub: "Collection CANSA" },
-    { icon: "🧢", label: "Accessoires", sub: "Casquettes, bonnets…" },
-    { icon: "💧", label: "Gourdes",     sub: "Équipement quotidien" },
-  ];
+  const [lightbox, setLightbox] = useState(null);
+
   return (
+    <>
     <section id="boutique" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "#0D1A4A" }} ref={ref}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "2rem" : "4rem", alignItems: "center" }}>
-        <motion.div variants={slideIn("left")} initial="hidden" animate={inView ? "visible" : "hidden"}>
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+        <Anim>
           <Label>Goodies officiels</Label>
-          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "white", lineHeight: 1, marginBottom: "1rem" }}>Boutique<br />du club</h2>
-          <p style={{ fontFamily: F2, fontSize: 16, color: "rgba(255,255,255,0.45)", maxWidth: 380, lineHeight: 1.7, marginBottom: "2rem" }}>
-            Portez les couleurs de CANSA Basket au quotidien. Toute la collection officielle est disponible sur notre page Hello Asso — commande en ligne, livraison ou retrait au gymnase.
+          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "white", marginBottom: "0.5rem" }}>Boutique du club</h2>
+          <p style={{ fontFamily: F2, fontSize: 16, color: "rgba(255,255,255,0.4)", maxWidth: 500, lineHeight: 1.7, marginBottom: "3rem" }}>
+            Portez les couleurs de CANSA Basket. Commandez en ligne via Hello Asso — livraison ou retrait au gymnase.
           </p>
+        </Anim>
+
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)", gap: "1rem", marginBottom: "3rem" }}>
+          {PRODUITS.map((prod, i) => (
+            <Anim key={prod.name} delay={i * 0.07}>
+              <motion.div onClick={() => setLightbox({ prod, mediaIndex: 0 })}
+                style={{ borderRadius: 10, overflow: "hidden", cursor: "pointer", position: "relative", aspectRatio: "3/4", background: "#07102E" }}
+                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.18 }}>
+                <img src={prod.cover} alt={prod.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0.75rem", background: "linear-gradient(to top, rgba(8,14,31,0.9) 0%, transparent 100%)" }}>
+                  <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 15, color: "white" }}>{prod.name}</div>
+                  <div style={{ fontFamily: F2, fontSize: 11, color: "rgba(255,255,255,0.5)", marginTop: 2 }}>{prod.sub}</div>
+                </div>
+              </motion.div>
+            </Anim>
+          ))}
+        </div>
+
+        <Anim delay={0.3}>
           <motion.a href={HELLOASSO} target="_blank" rel="noopener noreferrer"
             style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: F2, fontWeight: 600, fontSize: 14, color: "white", background: "#F07030", borderRadius: 8, padding: "0.875rem 2rem", textDecoration: "none" }}
             whileHover={{ scale: 1.04, backgroundColor: "#d45e22" }} whileTap={{ scale: 0.97 }}>
-            Voir la boutique
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            Commander sur Hello Asso
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
           </motion.a>
-        </motion.div>
-        <motion.div variants={slideIn("right")} initial="hidden" animate={inView ? "visible" : "hidden"}>
-          <motion.img
-            src="/boutique-hero.webp"
-            alt="T-shirt et gourde CANSA Basket au gymnase"
-            style={{ width: "100%", borderRadius: 12, objectFit: "cover", boxShadow: "0 16px 48px rgba(0,0,0,0.4)" }}
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.3 }}
-          />
-        </motion.div>
+        </Anim>
       </div>
     </section>
+
+    {/* LIGHTBOX */}
+    <AnimatePresence>
+      {lightbox && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(4,8,20,0.96)", display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}
+          onClick={() => setLightbox(null)}>
+          <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
+            style={{ background: "#0D1A4A", borderRadius: 16, width: "100%", maxWidth: 780, overflow: "hidden", maxHeight: "90vh", display: "flex", flexDirection: "column" }}
+            onClick={e => e.stopPropagation()}>
+
+            {/* Media */}
+            <div style={{ position: "relative", background: "#07102E", flexShrink: 0, minHeight: 300 }}>
+              {(() => {
+                const media = lightbox.prod.media[lightbox.mediaIndex];
+                if (typeof media === "object" && media.type === "video") {
+                  return <video src={media.src} controls autoPlay muted style={{ width: "100%", maxHeight: 440, objectFit: "contain", display: "block" }} />;
+                }
+                return <img src={media} alt={lightbox.prod.name} style={{ width: "100%", maxHeight: 440, objectFit: "contain", display: "block" }} />;
+              })()}
+              <button onClick={() => setLightbox(null)}
+                style={{ position: "absolute", top: 12, right: 12, background: "rgba(0,0,0,0.6)", border: "none", borderRadius: 99, width: 36, height: 36, cursor: "pointer", color: "white", fontSize: 18, display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
+              {lightbox.prod.media.length > 1 && (
+                <>
+                  <button onClick={() => setLightbox(l => ({ ...l, mediaIndex: (l.mediaIndex - 1 + l.prod.media.length) % l.prod.media.length }))}
+                    style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "none", borderRadius: 99, width: 40, height: 40, cursor: "pointer", color: "white", fontSize: 22, display: "flex", alignItems: "center", justifyContent: "center" }}>‹</button>
+                  <button onClick={() => setLightbox(l => ({ ...l, mediaIndex: (l.mediaIndex + 1) % l.prod.media.length }))}
+                    style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "none", borderRadius: 99, width: 40, height: 40, cursor: "pointer", color: "white", fontSize: 22, display: "flex", alignItems: "center", justifyContent: "center" }}>›</button>
+                </>
+              )}
+            </div>
+
+            {/* Thumbnails */}
+            {lightbox.prod.media.length > 1 && (
+              <div style={{ display: "flex", gap: 8, padding: "0.75rem", overflowX: "auto", background: "#07102E" }}>
+                {lightbox.prod.media.map((m, i) => (
+                  <button key={i} onClick={() => setLightbox(l => ({ ...l, mediaIndex: i }))}
+                    style={{ flexShrink: 0, width: 60, height: 60, borderRadius: 6, overflow: "hidden", border: `2px solid ${lightbox.mediaIndex === i ? "#F07030" : "transparent"}`, cursor: "pointer", background: "#0D1A4A", padding: 0 }}>
+                    {typeof m === "object" && m.type === "video"
+                      ? <div style={{ width: "100%", height: "100%", background: "#1A2D82", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 20 }}>▶</div>
+                      : <img src={m} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Infos + CTA */}
+            <div style={{ padding: "1.25rem 1.5rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
+              <div>
+                <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 22, color: "white" }}>{lightbox.prod.name}</div>
+                <div style={{ fontFamily: F2, fontSize: 13, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>{lightbox.prod.sub}</div>
+              </div>
+              <motion.a href={HELLOASSO} target="_blank" rel="noopener noreferrer"
+                style={{ flexShrink: 0, display: "inline-flex", alignItems: "center", gap: 6, fontFamily: F2, fontWeight: 600, fontSize: 13, color: "white", background: "#F07030", borderRadius: 8, padding: "0.75rem 1.5rem", textDecoration: "none" }}
+                whileHover={{ scale: 1.04, backgroundColor: "#d45e22" }} whileTap={{ scale: 0.97 }}>
+                Commander →
+              </motion.a>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+    </>
   );
 }
 
