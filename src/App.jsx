@@ -253,7 +253,7 @@ function Hero() {
 
 // ─── STATS ─────────────────────────────────────────────────────────────────
 function StatsStrip() {
-  const items = [{ number: "8", label: "Catégories" }, { number: "FFBB", label: "Affilié" }, { number: "06", label: "Alpes-Maritimes" }, { number: "7 ans", label: "Dès" }];
+  const items = [{ number: "8", label: "Catégories" }, { number: "FFBB", label: "Affilié" }, { number: "06", label: "Cté Dép. Basket-Ball 06" }, { number: "7 ans", label: "Dès" }];
   return (
     <div style={{ background: "#F07030" }}>
       <div style={{ display: "flex", justifyContent: "center", maxWidth: 900, margin: "0 auto" }}>
@@ -275,11 +275,44 @@ function About() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const isMobile = useWindowWidth() < 768;
+  const [activeCard, setActiveCard] = useState(null);
+  const panelRef = useRef(null);
+  const cardsRef = useRef(null);
+
+  const openCard = (i) => {
+    setActiveCard(i);
+    setTimeout(() => {
+      panelRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 350);
+  };
+
+  const closeCard = () => {
+    setActiveCard(null);
+    setTimeout(() => {
+      cardsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 100);
+  };
   const cards = [
-    { icon: "🏀", title: "Club formateur", sub: "FFBB — formation et compétition" },
-    { icon: "📍", title: "Châteauneuf", sub: "Gymnase Bois de St Jeaume" },
-    { icon: "👥", title: "8 catégories", sub: "U7 au Séniors + Loisirs" },
-    { icon: "🦅", title: "Esprit collectif", sub: "Respect · Progression · Plaisir" },
+    {
+      icon: "📖", title: "Historique", sub: "Notre histoire depuis 2008",
+      image: "/cards/card-historique.webp",
+      content: "À compléter — histoire du club, dates clés, palmarès, moments marquants depuis la fondation en 2008.",
+    },
+    {
+      icon: "👥", title: "Dirigeants", sub: "Le bureau du club",
+      image: "/cards/card-dirigeants.webp",
+      content: "À compléter — présidente, trésorier, secrétaire, membres du bureau et leurs rôles au sein du club.",
+    },
+    {
+      icon: "🏀", title: "Vie du club", sub: "Au quotidien",
+      image: "/cards/card-vieclub.webp",
+      content: "À compléter — entraînements, événements, tournois, stages, vie associative et moments forts de la saison.",
+    },
+    {
+      icon: "🤝", title: "Nos partenaires", sub: "Ils nous soutiennent",
+      image: "/cards/card-partenaires.webp",
+      content: "À compléter — logos et présentation des partenaires et sponsors du club.",
+    },
   ];
   return (
     <section id="club" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "white" }} ref={ref}>
@@ -302,16 +335,79 @@ function About() {
         </motion.div>
 
         <motion.div variants={slideIn("right")} initial="hidden" animate={inView ? "visible" : "hidden"}
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+          ref={cardsRef} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
           {cards.map((item, i) => (
-            <motion.div key={item.title} style={{ background: i % 2 === 0 ? "#f4f6fb" : "#fff", border: "1px solid #e8ecf4", borderRadius: 8, padding: "1.25rem" }}
-              whileHover={{ y: -5, boxShadow: "0 8px 24px rgba(26,45,130,0.1)" }} transition={{ duration: 0.2 }}>
-              <div style={{ fontSize: 26, marginBottom: 8 }}>{item.icon}</div>
-              <div style={{ fontFamily: F1, fontWeight: 700, fontSize: 17, color: "#1A2D82" }}>{item.title}</div>
-              <div style={{ fontFamily: F2, fontSize: 13, color: "#6B7280", marginTop: 3 }}>{item.sub}</div>
+            <motion.div key={item.title}
+              style={{
+                borderRadius: 10, cursor: "pointer", overflow: "hidden",
+                position: "relative", minHeight: 200,
+                border: `2px solid ${activeCard === i ? "#F07030" : "transparent"}`,
+                boxShadow: activeCard === i ? "0 0 0 2px #F07030" : "none",
+                transition: "border-color 0.2s",
+              }}
+              whileHover={{ y: -4, boxShadow: "0 12px 32px rgba(26,45,130,0.2)" }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => activeCard === i ? closeCard() : openCard(i)}
+              transition={{ duration: 0.2 }}>
+              {/* Image de fond */}
+              {item.image && (
+                <div style={{
+                  position: "absolute", inset: 0,
+                  backgroundImage: `url(${item.image})`,
+                  backgroundSize: "cover", backgroundPosition: "center",
+                  transition: "transform 0.4s ease",
+                }} />
+              )}
+              {/* Overlay */}
+              <div style={{
+                position: "absolute", inset: 0,
+                background: activeCard === i
+                  ? "rgba(8,14,31,0.82)"
+                  : "rgba(8,14,31,0.58)",
+                transition: "background 0.3s",
+              }} />
+              {/* Contenu */}
+              <div style={{ position: "relative", zIndex: 1, padding: "1.5rem" }}>
+                <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 20, color: "white" }}>{item.title}</div>
+                <div style={{ fontFamily: F2, fontSize: 13, color: "rgba(255,255,255,0.55)", marginTop: 3 }}>{item.sub}</div>
+                <div style={{ marginTop: 12, color: activeCard === i ? "#F07030" : "rgba(255,255,255,0.5)", fontSize: 11, fontFamily: F2, fontWeight: 600, letterSpacing: "0.08em" }}>
+                  {activeCard === i ? "FERMER ↑" : "EN SAVOIR PLUS ↓"}
+                </div>
+              </div>
             </motion.div>
           ))}
         </motion.div>
+      </div>
+
+      {/* Modal pleine largeur — hors de la grille */}
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+        <AnimatePresence>
+          {activeCard !== null && (
+            <motion.div
+              key={activeCard}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              style={{ overflow: "hidden", marginTop: "2rem" }}>
+              <div ref={panelRef} style={{ background: "#1A2D82", borderRadius: 12, padding: "2.5rem", position: "relative" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" }}>
+                  <div>
+                    <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 28, color: "white" }}>{cards[activeCard]?.title}</div>
+                    <div style={{ fontFamily: F2, fontSize: 13, color: "rgba(255,255,255,0.45)" }}>{cards[activeCard]?.sub}</div>
+                  </div>
+                  <button onClick={() => closeCard()}
+                    style={{ marginLeft: "auto", background: "rgba(255,255,255,0.1)", border: "none", borderRadius: 99, width: 32, height: 32, cursor: "pointer", color: "white", fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    ✕
+                  </button>
+                </div>
+                <p style={{ fontFamily: F2, fontSize: 15, color: "rgba(255,255,255,0.65)", lineHeight: 1.8 }}>
+                  {cards[activeCard]?.content}
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
@@ -378,8 +474,20 @@ function Categories() {
   const [active, setActive] = useState(null);
   const isMobile = useWindowWidth() < 768;
   return (
-    <section id="categories" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "#0D1A4A" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+    <section id="categories" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "#0D1A4A", position: "relative", overflow: "hidden" }}>
+      {/* Image de fond */}
+      <div style={{
+        position: "absolute", inset: 0,
+        backgroundImage: "url(/categories-bg.webp)",
+        backgroundSize: "cover", backgroundPosition: "center",
+        opacity: 0.15,
+      }} />
+      {/* Overlay dégradé */}
+      <div style={{
+        position: "absolute", inset: 0,
+        background: "linear-gradient(to bottom, rgba(13,26,74,0.7) 0%, rgba(13,26,74,0.85) 100%)",
+      }} />
+      <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <Anim>
           <Label>Nos équipes</Label>
           <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "white", marginBottom: "0.5rem" }}>Catégories</h2>
@@ -664,6 +772,78 @@ function Contact() {
   );
 }
 
+// ─── PARTENAIRES ───────────────────────────────────────────────────────────
+const PARTENAIRES = {
+  sponsors: [
+    // { name: "Nom sponsor", logo: "/partenaires/sponsor1.png", url: "https://..." },
+  ],
+  mairies: [
+    // { name: "Mairie de Châteauneuf-de-Grasse", logo: "/partenaires/mairie.png", url: "https://..." },
+  ],
+  fournisseurs: [
+    // { name: "Nom fournisseur", logo: "/partenaires/fournisseur1.png", url: "https://..." },
+  ],
+};
+
+function Partenaires() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+
+  const categories = [
+    { label: "Sponsors", key: "sponsors", icon: "🏆" },
+    { label: "Mairies", key: "mairies", icon: "🏛️" },
+    { label: "Fournisseurs", key: "fournisseurs", icon: "🤝" },
+  ];
+
+  const hasAny = Object.values(PARTENAIRES).some(arr => arr.length > 0);
+
+  return (
+    <section style={{ padding: "4rem 4rem", background: "#07102E" }} ref={ref}>
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+        <Anim>
+          <Label>Ils nous soutiennent</Label>
+          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 42, color: "white", marginBottom: "3rem" }}>
+            Nos partenaires
+          </h2>
+        </Anim>
+
+        {!hasAny && (
+          <motion.p
+            variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
+            style={{ fontFamily: F2, fontSize: 15, color: "rgba(255,255,255,0.3)", fontStyle: "italic" }}>
+            Les logos de nos partenaires seront affichés ici prochainement.
+          </motion.p>
+        )}
+
+        {categories.map((cat, ci) => PARTENAIRES[cat.key].length > 0 && (
+          <Anim key={cat.key} delay={ci * 0.1}>
+            <div style={{ marginBottom: "2.5rem" }}>
+              <div style={{ fontFamily: F1, fontWeight: 700, fontSize: 18, color: "rgba(255,255,255,0.45)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1.25rem", display: "flex", alignItems: "center", gap: 8 }}>
+                <span>{cat.icon}</span> {cat.label}
+              </div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", alignItems: "center" }}>
+                {PARTENAIRES[cat.key].map((p) => (
+                  <motion.a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
+                    style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "1rem 1.5rem", textDecoration: "none", minWidth: 140, height: 80 }}
+                    whileHover={{ scale: 1.05, background: "rgba(255,255,255,0.12)" }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{ duration: 0.18 }}
+                    title={p.name}>
+                    {p.logo
+                      ? <img src={p.logo} alt={p.name} style={{ maxHeight: 50, maxWidth: 120, objectFit: "contain", filter: "brightness(0) invert(1)", opacity: 0.8 }} />
+                      : <span style={{ fontFamily: F1, fontWeight: 700, fontSize: 15, color: "rgba(255,255,255,0.6)" }}>{p.name}</span>
+                    }
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+          </Anim>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 // ─── FOOTER ────────────────────────────────────────────────────────────────
 function Footer() {
   return (
@@ -715,6 +895,7 @@ export default function App() {
       <Inscriptions />
       <Boutique />
       <Contact />
+      <Partenaires />
       <Footer />
     </div>
   );
