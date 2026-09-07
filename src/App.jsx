@@ -474,26 +474,25 @@ function Categories() {
   const [active, setActive] = useState(null);
   const isMobile = useWindowWidth() < 768;
   return (
-    <section id="categories" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "#0D1A4A", position: "relative", overflow: "hidden" }}>
-      {/* Image de fond */}
-      <div style={{
-        position: "absolute", inset: 0,
-        backgroundImage: "url(/categories-bg.webp)",
-        backgroundSize: "cover", backgroundPosition: "center",
-        opacity: 0.15,
-      }} />
-      {/* Overlay dégradé */}
-      <div style={{
-        position: "absolute", inset: 0,
-        background: "linear-gradient(to bottom, rgba(13,26,74,0.7) 0%, rgba(13,26,74,0.85) 100%)",
-      }} />
-      <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 1 }}>
-        <Anim>
-          <Label>Nos équipes</Label>
-          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "white", marginBottom: "0.5rem" }}>Catégories</h2>
-          <p style={{ fontFamily: F2, fontSize: 16, color: "rgba(255,255,255,0.4)", maxWidth: 460, marginBottom: "0.5rem" }}>Une place pour chaque joueur et joueuse, dès 7 ans.</p>
-          <p style={{ fontFamily: F2, fontSize: 13, color: "rgba(255,255,255,0.25)", maxWidth: 460, marginBottom: "3rem" }}>Cliquez sur une catégorie pour découvrir le coach, les horaires et le niveau de compétition.</p>
-        </Anim>
+    <section id="categories" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "#0D1A4A" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+        {/* Header avec image à côté */}
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr auto", gap: "3rem", alignItems: "center", marginBottom: "3rem" }}>
+          <Anim>
+            <Label>Nos équipes</Label>
+            <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "white", marginBottom: "0.5rem" }}>Catégories</h2>
+            <p style={{ fontFamily: F2, fontSize: 16, color: "rgba(255,255,255,0.5)", maxWidth: 460, marginBottom: "0.5rem" }}>Une place pour chaque joueur et joueuse, dès 7 ans.</p>
+            <p style={{ fontFamily: F2, fontSize: 13, color: "rgba(255,255,255,0.3)", maxWidth: 460 }}>Cliquez sur une catégorie pour découvrir le coach, les horaires et le niveau de compétition.</p>
+          </Anim>
+          {!isMobile && (
+            <motion.div
+              initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}>
+              <img src="/categories-bg.webp" alt="Esprit d'équipe CANSA"
+                style={{ width: 280, height: 280, objectFit: "cover", borderRadius: 12, boxShadow: "0 12px 40px rgba(0,0,0,0.5)" }} />
+            </motion.div>
+          )}
+        </div>
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)", gap: "0.75rem" }}>
           {CATEGORIES.map((cat, i) => <CategoryCard key={cat.name} cat={cat} index={i} active={active} setActive={setActive} />)}
         </div>
@@ -502,7 +501,7 @@ function Categories() {
             <span style={{ fontSize: 22, color: "#F07030" }}>📍</span>
             <div>
               <div style={{ fontFamily: F1, fontWeight: 700, fontSize: 18, color: "white" }}>Gymnase Bois de St Jeaume</div>
-              <div style={{ fontFamily: F2, fontSize: 14, color: "rgba(255,255,255,0.38)" }}>Chemin Barnarac · 06740 Châteauneuf-de-Grasse</div>
+              <div style={{ fontFamily: F2, fontSize: 14, color: "rgba(255,255,255,0.38)" }}>Chemin de Barnarac · 06740 Châteauneuf-Grasse</div>
             </div>
           </div>
         </Anim>
@@ -596,32 +595,46 @@ function Inscriptions() {
   ];
   return (
     <section id="inscriptions" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "#f4f6fb" }} ref={ref}>
-      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <motion.div variants={slideIn("left")} initial="hidden" animate={inView ? "visible" : "hidden"}>
-          <Label>Rejoindre le club</Label>
-          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "#1A2D82", marginBottom: "0.75rem" }}>Inscriptions</h2>
-          <p style={{ fontFamily: F2, fontSize: 16, color: "#4A5568", maxWidth: 480, lineHeight: 1.7, marginBottom: "3.5rem" }}>Les inscriptions pour la saison 2026/27 sont ouvertes. Tout se fait en ligne via Hello Asso en quelques minutes.</p>
-        </motion.div>
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "1.5rem", marginBottom: "3rem" }}>
-          {steps.map((s, i) => (
-            <Anim key={s.n} delay={i * 0.12}>
-              <motion.div style={{ background: "white", borderRadius: 12, padding: "1.5rem", border: "1px solid #e8ecf4" }}
-                whileHover={{ y: -4, boxShadow: "0 12px 32px rgba(26,45,130,0.1)" }} transition={{ duration: 0.2 }}>
-                <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 36, color: "#F07030", lineHeight: 1, marginBottom: "1rem" }}>{s.n}</div>
-                <div style={{ fontFamily: F1, fontWeight: 700, fontSize: 20, color: "#1A2D82", marginBottom: "0.5rem" }}>{s.title}</div>
-                <p style={{ fontFamily: F2, fontSize: 14, color: "#6B7280", lineHeight: 1.6 }}>{s.text}</p>
-              </motion.div>
-            </Anim>
-          ))}
+      <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr auto", gap: "4rem", alignItems: "center" }}>
+        
+        {/* Gauche — contenu */}
+        <div>
+          <motion.div variants={slideIn("left")} initial="hidden" animate={inView ? "visible" : "hidden"}>
+            <Label>Rejoindre le club</Label>
+            <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "#1A2D82", marginBottom: "0.75rem" }}>Inscriptions</h2>
+            <p style={{ fontFamily: F2, fontSize: 16, color: "#4A5568", maxWidth: 480, lineHeight: 1.7, marginBottom: "2.5rem" }}>Les inscriptions pour la saison 2026/27 sont ouvertes. Tout se fait en ligne via Hello Asso en quelques minutes.</p>
+          </motion.div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1rem", marginBottom: "2.5rem" }}>
+            {steps.map((s, i) => (
+              <Anim key={s.n} delay={i * 0.12}>
+                <motion.div style={{ background: "white", borderRadius: 12, padding: "1.25rem 1.5rem", border: "1px solid #e8ecf4", display: "flex", alignItems: "flex-start", gap: "1.25rem" }}
+                  whileHover={{ y: -2, boxShadow: "0 8px 24px rgba(26,45,130,0.1)" }} transition={{ duration: 0.2 }}>
+                  <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 32, color: "#F07030", lineHeight: 1, flexShrink: 0, minWidth: 40 }}>{s.n}</div>
+                  <div>
+                    <div style={{ fontFamily: F1, fontWeight: 700, fontSize: 18, color: "#1A2D82", marginBottom: "0.25rem" }}>{s.title}</div>
+                    <p style={{ fontFamily: F2, fontSize: 14, color: "#6B7280", lineHeight: 1.6 }}>{s.text}</p>
+                  </div>
+                </motion.div>
+              </Anim>
+            ))}
+          </div>
+          <Anim delay={0.4}>
+            <motion.a href={HELLOASSO} target="_blank" rel="noopener noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: F2, fontWeight: 600, fontSize: 14, color: "white", background: "#F07030", borderRadius: 8, padding: "0.875rem 2rem", textDecoration: "none" }}
+              whileHover={{ scale: 1.04, backgroundColor: "#d45e22" }} whileTap={{ scale: 0.97 }}>
+              S'inscrire sur Hello Asso
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </motion.a>
+          </Anim>
         </div>
-        <Anim delay={0.4}>
-          <motion.a href={HELLOASSO} target="_blank" rel="noopener noreferrer"
-            style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: F2, fontWeight: 600, fontSize: 14, color: "white", background: "#F07030", borderRadius: 8, padding: "0.875rem 2rem", textDecoration: "none" }}
-            whileHover={{ scale: 1.04, backgroundColor: "#d45e22" }} whileTap={{ scale: 0.97 }}>
-            S'inscrire sur Hello Asso
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
-          </motion.a>
-        </Anim>
+
+        {/* Droite — image */}
+        {!isMobile && (
+          <motion.div variants={slideIn("right")} initial="hidden" animate={inView ? "visible" : "hidden"}>
+            <img src="/inscriptions-img.webp" alt="Entraînement CANSA Basket"
+              style={{ width: 380, height: 380, objectFit: "cover", borderRadius: 14, boxShadow: "0 16px 48px rgba(26,45,130,0.18)" }} />
+          </motion.div>
+        )}
       </div>
     </section>
   );
@@ -687,9 +700,8 @@ function Contact() {
   };
   const inp = { fontFamily: F2, fontSize: 14, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 6, color: "white", padding: "0.75rem 1rem", width: "100%", outline: "none", boxSizing: "border-box" };
   const coords = [
-    { icon: "📍", label: "Gymnase", value: "Bois de St Jeaume\nChemin Barnarac · 06740 Châteauneuf-de-Grasse" },
-    { icon: "📞", label: "Téléphone", value: "06 42 29 28 58" },
-    { icon: "👤", label: "Présidente", value: "Nathalie Abrahamme-Mestre" },
+    { icon: "📍", label: "Gymnase", value: "Gymnase du Bois de Saint Jeaume\nChemin de Barnarac · 06740 Châteauneuf-Grasse" },
+    { icon: "📞", label: "Téléphone", value: "06 61 98 26 01" },
     { icon: "ha", label: "Hello Asso", value: "Boutique & Inscriptions", link: HELLOASSO },
     { icon: "fb", label: "Facebook", value: "cansabasket", link: FACEBOOK },
     { icon: "ig", label: "Instagram", value: "@cansa_basket_06740", link: INSTAGRAM },
