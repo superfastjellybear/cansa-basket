@@ -595,46 +595,50 @@ function Inscriptions() {
   ];
   return (
     <section id="inscriptions" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "#f4f6fb" }} ref={ref}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr auto", gap: "4rem", alignItems: "center" }}>
-        
-        {/* Gauche — contenu */}
-        <div>
-          <motion.div variants={slideIn("left")} initial="hidden" animate={inView ? "visible" : "hidden"}>
-            <Label>Rejoindre le club</Label>
-            <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "#1A2D82", marginBottom: "0.75rem" }}>Inscriptions</h2>
-            <p style={{ fontFamily: F2, fontSize: 16, color: "#4A5568", maxWidth: 480, lineHeight: 1.7, marginBottom: "2.5rem" }}>Les inscriptions pour la saison 2026/27 sont ouvertes. Tout se fait en ligne via Hello Asso en quelques minutes.</p>
-          </motion.div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1rem", marginBottom: "2.5rem" }}>
-            {steps.map((s, i) => (
-              <Anim key={s.n} delay={i * 0.12}>
-                <motion.div style={{ background: "white", borderRadius: 12, padding: "1.25rem 1.5rem", border: "1px solid #e8ecf4", display: "flex", alignItems: "flex-start", gap: "1.25rem" }}
-                  whileHover={{ y: -2, boxShadow: "0 8px 24px rgba(26,45,130,0.1)" }} transition={{ duration: 0.2 }}>
-                  <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 32, color: "#F07030", lineHeight: 1, flexShrink: 0, minWidth: 40 }}>{s.n}</div>
-                  <div>
-                    <div style={{ fontFamily: F1, fontWeight: 700, fontSize: 18, color: "#1A2D82", marginBottom: "0.25rem" }}>{s.title}</div>
-                    <p style={{ fontFamily: F2, fontSize: 14, color: "#6B7280", lineHeight: 1.6 }}>{s.text}</p>
-                  </div>
-                </motion.div>
-              </Anim>
-            ))}
-          </div>
-          <Anim delay={0.4}>
-            <motion.a href={HELLOASSO} target="_blank" rel="noopener noreferrer"
-              style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: F2, fontWeight: 600, fontSize: 14, color: "white", background: "#F07030", borderRadius: 8, padding: "0.875rem 2rem", textDecoration: "none" }}
-              whileHover={{ scale: 1.04, backgroundColor: "#d45e22" }} whileTap={{ scale: 0.97 }}>
-              S'inscrire sur Hello Asso
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
-            </motion.a>
-          </Anim>
-        </div>
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
 
-        {/* Droite — image */}
-        {!isMobile && (
-          <motion.div variants={slideIn("right")} initial="hidden" animate={inView ? "visible" : "hidden"}>
-            <img src="/inscriptions-img.webp" alt="Entraînement CANSA Basket"
-              style={{ width: 380, height: 380, objectFit: "cover", borderRadius: 14, boxShadow: "0 16px 48px rgba(26,45,130,0.18)" }} />
-          </motion.div>
-        )}
+        {/* Header seul */}
+        <motion.div variants={slideIn("left")} initial="hidden" animate={inView ? "visible" : "hidden"}
+          style={{ marginBottom: "2.5rem" }}>
+          <Label>Rejoindre le club</Label>
+          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "#1A2D82", marginBottom: "0.75rem" }}>Inscriptions</h2>
+          <p style={{ fontFamily: F2, fontSize: 16, color: "#4A5568", maxWidth: 480, lineHeight: 1.7 }}>Les inscriptions pour la saison 2026/27 sont ouvertes. Tout se fait en ligne via Hello Asso en quelques minutes.</p>
+        </motion.div>
+
+        {/* Étapes + image côte à côte */}
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr auto", gap: "4rem", alignItems: "center" }}>
+          <div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1rem", marginBottom: "2.5rem" }}>
+              {steps.map((s, i) => (
+                <Anim key={s.n} delay={i * 0.12}>
+                  <motion.div style={{ background: "white", borderRadius: 12, padding: "1.25rem 1.5rem", border: "1px solid #e8ecf4", display: "flex", alignItems: "flex-start", gap: "1.25rem" }}
+                    whileHover={{ y: -2, boxShadow: "0 8px 24px rgba(26,45,130,0.1)" }} transition={{ duration: 0.2 }}>
+                    <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 32, color: "#F07030", lineHeight: 1, flexShrink: 0, minWidth: 40 }}>{s.n}</div>
+                    <div>
+                      <div style={{ fontFamily: F1, fontWeight: 700, fontSize: 18, color: "#1A2D82", marginBottom: "0.25rem" }}>{s.title}</div>
+                      <p style={{ fontFamily: F2, fontSize: 14, color: "#6B7280", lineHeight: 1.6 }}>{s.text}</p>
+                    </div>
+                  </motion.div>
+                </Anim>
+              ))}
+            </div>
+            <Anim delay={0.4}>
+              <motion.a href={HELLOASSO} target="_blank" rel="noopener noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: F2, fontWeight: 600, fontSize: 14, color: "white", background: "#F07030", borderRadius: 8, padding: "0.875rem 2rem", textDecoration: "none" }}
+                whileHover={{ scale: 1.04, backgroundColor: "#d45e22" }} whileTap={{ scale: 0.97 }}>
+                S'inscrire sur Hello Asso
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </motion.a>
+            </Anim>
+          </div>
+
+          {!isMobile && (
+            <motion.div variants={slideIn("right")} initial="hidden" animate={inView ? "visible" : "hidden"}>
+              <img src="/inscriptions-img.webp" alt="Entraînement CANSA Basket"
+                style={{ width: 380, height: 380, objectFit: "cover", borderRadius: 14, boxShadow: "0 16px 48px rgba(26,45,130,0.18)" }} />
+            </motion.div>
+          )}
+        </div>
       </div>
     </section>
   );
