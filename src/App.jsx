@@ -680,7 +680,15 @@ function Boutique() {
               <motion.div onClick={() => setLightbox({ prod, mediaIndex: 0 })}
                 style={{ borderRadius: 10, overflow: "hidden", cursor: "pointer", position: "relative", aspectRatio: "3/4", background: "#07102E" }}
                 whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.18 }}>
-                <img src={prod.cover} alt={prod.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                {/* Video en boucle si disponible, sinon image */}
+                {prod.media.some(m => typeof m === "object" && m.type === "video") ? (
+                  <video
+                    src={prod.media.find(m => typeof m === "object" && m.type === "video").src}
+                    autoPlay muted loop playsInline
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                ) : (
+                  <img src={prod.cover} alt={prod.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                )}
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0.75rem", background: "linear-gradient(to top, rgba(8,14,31,0.9) 0%, transparent 100%)" }}>
                   <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 15, color: "white" }}>{prod.name}</div>
                   <div style={{ fontFamily: F2, fontSize: 11, color: "rgba(255,255,255,0.5)", marginTop: 2 }}>{prod.sub}</div>
