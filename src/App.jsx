@@ -959,7 +959,7 @@ function Partenaires() {
               Sponsors, équipementiers et mairies qui nous font confiance saison après saison.
             </p>
             <motion.a
-              href="mailto:contact@cansabasket.fr?subject=Devenir partenaire CANSA Basket"
+              href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
               style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
                 background: "#F07030", color: "white",
