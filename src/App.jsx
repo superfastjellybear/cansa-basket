@@ -423,9 +423,9 @@ function About() {
                           <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
                             {cat.partenaires.map((p) => (
                               <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
-                                style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10, background: p.whiteBg ? "white" : p.blueBg ? "#2C519C" : "rgba(255,255,255,0.07)", border: (p.whiteBg || p.blueBg) ? `2px solid ${cat.color}44` : `1px solid ${cat.color}44`, borderRadius: 10, padding: "1rem", textDecoration: "none", width: 160, height: 120 }}>
+                                style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, background: p.whiteBg ? "white" : p.blueBg ? "#2C519C" : "rgba(255,255,255,0.07)", border: (p.whiteBg || p.blueBg) ? `2px solid ${cat.color}44` : `1px solid ${cat.color}44`, borderRadius: 10, padding: "0.75rem", textDecoration: "none", width: 150, height: cat.key === "mairies" ? 150 : 110 }}>
                                 {p.logo
-                                  ? <img src={p.logo} alt={p.name} style={{ maxHeight: 70, maxWidth: 140, objectFit: "contain", filter: (p.whiteBg || p.noFilter) ? "none" : "brightness(0) invert(1)", opacity: 1 }} />
+                                  ? <img src={p.logo} alt={p.name} style={{ maxHeight: cat.key === "mairies" ? 110 : 80, maxWidth: 130, objectFit: "contain", filter: (p.whiteBg || p.noFilter) ? "none" : "brightness(0) invert(1)", opacity: 1 }} />
                                   : null}
                                 {cat.key === "mairies" && (
                                   <span style={{ fontFamily: F1, fontWeight: 700, fontSize: 13, color: p.whiteBg ? "#1A2D82" : "rgba(255,255,255,0.9)", textAlign: "center" }}>{p.name}</span>
@@ -694,6 +694,7 @@ const PRODUITS = [
   { name: "Hoodie Zip", sub: "Sweat à capuche zippé navy", cover: "/boutique/prod-hoodie.webp", media: ["/boutique/prod-hoodie.webp", { type: "video", src: "/boutique/CansaZipper.mp4" }] },
   { name: "Sac à dos", sub: "Sac navy avec logo CANSA", cover: "/boutique/prod-sac-gourde.webp", media: ["/boutique/prod-sac-gourde.webp", "/boutique/prod-sac-teddy.webp", "/boutique/prod-sac-teddy2.webp"] },
   { name: "Accessoires", sub: "Casquette · Claquettes · Pack", cover: "/boutique/prod-accessoires.webp", media: ["/boutique/prod-accessoires.webp"] },
+  { name: "T-Shirt", sub: "T-shirt blanc logo CANSA aigles", cover: "/boutique/prod-tshirt.webp", media: ["/boutique/prod-tshirt.webp", { type: "video", src: "/boutique/prod-tshirt.mp4" }] },
 ];
 
 // ─── BOUTIQUE ──────────────────────────────────────────────────────────────
@@ -1020,13 +1021,13 @@ function Partenaires() {
                       style={{
                         display: "flex", flexDirection: "column",
                         alignItems: "center", justifyContent: "center",
-                        gap: 10,
+                        gap: 8,
                         background: p.whiteBg ? "white" : p.blueBg ? "#2C519C" : "rgba(255,255,255,0.06)",
                         border: (p.whiteBg || p.blueBg) ? `2px solid ${cat.color}44` : `1px solid ${cat.color}33`,
                         borderRadius: 12,
-                        padding: "1.5rem 2rem",
+                        padding: "0.75rem",
                         textDecoration: "none",
-                        minWidth: 200, minHeight: 140,
+                        width: 150, height: cat.key === "mairies" ? 150 : 110,
                       }}
                       whileHover={(p.whiteBg || p.blueBg)
                         ? { scale: 1.04, borderColor: cat.color }
@@ -1040,8 +1041,8 @@ function Partenaires() {
                           src={p.logo}
                           alt={p.name}
                           style={{
-                            maxHeight: 55,
-                            maxWidth: 115,
+                            maxHeight: cat.key === "mairies" ? 110 : 80,
+                            maxWidth: 130,
                             objectFit: "contain",
                             filter: (p.whiteBg || p.noFilter) ? "none" : "brightness(0) invert(1)",
                             opacity: 1,
@@ -1056,11 +1057,12 @@ function Partenaires() {
                       )}
                       {cat.key === "mairies" && (
                         <span style={{
-                          fontFamily: F1, fontWeight: 700, fontSize: 14,
+                          fontFamily: F1, fontWeight: 700, fontSize: 12,
                           color: p.whiteBg ? "#1A2D82" : "rgba(255,255,255,0.9)",
-                          letterSpacing: "0.04em",
+                          letterSpacing: "0.02em",
                           textAlign: "center",
                           marginTop: 2,
+                          lineHeight: 1.3,
                         }}>
                           {p.name}
                         </span>
