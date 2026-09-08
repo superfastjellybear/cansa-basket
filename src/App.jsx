@@ -762,13 +762,13 @@ function Boutique() {
             onClick={e => e.stopPropagation()}>
 
             {/* Media */}
-            <div style={{ position: "relative", background: "#07102E", flexShrink: 0, minHeight: 300 }}>
+            <div style={{ position: "relative", background: "#07102E", flexShrink: 0, height: "65vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
               {(() => {
                 const media = lightbox.prod.media[lightbox.mediaIndex];
                 if (typeof media === "object" && media.type === "video") {
-                  return <video src={media.src} controls autoPlay muted style={{ width: "100%", maxHeight: 580, objectFit: "contain", display: "block" }} />;
+                  return <video src={media.src} controls autoPlay muted style={{ maxWidth: "100%", maxHeight: "100%", width: "auto", height: "auto", objectFit: "contain", display: "block", margin: "auto" }} />;
                 }
-                return <img src={media} alt={lightbox.prod.name} style={{ width: "100%", maxHeight: 440, objectFit: "contain", display: "block" }} />;
+                return <img src={media} alt={lightbox.prod.name} style={{ maxWidth: "100%", maxHeight: "100%", width: "auto", height: "auto", objectFit: "contain", display: "block", margin: "auto" }} />;
               })()}
               <button onClick={() => setLightbox(null)}
                 style={{ position: "absolute", top: 12, right: 12, background: "rgba(0,0,0,0.6)", border: "none", borderRadius: 99, width: 36, height: 36, cursor: "pointer", color: "white", fontSize: 18, display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
