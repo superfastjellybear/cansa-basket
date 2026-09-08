@@ -592,7 +592,7 @@ function News() {
                           {item.photos && item.photos.length > 0 && (
                             <div style={{ display: "grid", gridTemplateColumns: item.photos.length === 1 ? "1fr" : "repeat(2, 1fr)", gap: "0.5rem", marginTop: "1rem" }}>
                               {item.photos.map((src, pi) => (
-                                <img key={pi} src={src} alt="" style={{ width: "100%", borderRadius: 6, objectFit: "cover", aspectRatio: "16/9" }} />
+                                <img key={pi} src={src} alt="" style={{ width: "100%", borderRadius: 6, objectFit: "contain", maxHeight: 580 }} />
                               ))}
                             </div>
                           )}
@@ -758,7 +758,7 @@ function Boutique() {
           style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(4,8,20,0.96)", display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}
           onClick={() => setLightbox(null)}>
           <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
-            style={{ background: "#0D1A4A", borderRadius: 16, width: "100%", maxWidth: 780, overflow: "hidden", maxHeight: "90vh", display: "flex", flexDirection: "column" }}
+            style={{ background: "#0D1A4A", borderRadius: 16, width: "100%", maxWidth: 1000, overflow: "hidden", maxHeight: "92vh", display: "flex", flexDirection: "column" }}
             onClick={e => e.stopPropagation()}>
 
             {/* Media */}
@@ -766,7 +766,7 @@ function Boutique() {
               {(() => {
                 const media = lightbox.prod.media[lightbox.mediaIndex];
                 if (typeof media === "object" && media.type === "video") {
-                  return <video src={media.src} controls autoPlay muted style={{ width: "100%", maxHeight: 440, objectFit: "contain", display: "block" }} />;
+                  return <video src={media.src} controls autoPlay muted style={{ width: "100%", maxHeight: 580, objectFit: "contain", display: "block" }} />;
                 }
                 return <img src={media} alt={lightbox.prod.name} style={{ width: "100%", maxHeight: 440, objectFit: "contain", display: "block" }} />;
               })()}
