@@ -689,7 +689,7 @@ function Inscriptions() {
 const PRODUITS = [
   { name: "Jogging", sub: "Pantalon molleton navy", cover: "/boutique/prod-jogging.webp", media: ["/boutique/prod-jogging.webp"] },
   { name: "Survêtement", sub: "Veste + pantalon rayé navy", cover: "/boutique/prod-survetement.webp", media: ["/boutique/prod-survetement.webp"] },
-  { name: "Tenue d'entraînement", sub: "Maillot + short réversible", cover: "/boutique/prod-tenue.webp", media: ["/boutique/prod-tenue.webp"] },
+  { name: "Tenue d'entraînement", sub: "Maillot + short réversible", cover: "/boutique/prod-tenue-blanc.webp", media: [{ type: "video", src: "/boutique/prod-tenue.mp4" }, "/boutique/prod-tenue-blanc.webp", "/boutique/prod-tenue-bleu.webp"] },
   { name: "Teddy / Varsity", sub: "Veste college navy & blanc", cover: "/boutique/prod-teddy-front.webp", media: ["/boutique/prod-teddy-front.webp", "/boutique/prod-sac-teddy.webp", "/boutique/prod-sac-teddy2.webp"] },
   { name: "Hoodie Zip", sub: "Sweat à capuche zippé navy", cover: "/boutique/prod-hoodie.webp", media: ["/boutique/prod-hoodie.webp", { type: "video", src: "/boutique/CansaZipper.mp4" }] },
   { name: "Sac à dos", sub: "Sac navy avec logo CANSA", cover: "/boutique/prod-sac-gourde.webp", media: ["/boutique/prod-sac-gourde.webp", "/boutique/prod-sac-teddy.webp", "/boutique/prod-sac-teddy2.webp"] },
