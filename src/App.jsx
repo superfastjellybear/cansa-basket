@@ -687,13 +687,13 @@ function Inscriptions() {
 
 // ─── BOUTIQUE DATA ─────────────────────────────────────────────────────────
 const PRODUITS = [
-  { name: "Jogging", sub: "Pantalon molleton navy", cover: "/boutique/prod-jogging.webp", media: ["/boutique/prod-jogging.webp"] },
-  { name: "Survêtement", sub: "Veste + pantalon rayé navy", cover: "/boutique/prod-survetement.webp", media: ["/boutique/prod-survetement.webp"] },
+  { name: "Jogging", sub: "Pantalon molleton navy", cover: "/boutique/prod-jogging.webp", media: [{ type: "video", src: "/boutique/prod-jogging.mp4" }, "/boutique/prod-jogging.webp"] },
+  { name: "Survêtement", sub: "Veste + pantalon rayé navy", cover: "/boutique/prod-survetement.webp", media: [{ type: "video", src: "/boutique/prod-survetement.mp4" }, "/boutique/prod-survetement.webp"] },
   { name: "Tenue d'entraînement", sub: "Maillot + short réversible", cover: "/boutique/prod-tenue-blanc.webp", media: [{ type: "video", src: "/boutique/prod-tenue.mp4" }, "/boutique/prod-tenue-blanc.webp", "/boutique/prod-tenue-bleu.webp"] },
-  { name: "Teddy / Varsity", sub: "Veste college navy & blanc", cover: "/boutique/prod-teddy-front.webp", media: ["/boutique/prod-teddy-front.webp", "/boutique/prod-sac-teddy.webp", "/boutique/prod-sac-teddy2.webp"] },
+  { name: "Teddy / Varsity", sub: "Veste college navy & blanc", cover: "/boutique/prod-teddy-front.webp", media: [{ type: "video", src: "/boutique/prod-teddy.mp4" }, "/boutique/prod-teddy-front.webp", "/boutique/prod-sac-teddy.webp", "/boutique/prod-sac-teddy2.webp"] },
   { name: "Hoodie Zip", sub: "Sweat à capuche zippé navy", cover: "/boutique/prod-hoodie.webp", media: ["/boutique/prod-hoodie.webp", { type: "video", src: "/boutique/CansaZipper.mp4" }] },
-  { name: "Sac à dos", sub: "Sac navy avec logo CANSA", cover: "/boutique/prod-sac-gourde.webp", media: ["/boutique/prod-sac-gourde.webp", "/boutique/prod-sac-teddy.webp", "/boutique/prod-sac-teddy2.webp"] },
-  { name: "Accessoires", sub: "Casquette · Claquettes · Pack", cover: "/boutique/prod-accessoires.webp", media: ["/boutique/prod-accessoires.webp"] },
+  { name: "Sac à dos", sub: "Sac navy avec logo CANSA", cover: "/boutique/prod-sac-gourde.webp", media: [{ type: "video", src: "/boutique/prod-sac.mp4" }, "/boutique/prod-sac-gourde.webp", "/boutique/prod-sac-teddy.webp", "/boutique/prod-sac-teddy2.webp"] },
+  { name: "Accessoires", sub: "Casquette · Claquettes · Pack", cover: "/boutique/prod-accessoires.webp", media: [{ type: "video", src: "/boutique/prod-accessoires.mp4" }, "/boutique/prod-accessoires.webp"] },
   { name: "T-Shirt", sub: "T-shirt blanc logo CANSA aigles", cover: "/boutique/prod-tshirt.webp", media: ["/boutique/prod-tshirt.webp", { type: "video", src: "/boutique/prod-tshirt.mp4" }] },
 ];
 
