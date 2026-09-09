@@ -325,11 +325,13 @@ function About() {
     {
       title: "Dirigeants", sub: "Le bureau du club",
       image: "/cards/card-dirigeants.webp",
+      photo: "/cards/card-dirigeants-photo.webp",
       content: "Présidente : Madame Nathalie ABRAHAMME-MESTRE\nTrésorier : Monsieur Philippe VIALE\nSecrétaire : Madame Barbara OURMAN\n\nContact club : Barbara — 06 61 98 26 01 · cansabasket@hotmail.fr\nContact présidente : 06 14 18 18 93\n\nSiège social : 18 Chemin de la Santoline, 06650 Le Bar-sur-Loup\nGymnase : Bois de Saint-Jeaume, Chemin de Barnarac, 06740 Châteauneuf-de-Grasse",
     },
     {
       title: "Vie du club", sub: "Au quotidien",
       image: "/cards/card-vie-club.webp",
+      photo: "/cards/card-vie-club.webp",
       content: "CANSA Basket accueille les passionnés de basketball dès 7 ans, quel que soit leur niveau, dans un esprit de progression, de cohésion d'équipe et de lien social. Chaque joueur est accompagné dans son parcours par une équipe d'entraîneurs qualifiés.\n\nPour la saison 2026-2027, les entraînements ont lieu au Gymnase du Bois de Saint-Jeaume à Châteauneuf-de-Grasse.\n\nDe U9 à U11 — École de mini-basket, un entraînement par semaine. Formation et rencontres en plateaux pour U9 et U11-2, formation et compétition pour U11-1.\n\nDe U13 à U18 — Deux entraînements par semaine, formation et compétition. Les matchs se disputent principalement les samedis et dimanches.\n\nSéniors — Deux équipes engagées en championnat : une équipe compétition et une équipe loisirs-mixte, avec des rencontres en soirée en semaine.\n\nVacances scolaires — Un stage d'une semaine est organisé pour les jeunes de U9 à U18 (hors vacances de Noël).",
 
     },
@@ -429,6 +431,10 @@ function About() {
                 </div>
 
                 {/* Contenu */}
+                {cards[activeCard]?.photo && cards[activeCard]?.content !== "__PARTENAIRES__" && (
+                  <img src={cards[activeCard].photo} alt={cards[activeCard].title}
+                    style={{ width: "100%", borderRadius: 8, objectFit: "cover", maxHeight: 220, marginBottom: "1.25rem" }} />
+                )}
                 {cards[activeCard]?.content === "__PARTENAIRES__" ? (
                   <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
                     {[
@@ -580,6 +586,13 @@ function Categories() {
 function News() {
   const [active, setActive] = useState(null);
   const [showAll, setShowAll] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState({});
+  const goPhoto = (newsIdx, dir, total) => {
+    setPhotoIndex(prev => ({
+      ...prev,
+      [newsIdx]: ((prev[newsIdx] || 0) + dir + total) % total
+    }));
+  };
   const isMobile = useWindowWidth() < 768;
   const VISIBLE = 3;
   const visibleNews = showAll ? NEWS : NEWS.slice(0, VISIBLE);
@@ -624,13 +637,24 @@ function News() {
                               {item.tag === "Boutique" ? "Visiter la boutique →" : item.tag === "Événement" ? "S'inscrire →" : "En savoir plus →"}
                             </motion.a>
                           )}
-                          {item.photos && item.photos.length > 0 && (
-                            <div style={{ display: "grid", gridTemplateColumns: item.photos.length === 1 ? "1fr" : item.photos.length > 4 ? "repeat(4, 1fr)" : "repeat(2, 1fr)", gap: "0.5rem", marginTop: "1rem" }}>
-                              {item.photos.map((src, pi) => (
-                                <img key={pi} src={src} alt="" style={{ width: "100%", borderRadius: 6, objectFit: "contain", maxHeight: 580 }} />
-                              ))}
-                            </div>
-                          )}
+                          {item.photos && item.photos.length > 0 && (() => {
+                            const idx = photoIndex[i] || 0;
+                            const total = item.photos.length;
+                            return (
+                              <div style={{ position: "relative", marginTop: "1rem" }}>
+                                <img src={item.photos[idx]} alt="" style={{ width: "100%", borderRadius: 8, objectFit: "contain", maxHeight: 420, display: "block" }} />
+                                {total > 1 && (
+                                  <>
+                                    <button onClick={e => { e.stopPropagation(); goPhoto(i, -1, total); }}
+                                      style={{ position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "none", borderRadius: 99, width: 36, height: 36, cursor: "pointer", color: "white", fontSize: 18, display: "flex", alignItems: "center", justifyContent: "center" }}>‹</button>
+                                    <button onClick={e => { e.stopPropagation(); goPhoto(i, 1, total); }}
+                                      style={{ position: "absolute", right: 8, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "none", borderRadius: 99, width: 36, height: 36, cursor: "pointer", color: "white", fontSize: 18, display: "flex", alignItems: "center", justifyContent: "center" }}>›</button>
+                                    <div style={{ textAlign: "center", marginTop: 8, fontFamily: "sans-serif", fontSize: 12, color: "#9CA3AF" }}>{idx + 1} / {total}</div>
+                                  </>
+                                )}
+                              </div>
+                            );
+                          })()}
                         </div>
                       </motion.div>
                     )}
