@@ -21,7 +21,7 @@ const NEWS = [
     photos: ["/news/news-stage-toussaint.webp"],
   },
   {
-    date: "Octobre 2026", title: "Vide-grenier & Tournoi 3x3 — dimanche 11 octobre", tag: "Événement", color: "#F07030",
+    date: "Octobre 2026", title: "Vide-grenier — dimanche 11 octobre", tag: "Événement", color: "#F07030",
     link: "https://www.helloasso.com/associations/cansa-basket/evenements/vide-grenier-de-cansa-basket",
     content: "CANSA Basket organise son grand vide-grenier le dimanche 11 octobre 2026 au Pré du Lac à Châteauneuf, de 7h30 à 16h (installation des exposants dès 6h). Buvette et snack sur place.\n\nVous souhaitez exposer ? Des stands de 3x3 mètres sont disponibles à 20€ — une belle occasion de vider vos placards tout en soutenant le club. Informations et réservations : 06.42.29.28.58 ou cansabasket@hotmail.com",
     photos: ["/news/news-vide-grenier.webp"],
@@ -326,7 +326,7 @@ function About() {
       title: "Dirigeants", sub: "Le bureau du club",
       image: "/cards/card-dirigeants.webp",
       photo: "/cards/card-dirigeants-photo.webp",
-      content: "Présidente : Madame Nathalie ABRAHAMME-MESTRE\nTrésorier : Monsieur Philippe VIALE\nSecrétaire : Madame Barbara OURMAN\n\nContact club : Barbara — 06 61 98 26 01 · cansabasket@hotmail.fr\nContact présidente : 06 14 18 18 93\n\nSiège social : 18 Chemin de la Santoline, 06650 Le Bar-sur-Loup\nGymnase : Bois de Saint-Jeaume, Chemin de Barnarac, 06740 Châteauneuf-de-Grasse",
+      content: "Présidente : Madame Nathalie ABRAHAMME-MESTRE\nTrésorier : Monsieur Philippe VIALE\nSecrétaires : Madame Barbara OURMAN · Madame Marie Gabrielle GHANDOUR\n\nContact club : Barbara — 06 61 98 26 01 · cansabasket@hotmail.fr\nContact présidente : 06 14 18 18 93\n\nSiège social : 18 Chemin de la Santoline, 06650 Le Bar-sur-Loup\nGymnase : Bois de Saint-Jeaume, Chemin de Barnarac, 06740 Châteauneuf-de-Grasse\n\nMairie partenaire : Mairie du Rouret",
     },
     {
       title: "Vie du club", sub: "Au quotidien",
@@ -813,10 +813,10 @@ function Boutique() {
         </div>
 
         <Anim delay={0.3}>
-          <motion.a href={HELLOASSO_INSCRIPTION} target="_blank" rel="noopener noreferrer"
+          <motion.a href={HELLOASSO} target="_blank" rel="noopener noreferrer"
             style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: F2, fontWeight: 600, fontSize: 14, color: "white", background: "#F07030", borderRadius: 8, padding: "0.875rem 2rem", textDecoration: "none" }}
             whileHover={{ scale: 1.04, backgroundColor: "#d45e22" }} whileTap={{ scale: 0.97 }}>
-            Commander sur Hello Asso
+            Visiter la boutique →
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
           </motion.a>
         </Anim>
@@ -1031,7 +1031,7 @@ function Partenaires() {
               Sponsors, équipementiers et mairies qui nous font confiance saison après saison.
             </p>
             <motion.a
-              href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
+              href="/CANSA_Basket_Dossier_Mecenat_2026.pdf" target="_blank" rel="noopener noreferrer" download
               style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
                 background: "#F07030", color: "white",
