@@ -15,7 +15,7 @@ const CATEGORIES = [
 
 const NEWS = [
   {
-    date: "Octobre 2026", title: "Stage intensif de la Toussaint — du 26 au 30 octobre", tag: "Événement", color: "#1A2D82",
+    date: "Octobre 2026", title: "Stage intensif de la Toussaint — du 26 au 30 octobre", tag: "Événement", color: "#344596",
     content: "CANSA Basket organise son stage intensif pendant les vacances de la Toussaint, du 26 au 30 octobre 2026 au Gymnase du Rouret (Le Rouret).\n\nOuvert à tous les jeunes de U9 à U18, ce stage de 5 jours est l'occasion de progresser, prendre confiance sur le terrain et partager sa passion du basket dans une ambiance motivante.\n\nTarif : 160€ la semaine ou 40€ par jour. Inscriptions via Hello Asso. Infos : cansabasket@hotmail.fr · 06-61-98-26-01 (Secrétaire : Barbara)",
     link: "https://www.helloasso.com/associations/cansa-basket",
     photos: ["/news/news-stage-toussaint.webp"],
@@ -27,7 +27,7 @@ const NEWS = [
     photos: ["/news/news-vide-grenier.webp"],
   },
   {
-    date: "Septembre 2026", title: "Reprise des entraînements — saison 2026/27", tag: "Club", color: "#1A2D82",
+    date: "Septembre 2026", title: "Reprise des entraînements — saison 2026/27", tag: "Club", color: "#344596",
     content: "La saison 2026/27 est lancée ! Les entraînements reprennent pour toutes les catégories au Gymnase du Bois de Saint-Jeaume. Consultez la section Catégories pour connaître les horaires de votre équipe.",
     photos: ["/news/news-reprise.webp"],
   },
@@ -47,7 +47,7 @@ const NEWS = [
     ],
   },
   {
-    date: "Juin 2026", title: "Tournoi de fin de saison — bravo à toutes les équipes", tag: "Événement", color: "#1A2D82",
+    date: "Juin 2026", title: "Tournoi de fin de saison — bravo à toutes les équipes", tag: "Événement", color: "#344596",
     content: "Belle fin de saison pour toutes nos équipes ! Un grand bravo aux joueurs, joueuses, entraîneurs et familles pour leur engagement tout au long de l'année. Rendez-vous en septembre pour une nouvelle saison !",
     photos: [],
   },
@@ -124,7 +124,7 @@ function Nav() {
     { label: "Nous contacter", href: "#contact" },
   ];
   return (
-    <motion.nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 2rem", height: 56, background: "#07102E", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+    <motion.nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 2rem", height: 56, background: "#07102E", borderBottom: "2px solid #5E9BD4" }}>
       <motion.div style={{ fontFamily: F1, fontWeight: 900, fontSize: 18, color: "white", letterSpacing: "0.08em" }} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
         CANSA <span style={{ color: "#F07030" }}>BASKET</span>
       </motion.div>
@@ -150,12 +150,12 @@ function Nav() {
           </button>
           <AnimatePresence>
             {open && (
-              <motion.div style={{ position: "absolute", top: 56, left: 0, right: 0, background: "#07102E", borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", flexDirection: "column", padding: "0.5rem 0", zIndex: 100 }}
+              <motion.div style={{ position: "absolute", top: 56, left: 0, right: 0, background: "#07102E", borderBottom: "1px solid #5E9BD4", display: "flex", flexDirection: "column", padding: "0.5rem 0", zIndex: 100 }}
                 initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
                 {links.map((l) => (
                   <a key={l.label} href={l.href} onClick={() => setOpen(false)}
                     style={{ fontFamily: F2, fontSize: 14, color: "rgba(255,255,255,0.75)", textDecoration: "none", padding: "0.75rem 2rem" }}
-                    onMouseEnter={e => e.target.style.color = "white"} onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.75)"}>
+                    onMouseEnter={e => e.target.style.color = "#5B9BD5"} onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.75)"}>
                     {l.label}
                   </a>
                 ))}
@@ -355,7 +355,7 @@ function About() {
       <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "2rem" : "4rem", alignItems: "center" }}>
         <motion.div variants={slideIn("left")} initial="hidden" animate={inView ? "visible" : "hidden"}>
           <Label>Le club</Label>
-          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 54, color: "#1A2D82", lineHeight: 1.1, marginBottom: "1.5rem" }}>Fondé en 2008,<br />passion basket</h2>
+          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 54, color: "#344596", lineHeight: 1.1, marginBottom: "1.5rem" }}>Fondé en 2008,<br />passion basket</h2>
           <p style={{ fontFamily: F2, fontSize: 16, color: "#4A5568", lineHeight: 1.7, maxWidth: 440, marginBottom: "1.25rem" }}>
             Fondé en 2008 par des passionnés de basket, CANSA Basket est un club formateur situé entre Grasse et Sophia Antipolis, dans les Alpes-Maritimes.
           </p>
@@ -365,7 +365,7 @@ function About() {
           <p style={{ fontFamily: F2, fontSize: 16, color: "#4A5568", lineHeight: 1.7, maxWidth: 440, marginBottom: "1.25rem" }}>
             Derrière chaque joueur, chaque entraîneur, chaque bénévole, il y a une même volonté : faire vivre le club et faire grandir ceux qui l'animent. Un esprit de transmission et de cohésion porté au fil des générations.
           </p>
-          <p style={{ fontFamily: F1, fontWeight: 700, fontSize: 17, color: "#1A2D82", maxWidth: 440 }}>
+          <p style={{ fontFamily: F1, fontWeight: 700, fontSize: 17, color: "#344596", maxWidth: 440 }}>
             Si vous partagez nos valeurs et notre passion pour le basket, n'hésitez pas à nous rejoindre.
           </p>
         </motion.div>
@@ -377,11 +377,11 @@ function About() {
               style={{
                 borderRadius: 10, cursor: "pointer", overflow: "hidden",
                 position: "relative", minHeight: 200,
-                border: `2px solid ${activeCard === i ? "#F07030" : "transparent"}`,
-                boxShadow: activeCard === i ? "0 0 0 2px #F07030" : "none",
+                border: `2px solid ${activeCard === i ? "#5B9BD5" : "rgba(91,155,213,0.18)"}`,
+                boxShadow: activeCard === i ? "0 8px 32px rgba(91,155,213,0.22)" : "none",
                 transition: "border-color 0.2s",
               }}
-              whileHover={{ y: -4, boxShadow: "0 12px 32px rgba(26,45,130,0.2)" }}
+              whileHover={{ y: -4, boxShadow: "0 12px 32px rgba(91,155,213,0.25)" }}
               whileTap={{ scale: 0.98 }}
               onClick={() => activeCard === i ? closeCard() : openCard(i)}
               transition={{ duration: 0.2 }}>
@@ -406,7 +406,7 @@ function About() {
               <div style={{ position: "relative", zIndex: 1, padding: "1.5rem" }}>
                 <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 20, color: "white" }}>{item.title}</div>
                 <div style={{ fontFamily: F2, fontSize: 13, color: "rgba(255,255,255,0.55)", marginTop: 3 }}>{item.sub}</div>
-                <div style={{ marginTop: 12, color: activeCard === i ? "#F07030" : "rgba(255,255,255,0.5)", fontSize: 11, fontFamily: F2, fontWeight: 600, letterSpacing: "0.08em" }}>
+                <div style={{ marginTop: 12, color: activeCard === i ? "white" : "#5B9BD5", fontSize: 11, fontFamily: F2, fontWeight: 600, letterSpacing: "0.08em" }}>
                   {activeCard === i ? "FERMER ↑" : "EN SAVOIR PLUS ↓"}
                 </div>
               </div>
@@ -426,7 +426,7 @@ function About() {
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               style={{ overflow: "hidden", marginTop: "2rem" }}>
-              <div ref={panelRef} style={{ background: "#1A2D82", borderRadius: 12, padding: "2.5rem", position: "relative" }}>
+              <div ref={panelRef} style={{ background: "#344596", borderRadius: 12, padding: "2.5rem", position: "relative" }}>
                 {/* Header */}
                 <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.75rem" }}>
                   <div>
@@ -468,7 +468,7 @@ function About() {
                                   ? <img src={p.logo} alt={p.name} style={{ maxHeight: cat.key === "mairies" ? 110 : 80, maxWidth: 130, objectFit: "contain", filter: (p.whiteBg || p.noFilter) ? "none" : "brightness(0) invert(1)", opacity: 1 }} />
                                   : null}
                                 {cat.key === "mairies" && (
-                                  <span style={{ fontFamily: F1, fontWeight: 700, fontSize: 13, color: p.whiteBg ? "#1A2D82" : "rgba(255,255,255,0.9)", textAlign: "center" }}>{p.name}</span>
+                                  <span style={{ fontFamily: F1, fontWeight: 700, fontSize: 13, color: p.whiteBg ? "#344596" : "rgba(255,255,255,0.9)", textAlign: "center" }}>{p.name}</span>
                                 )}
                               </a>
                             ))}
@@ -506,14 +506,14 @@ function CategoryCard({ cat, index, active, setActive }) {
 
   return (
     <Anim delay={index * 0.06}>
-      <motion.div style={{ borderRadius: 8, overflow: "hidden", cursor: "pointer", background: isOpen ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.04)", border: `1px solid ${isOpen ? cat.color : "rgba(255,255,255,0.07)"}`, transition: "border-color 0.2s, background 0.2s" }}
+      <motion.div style={{ borderRadius: 8, overflow: "hidden", cursor: "pointer", background: isOpen ? "rgba(91,155,213,0.10)" : "rgba(255,255,255,0.04)", border: `1px solid ${isOpen ? cat.color : "rgba(255,255,255,0.07)"}`, transition: "border-color 0.2s, background 0.2s" }}
         whileTap={{ scale: 0.98 }} onClick={() => setActive(isOpen ? null : index)}>
         <motion.div style={{ height: 3, background: cat.color, originX: 0 }} initial={{ scaleX: 0 }} animate={{ scaleX: isOpen ? 1 : 0 }} whileHover={{ scaleX: 1 }} transition={{ duration: 0.25 }} />
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", padding: "1rem", gap: 8, minHeight: 88 }}>
           <div>
             <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 26, color: "white", lineHeight: 1 }}>{cat.name}</div>
             <div style={{ fontFamily: F1, fontWeight: 700, fontSize: 15, color: cat.sub ? cat.color : "transparent", marginTop: 2 }}>{cat.sub || "·"}</div>
-            <div style={{ fontFamily: F2, fontSize: 13, color: "rgba(255,255,255,0.38)", marginTop: 6 }}>{cat.age}</div>
+            <div style={{ fontFamily: F2, fontSize: 13, color: "rgba(91,155,213,0.65)", marginTop: 6 }}>{cat.age}</div>
           </div>
           <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.25 }} style={{ marginTop: 4, flexShrink: 0 }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={isOpen ? cat.color : "rgba(255,255,255,0.3)"} strokeWidth="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -555,13 +555,13 @@ function Categories() {
   const [active, setActive] = useState(null);
   const isMobile = useWindowWidth() < 768;
   return (
-    <section id="categories" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "#0D1A4A" }}>
+    <section id="categories" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "linear-gradient(160deg, #0D1E3A 0%, #0D1A4A 60%)" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         {/* Header avec image à côté */}
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr auto", gap: "3rem", alignItems: "center", marginBottom: "3rem" }}>
           <Anim>
             <Label>Nos équipes</Label>
-            <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "white", marginBottom: "0.5rem" }}>Catégories</h2>
+            <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "#5E9BD4", marginBottom: "0.5rem" }}>Catégories</h2>
             <p style={{ fontFamily: F2, fontSize: 16, color: "rgba(255,255,255,0.5)", maxWidth: 460, marginBottom: "0.5rem" }}>Une place pour chaque joueur et joueuse, dès 7 ans.</p>
             <p style={{ fontFamily: F2, fontSize: 13, color: "rgba(255,255,255,0.3)", maxWidth: 460 }}>Cliquez sur une catégorie pour découvrir le coach, les horaires et le niveau de compétition.</p>
           </Anim>
@@ -610,7 +610,7 @@ function News() {
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <Anim>
           <Label>Actualités</Label>
-          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "#1A2D82", marginBottom: "3rem" }}>Dernières nouvelles</h2>
+          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "#5E9BD4", marginBottom: "3rem" }}>Dernières nouvelles</h2>
         </Anim>
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "1.5rem" }}>
           {visibleNews.map((item, i) => (
@@ -630,7 +630,7 @@ function News() {
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={item.color} strokeWidth="2.5"><polyline points="6 9 12 15 18 9"/></svg>
                     </motion.div>
                   </div>
-                  <p style={{ fontFamily: F1, fontWeight: 700, fontSize: 20, color: "#1A2D82", lineHeight: 1.3, marginBottom: "0.5rem" }}>{item.title}</p>
+                  <p style={{ fontFamily: F1, fontWeight: 700, fontSize: 20, color: "#344596", lineHeight: 1.3, marginBottom: "0.5rem" }}>{item.title}</p>
                   <p style={{ fontFamily: F2, fontSize: 12, color: "#9CA3AF", marginBottom: active === i ? "1rem" : 0 }}>{item.date}</p>
                   <AnimatePresence initial={false}>
                     {active === i && (
@@ -677,8 +677,8 @@ function News() {
           <div style={{ textAlign: "center", marginTop: "2.5rem" }}>
             <motion.button
               onClick={() => setShowAll(s => !s)}
-              style={{ fontFamily: F1, fontWeight: 700, fontSize: 15, letterSpacing: "0.04em", color: "#1A2D82", background: "transparent", border: "2px solid #1A2D82", borderRadius: 6, padding: "0.65rem 2rem", cursor: "pointer" }}
-              whileHover={{ background: "#1A2D82", color: "white" }}
+              style={{ fontFamily: F1, fontWeight: 700, fontSize: 15, letterSpacing: "0.04em", color: "#5B9BD5", background: "transparent", border: "2px solid #5B9BD5", borderRadius: 6, padding: "0.65rem 2rem", cursor: "pointer" }}
+              whileHover={{ background: "#5B9BD5", color: "white" }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
             >
@@ -723,7 +723,7 @@ function Inscriptions() {
         <motion.div variants={slideIn("left")} initial="hidden" animate={inView ? "visible" : "hidden"}
           style={{ marginBottom: "2.5rem" }}>
           <Label>Rejoindre le club</Label>
-          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "#1A2D82", marginBottom: "0.75rem" }}>Inscriptions</h2>
+          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "#5E9BD4", marginBottom: "0.75rem" }}>Inscriptions</h2>
           <p style={{ fontFamily: F2, fontSize: 16, color: "#4A5568", maxWidth: 480, lineHeight: 1.7 }}>Les inscriptions pour la saison 2026/27 sont ouvertes. Tout se fait en ligne via Hello Asso en quelques minutes.</p>
         </motion.div>
 
@@ -735,9 +735,9 @@ function Inscriptions() {
                 <Anim key={s.n} delay={i * 0.12}>
                   <motion.div style={{ background: "white", borderRadius: 12, padding: "1.25rem 1.5rem", border: "1px solid #e8ecf4", display: "flex", alignItems: "flex-start", gap: "1.25rem" }}
                     whileHover={{ y: -2, boxShadow: "0 8px 24px rgba(26,45,130,0.1)" }} transition={{ duration: 0.2 }}>
-                    <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 32, color: "#F07030", lineHeight: 1, flexShrink: 0, minWidth: 40 }}>{s.n}</div>
+                    <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 32, color: "#5B9BD5", lineHeight: 1, flexShrink: 0, minWidth: 40 }}>{s.n}</div>
                     <div>
-                      <div style={{ fontFamily: F1, fontWeight: 700, fontSize: 18, color: "#1A2D82", marginBottom: "0.25rem" }}>{s.title}</div>
+                      <div style={{ fontFamily: F1, fontWeight: 700, fontSize: 18, color: "#344596", marginBottom: "0.25rem" }}>{s.title}</div>
                       <p style={{ fontFamily: F2, fontSize: 14, color: "#6B7280", lineHeight: 1.6 }}>{s.text}</p>
                     </div>
                   </motion.div>
@@ -791,7 +791,7 @@ function Boutique() {
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <Anim>
           <Label>Goodies officiels</Label>
-          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "white", marginBottom: "0.5rem" }}>Boutique du club</h2>
+          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "#5E9BD4", marginBottom: "0.5rem" }}>Boutique du club</h2>
           <p style={{ fontFamily: F2, fontSize: 16, color: "rgba(255,255,255,0.4)", maxWidth: 500, lineHeight: 1.7, marginBottom: "3rem" }}>
             Portez les couleurs de CANSA Basket. Commandez en ligne via Hello Asso — livraison ou retrait au gymnase.
           </p>
@@ -870,7 +870,7 @@ function Boutique() {
                   <button key={i} onClick={() => setLightbox(l => ({ ...l, mediaIndex: i }))}
                     style={{ flexShrink: 0, width: 60, height: 60, borderRadius: 6, overflow: "hidden", border: `2px solid ${lightbox.mediaIndex === i ? "#F07030" : "transparent"}`, cursor: "pointer", background: "#0D1A4A", padding: 0 }}>
                     {typeof m === "object" && m.type === "video"
-                      ? <div style={{ width: "100%", height: "100%", background: "#1A2D82", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 20 }}>▶</div>
+                      ? <div style={{ width: "100%", height: "100%", background: "#344596", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 20 }}>▶</div>
                       : <img src={m} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
                   </button>
                 ))}
@@ -923,7 +923,7 @@ function Contact() {
     { icon: "ig", label: "Instagram", value: "@cansa_basket_06740", link: INSTAGRAM },
   ];
   return (
-    <section id="contact" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "#1A2D82", position: "relative", overflow: "hidden" }} ref={ref}>
+    <section id="contact" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "#1A2845", position: "relative", overflow: "hidden" }} ref={ref}>
       <video autoPlay muted loop playsInline
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", pointerEvents: "none" }}
         src="/Video/hero-Cansa.mp4" />
@@ -932,7 +932,7 @@ function Contact() {
         <div>
           <motion.div variants={fadeUp} custom={0} initial="hidden" animate={inView ? "visible" : "hidden"}>
             <Label>Contact</Label>
-            <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "white", lineHeight: 1, marginBottom: "1rem" }}>Nous contacter</h2>
+            <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "#5E9BD4", lineHeight: 1, marginBottom: "1rem" }}>Nous contacter</h2>
             <p style={{ fontFamily: F2, fontSize: 16, color: "rgba(255,255,255,0.42)", maxWidth: 360, lineHeight: 1.7, marginBottom: "2rem" }}>Une question sur le club, les catégories ou les horaires ? Écrivez-nous directement.</p>
           </motion.div>
           <motion.div style={{ borderRadius: 12, padding: "2rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}
@@ -949,13 +949,13 @@ function Contact() {
                   <div key={f.name} style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                     <label style={{ fontFamily: F2, fontSize: 11, color: "rgba(255,255,255,0.38)", letterSpacing: "0.1em", textTransform: "uppercase" }}>{f.label}</label>
                     <input name={f.name} type={f.type} value={form[f.name]} onChange={handleChange} required placeholder={f.placeholder} style={inp}
-                      onFocus={e => e.target.style.borderColor = "#F07030"} onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.12)"} />
+                      onFocus={e => e.target.style.borderColor = "#5B9BD5"} onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.12)"} />
                   </div>
                 ))}
                 <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <label style={{ fontFamily: F2, fontSize: 11, color: "rgba(255,255,255,0.38)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Message</label>
                   <textarea name="message" value={form.message} onChange={handleChange} required rows={4} placeholder="Votre question…" style={{ ...inp, resize: "none" }}
-                    onFocus={e => e.target.style.borderColor = "#F07030"} onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.12)"} />
+                    onFocus={e => e.target.style.borderColor = "#5B9BD5"} onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.12)"} />
                 </div>
                 <motion.button type="submit" disabled={sending}
                   style={{ fontFamily: F2, fontWeight: 600, fontSize: 14, color: "white", background: "#F07030", border: "none", borderRadius: 6, padding: "0.75rem", cursor: "pointer", opacity: sending ? 0.6 : 1 }}
@@ -1033,7 +1033,7 @@ function Partenaires() {
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
         <Anim>
           <Label>Ils nous soutiennent</Label>
-          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 48, color: "white", marginBottom: "0.5rem" }}>
+          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 48, color: "#5E9BD4", marginBottom: "0.5rem" }}>
             Nos partenaires
           </h2>
           <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "3.5rem", flexWrap: "wrap" }}>
@@ -1141,7 +1141,7 @@ function Partenaires() {
                       {cat.key === "mairies" && (
                         <span style={{
                           fontFamily: F1, fontWeight: 700, fontSize: 12,
-                          color: p.whiteBg ? "#1A2D82" : "rgba(255,255,255,0.9)",
+                          color: p.whiteBg ? "#344596" : "rgba(255,255,255,0.9)",
                           letterSpacing: "0.02em",
                           textAlign: "center",
                           lineHeight: 1.3,
@@ -1186,7 +1186,7 @@ function Partenaires() {
 // ─── FOOTER ────────────────────────────────────────────────────────────────
 function Footer() {
   return (
-    <footer style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 40, padding: "0.75rem 2rem", background: "rgba(7,16,46,0.97)", backdropFilter: "blur(12px)", borderTop: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem" }}>
+    <footer style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 40, padding: "0.75rem 2rem", background: "rgba(7,16,46,0.97)", backdropFilter: "blur(12px)", borderTop: "2px solid #5B9BD5", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem" }}>
       <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 16, color: "white", letterSpacing: "0.08em" }}>CANSA <span style={{ color: "#F07030" }}>BASKET</span></div>
       <div style={{ fontFamily: F2, fontSize: 12, color: "rgba(255,255,255,0.28)" }}>Châteauneuf-de-Grasse · Club formateur FFBB · © 2026</div>
       <div style={{ display: "flex", gap: "1.25rem" }}>
