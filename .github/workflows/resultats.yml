@@ -1,0 +1,47 @@
+name: Resultats FFBB
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/**"
+      - ".github/workflows/resultats.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: resultats
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer la bibliotheque FFBB
+        run: pip install ffbb-api-client-v3
+
+      - name: Exploration de l'API FFBB (etape 1)
+        run: python scripts/ffbb_discovery.py
+        continue-on-error: true
+
+      - name: Enregistrer le resultat dans le depot
+        run: |
+          git config user.name "cansa-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add ffbb-debug || true
+          if git diff --cached --quiet; then
+            echo "Rien de nouveau"
+          else
+            git commit -m "Exploration API FFBB [skip ci]"
+            git pull --rebase
+            git push
+          fi
