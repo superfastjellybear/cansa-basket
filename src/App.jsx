@@ -1366,7 +1366,7 @@ function NewsBanner() {
             onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
             initial={{ opacity: 0, y: isMobile ? -24 : 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: isMobile ? -24 : 24 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            style={{ pointerEvents: "auto", width: "100%", maxWidth: 680, background: "#07102E", border: "1px solid rgba(240,112,48,0.6)", borderLeft: "5px solid #F07030", borderRadius: 10, boxShadow: "0 12px 40px rgba(0,0,0,0.35)", padding: isMobile ? "0.75rem 0.75rem 0.75rem 1rem" : "0.9rem 1rem 0.9rem 1.25rem", display: "flex", alignItems: "center", gap: "0.9rem", flexWrap: isMobile ? "wrap" : "nowrap" }}>
+            style={{ pointerEvents: "auto", width: "100%", maxWidth: 680, background: "#07102E", border: "1px solid rgba(240,112,48,0.6)", borderLeft: "5px solid #F07030", borderRadius: 10, boxShadow: "0 12px 40px rgba(0,0,0,0.35)", padding: isMobile ? "0.75rem 0.75rem 0.75rem 1rem" : "0.9rem 1rem 0.9rem 1.25rem", display: "flex", alignItems: "center", gap: isMobile ? "0.4rem" : "0.9rem", flexWrap: isMobile ? "wrap" : "nowrap" }}>
             <div style={{ flex: isMobile ? "1 1 100%" : 1, minWidth: 0 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <span style={{ fontFamily: F1, fontWeight: 800, fontSize: 11, letterSpacing: "0.12em", color: "white", background: "#F07030", borderRadius: 4, padding: "2px 8px" }}>NOUVEAU</span>
@@ -1378,20 +1378,26 @@ function NewsBanner() {
                     ))}
                   </div>
                 )}
+                {isMobile && (
+                  <button onClick={close} aria-label="Fermer"
+                    style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.6)", fontSize: 22, lineHeight: 1, padding: "0 4px", marginLeft: "auto" }}>×</button>
+                )}
               </div>
-              <div style={{ minHeight: isMobile ? 44 : 48, marginTop: 6 }}>
+              <div style={{ minHeight: isMobile ? 0 : 48, marginTop: isMobile ? 4 : 6 }}>
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.p key={current.title} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}
-                    style={{ fontFamily: F1, fontWeight: 700, fontSize: isMobile ? 17 : 19, color: "white", lineHeight: 1.25 }}>{current.title}</motion.p>
+                    style={{ fontFamily: F1, fontWeight: 700, fontSize: isMobile ? 16 : 19, color: "white", lineHeight: 1.25, margin: 0 }}>{current.title}</motion.p>
                 </AnimatePresence>
               </div>
             </div>
             <a href="#actu" onClick={close}
-              style={{ fontFamily: F1, fontWeight: 800, fontSize: 14, letterSpacing: "0.04em", color: "white", background: "#F07030", borderRadius: 6, padding: "0.55rem 1.1rem", textDecoration: "none", whiteSpace: "nowrap" }}>
+              style={{ fontFamily: F1, fontWeight: 800, fontSize: isMobile ? 13 : 14, letterSpacing: "0.04em", color: "white", background: "#F07030", borderRadius: 6, padding: isMobile ? "0.4rem 0.9rem" : "0.55rem 1.1rem", textDecoration: "none", whiteSpace: "nowrap" }}>
               Voir les actualités →
             </a>
-            <button onClick={close} aria-label="Fermer"
-              style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.55)", fontSize: 22, lineHeight: 1, padding: "0 4px", marginLeft: isMobile ? "auto" : 0 }}>×</button>
+            {!isMobile && (
+              <button onClick={close} aria-label="Fermer"
+                style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.55)", fontSize: 22, lineHeight: 1, padding: "0 4px" }}>×</button>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
