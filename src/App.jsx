@@ -15,12 +15,12 @@ const CATEGORIES = [
 
 const NEWS = [
   {
-    date: "Novembre 2026", since: "2026-11-21", title: "Tournoi de Noël U9 / U11 — dimanche 13 décembre", tag: "Événement", color: "#344596",
+    date: "Novembre 2026", since: "2026-11-21", until: "2026-12-13", title: "Tournoi de Noël U9 / U11 — dimanche 13 décembre", tag: "Événement", color: "#344596",
     content: "CANSA Basket vous donne rendez-vous le dimanche 13 décembre 2026, de 9h à 15h au Gymnase du Bois de Saint-Jeaume, pour célébrer ensemble le Noël du club. Ce tournoi est destiné aux catégories U9 et U11.\n\nAu programme de cette belle journée placée sous le signe du partage et de la convivialité : un tournoi enfants/parents avec des matchs amicaux pour partager le plaisir du basket ensemble, des concours de lancers francs et de shoots pour tester votre adresse et relever quelques défis, et de belles surprises pour profiter pleinement de la journée.\n\nL'équipe de la buvette sera là pour vous accueillir avec boissons chaudes et froides, sandwichs, frites, crêpes et gourmandises.\n\nPour participer, rien de plus simple : écrivez à cansabasket@hotmail.fr ou envoyez un message à Barbara au 06 61 98 26 01.",
     photos: ["/news/news-tournoi-noel.webp"],
   },
   {
-    date: "Novembre 2026", since: "2026-11-21", title: "Kinder Joy of Moving Basket Day — mercredi 2 décembre", tag: "Événement", color: "#F07030",
+    date: "Novembre 2026", since: "2026-11-21", until: "2026-12-02", title: "Kinder Joy of Moving Basket Day — mercredi 2 décembre", tag: "Événement", color: "#F07030",
     content: "CANSA Basket participe à l'opération nationale « Kinder Joy of Moving Basket Day », en partenariat avec la FFBB : les jeunes licenciés invitent un proche pour lui faire découvrir gratuitement le basket.\n\nRendez-vous le mercredi 2 décembre 2026 à partir de 15h45 au Gymnase du Bois de Saint-Jeaume. L'opération s'adresse aux enfants jusqu'à 11 ans et reste ouverte à tous ceux qui souhaitent découvrir le basket : tirs à différentes distances, parcours de dribbles et jeux d'adresse avec le ballon, le tout dans la bonne humeur !\n\nPour plus d'informations sur le déroulé des ateliers : cansabasket@hotmail.fr ou Barbara au 06 61 98 26 01.",
     photos: ["/news/news-kinder-basket-day.webp"],
   },
@@ -1312,12 +1312,18 @@ function Footer() {
 // ─── NOUVELLES NEWS : bandeau d'information ────────────────────────────────
 // Pour qu'une news déclenche le bandeau et les pastilles "Nouveau", ajouter
 // since: "AAAA-MM-JJ" (date de publication) à son entrée dans NEWS.
+// Pour un événement, ajouter aussi until: "AAAA-MM-JJ" (date de l'événement) :
+// la news reste "nouvelle" jusqu'à cette date incluse, puis disparaît du bandeau.
+// Sans until (news du club, boutique...), elle reste "nouvelle" pendant un nombre
+// de jours limité (14 jours pour les pastilles, 30 jours pour le bandeau).
 // La news la plus récente doit rester en première position dans la liste.
 const NEWS_SEEN_KEY = "cansa_news_seen";
 function isRecent(item, days) {
   if (!item || !item.since) return false;
   const age = (Date.now() - new Date(item.since).getTime()) / 86400000;
-  return age >= -1 && age <= days;
+  if (age < -1) return false;
+  if (item.until) return Date.now() <= new Date(item.until + "T23:59:59").getTime();
+  return age <= days;
 }
 
 function NewsBanner() {
