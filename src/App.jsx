@@ -4,16 +4,26 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 // ─── DATA ──────────────────────────────────────────────────────────────────
 const CATEGORIES = [
   { name: "U9",      sub: "Mini-poussins", age: "Nés en 2018 et 2019",     color: "#5B9BD5", coach: "Sandrine",  assistants: "Marceau, Maël",      horaire: "Mercredi 15h45 – 17h15",                          niveau: "Départemental" },
-  { name: "U11",     sub: "Poussins",      age: "Nés en 2016 et 2017",     color: "#F07030", coach: "Pierre",    assistants: "",                   horaire: "Mercredi 16h15 – 18h00",                          niveau: "Départemental" },
+  { name: "U11",     sub: "Poussins",      age: "Nés en 2016 et 2017",     color: "#F07030", coach: "Pierre",    assistants: "",                   horaire: "Mercredi 16h15 – 18h00",                          niveau: "Départemental", photo: "/categories/team-u11.webp" },
   { name: "U11-2",   sub: "Poussins",      age: "Nés en 2016 et 2017",     color: "#F07030", coach: "Marlène",   assistants: "Tom, Mika, Leandro", horaire: "Mercredi 15h45 – 17h15",                          niveau: "Départemental" },
-  { name: "U13",     sub: "Benjamins",     age: "Nés en 2014 et 2015",     color: "#5B9BD5", coach: "Marlène",   assistants: "Mika",               horaire: "Lundi 17h15 – 18h30 · Jeudi 17h15 – 18h45",      niveau: "Départemental" },
-  { name: "U15",     sub: "Minimes",       age: "Nés en 2012 et 2013",     color: "#F07030", coach: "Anthony",   assistants: "Maël",               horaire: "Lundi 18h30 – 19h45 · Jeudi 18h45 – 20h30",      niveau: "Départemental" },
-  { name: "U18",     sub: "Cadets",        age: "Nés en 2009, 2010, 2011", color: "#5B9BD5", coach: "Karim",    assistants: "",                   horaire: "Lundi 19h45 – 21h00 · Mercredi 18h00 – 19h30",   niveau: "Départemental" },
+  { name: "U13",     sub: "Benjamins",     age: "Nés en 2014 et 2015",     color: "#5B9BD5", coach: "Marlène",   assistants: "Mika",               horaire: "Lundi 17h15 – 18h30 · Jeudi 17h15 – 18h45",      niveau: "Départemental", photo: "/categories/team-u13.webp" },
+  { name: "U15",     sub: "Minimes",       age: "Nés en 2012 et 2013",     color: "#F07030", coach: "Anthony",   assistants: "Maël",               horaire: "Lundi 18h30 – 19h45 · Jeudi 18h45 – 20h30",      niveau: "Départemental", photo: "/categories/team-u15.webp" },
+  { name: "U18",     sub: "Cadets",        age: "Nés en 2009, 2010, 2011", color: "#5B9BD5", coach: "Karim",    assistants: "",                   horaire: "Lundi 19h45 – 21h00 · Mercredi 18h00 – 19h30",   niveau: "Départemental", photo: "/categories/team-u18.webp" },
   { name: "Séniors", sub: "",              age: "À partir de 2008",        color: "#F07030", coach: "Karim",    assistants: "",                   horaire: "Lundi 21h00 – 22h20",                             niveau: "Départemental" },
-  { name: "Loisirs", sub: "Tous niveaux", age: "À partir de 2008",       color: "#5B9BD5", coach: "Éric",     assistants: "",                   horaire: "Jeudi 20h30 – 22h20",                             niveau: "Loisirs compétition" },
+  { name: "Loisirs", sub: "Tous niveaux", age: "À partir de 2008",       color: "#5B9BD5", coach: "Éric",     assistants: "",                   horaire: "Jeudi 20h30 – 22h20",                             niveau: "Loisirs compétition", photo: "/categories/team-loisirs.webp" },
 ];
 
 const NEWS = [
+  {
+    date: "Novembre 2026", since: "2026-11-21", title: "Tournoi de Noël U9 / U11 — dimanche 13 décembre", tag: "Événement", color: "#344596",
+    content: "CANSA Basket vous donne rendez-vous le dimanche 13 décembre 2026, de 9h à 15h au Gymnase du Bois de Saint-Jeaume, pour célébrer ensemble le Noël du club. Ce tournoi est destiné aux catégories U9 et U11.\n\nAu programme de cette belle journée placée sous le signe du partage et de la convivialité : un tournoi enfants/parents avec des matchs amicaux pour partager le plaisir du basket ensemble, des concours de lancers francs et de shoots pour tester votre adresse et relever quelques défis, et de belles surprises pour profiter pleinement de la journée.\n\nL'équipe de la buvette sera là pour vous accueillir avec boissons chaudes et froides, sandwichs, frites, crêpes et gourmandises.\n\nPour participer, rien de plus simple : écrivez à cansabasket@hotmail.fr ou envoyez un message à Barbara au 06 61 98 26 01.",
+    photos: ["/news/news-tournoi-noel.webp"],
+  },
+  {
+    date: "Novembre 2026", since: "2026-11-21", title: "Kinder Joy of Moving Basket Day — mercredi 2 décembre", tag: "Événement", color: "#F07030",
+    content: "CANSA Basket participe à l'opération nationale « Kinder Joy of Moving Basket Day », en partenariat avec la FFBB : les jeunes licenciés invitent un proche pour lui faire découvrir gratuitement le basket.\n\nRendez-vous le mercredi 2 décembre 2026 à partir de 15h45 au Gymnase du Bois de Saint-Jeaume. L'opération s'adresse aux enfants jusqu'à 11 ans et reste ouverte à tous ceux qui souhaitent découvrir le basket : tirs à différentes distances, parcours de dribbles et jeux d'adresse avec le ballon, le tout dans la bonne humeur !\n\nPour plus d'informations sur le déroulé des ateliers : cansabasket@hotmail.fr ou Barbara au 06 61 98 26 01.",
+    photos: ["/news/news-kinder-basket-day.webp"],
+  },
   {
     date: "Octobre 2026", title: "Stage intensif de la Toussaint — du 26 au 30 octobre", tag: "Événement", color: "#344596",
     content: "CANSA Basket organise son stage intensif pendant les vacances de la Toussaint, du 26 au 30 octobre 2026 au Gymnase du Rouret (Le Rouret).\n\nOuvert à tous les jeunes de U9 à U18, ce stage de 5 jours est l'occasion de progresser, prendre confiance sur le terrain et partager sa passion du basket dans une ambiance motivante.\n\nTarif : 160€ la semaine ou 40€ par jour. Inscriptions via Hello Asso. Infos : cansabasket@hotmail.fr · 06-61-98-26-01 (Secrétaire : Barbara)",
@@ -115,6 +125,8 @@ function Nav() {
   const [open, setOpen] = useState(false);
   const w = useWindowWidth();
   const isMobile = w < 768;
+  const hasNew = NEWS.some(n => isRecent(n, 14));
+  const newDot = <span title="Nouvelles actualités" style={{ display: "inline-block", width: 7, height: 7, borderRadius: "50%", background: "#F07030", marginLeft: 6, verticalAlign: "middle", boxShadow: "0 0 0 3px rgba(240,112,48,0.25)" }} />;
   const links = [
     { label: "Le club",        href: "#club" },
     { label: "Catégories",     href: "#categories" },
@@ -135,7 +147,7 @@ function Nav() {
           <motion.a key={l.label} href={l.href} style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none", fontSize: 13, fontFamily: F2, fontWeight: 500 }}
             initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 + i * 0.05, duration: 0.4 }}
             onMouseEnter={e => e.target.style.color = "white"} onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.6)"}>
-            {l.label}
+            {l.label}{l.href === "#actu" && hasNew && newDot}
           </motion.a>
         ))}
       </div>
@@ -156,7 +168,7 @@ function Nav() {
                   <a key={l.label} href={l.href} onClick={() => setOpen(false)}
                     style={{ fontFamily: F2, fontSize: 14, color: "rgba(255,255,255,0.75)", textDecoration: "none", padding: "0.75rem 2rem" }}
                     onMouseEnter={e => e.target.style.color = "#5B9BD5"} onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.75)"}>
-                    {l.label}
+                    {l.label}{l.href === "#actu" && hasNew && newDot}
                   </a>
                 ))}
               </motion.div>
@@ -532,6 +544,10 @@ function CategoryCard({ cat, index, active, setActive }) {
           {isOpen && (
             <motion.div key="detail" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }} style={{ overflow: "hidden" }}>
               <div style={{ padding: "0.75rem 1rem 1rem", borderTop: "1px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                {cat.photo && (
+                  <img src={cat.photo} alt={`Équipe ${cat.name} CANSA Basket`} loading="lazy"
+                    style={{ width: "100%", height: "auto", display: "block", borderRadius: 6, border: `1px solid ${cat.color}55` }} />
+                )}
                 {infoRows.map((row) => (
                   <div key={row.label} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
                     <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>{row.icon}</span>
@@ -629,6 +645,9 @@ function News() {
                     <motion.div animate={{ rotate: active === i ? 180 : 0 }} transition={{ duration: 0.25 }}>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={item.color} strokeWidth="2.5"><polyline points="6 9 12 15 18 9"/></svg>
                     </motion.div>
+                    {isRecent(item, 14) && (
+                      <span style={{ fontFamily: F1, fontWeight: 800, fontSize: 11, letterSpacing: "0.12em", color: "white", background: "#F07030", borderRadius: 4, padding: "2px 8px" }}>NOUVEAU</span>
+                    )}
                   </div>
                   <p style={{ fontFamily: F1, fontWeight: 700, fontSize: 20, color: "#344596", lineHeight: 1.3, marginBottom: "0.5rem" }}>{item.title}</p>
                   <p style={{ fontFamily: F2, fontSize: 12, color: "#9CA3AF", marginBottom: active === i ? "1rem" : 0 }}>{item.date}</p>
@@ -1223,6 +1242,62 @@ function Footer() {
 }
 
 // ─── APP ───────────────────────────────────────────────────────────────────
+// ─── NOUVELLES NEWS : bandeau d'information ────────────────────────────────
+// Pour qu'une news déclenche le bandeau et les pastilles "Nouveau", ajouter
+// since: "AAAA-MM-JJ" (date de publication) à son entrée dans NEWS.
+// La news la plus récente doit rester en première position dans la liste.
+const NEWS_SEEN_KEY = "cansa_news_seen";
+function isRecent(item, days) {
+  if (!item || !item.since) return false;
+  const age = (Date.now() - new Date(item.since).getTime()) / 86400000;
+  return age >= -1 && age <= days;
+}
+
+function NewsBanner() {
+  const latest = NEWS[0];
+  const [show, setShow] = useState(false);
+  const isMobile = useWindowWidth() < 768;
+
+  useEffect(() => {
+    if (!isRecent(latest, 30)) return;
+    let seen = null;
+    try { seen = localStorage.getItem(NEWS_SEEN_KEY); } catch (e) { /* stockage indisponible */ }
+    if (seen === latest.title) return;
+    const t = setTimeout(() => setShow(true), 2500);
+    return () => clearTimeout(t);
+  }, []);
+
+  const close = () => {
+    setShow(false);
+    try { localStorage.setItem(NEWS_SEEN_KEY, latest.title); } catch (e) { /* stockage indisponible */ }
+  };
+
+  return (
+    <div style={{ position: "fixed", left: 0, right: 0, ...(isMobile ? { top: 66 } : { bottom: 82 }), zIndex: 45, display: "flex", justifyContent: "center", padding: "0 1rem", pointerEvents: "none" }}>
+      <AnimatePresence>
+        {show && (
+          <motion.div
+            role="status"
+            initial={{ opacity: 0, y: isMobile ? -24 : 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: isMobile ? -24 : 24 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            style={{ pointerEvents: "auto", width: "100%", maxWidth: 680, background: "#07102E", border: "1px solid rgba(240,112,48,0.6)", borderLeft: "5px solid #F07030", borderRadius: 10, boxShadow: "0 12px 40px rgba(0,0,0,0.35)", padding: isMobile ? "0.75rem 0.75rem 0.75rem 1rem" : "0.9rem 1rem 0.9rem 1.25rem", display: "flex", alignItems: "center", gap: "0.9rem", flexWrap: isMobile ? "wrap" : "nowrap" }}>
+            <div style={{ flex: isMobile ? "1 1 100%" : 1, minWidth: 0 }}>
+              <span style={{ fontFamily: F1, fontWeight: 800, fontSize: 11, letterSpacing: "0.12em", color: "white", background: "#F07030", borderRadius: 4, padding: "2px 8px" }}>NOUVEAU</span>
+              <p style={{ fontFamily: F1, fontWeight: 700, fontSize: isMobile ? 17 : 19, color: "white", lineHeight: 1.25, marginTop: 6 }}>{latest.title}</p>
+            </div>
+            <a href="#actu" onClick={close}
+              style={{ fontFamily: F1, fontWeight: 800, fontSize: 14, letterSpacing: "0.04em", color: "white", background: "#F07030", borderRadius: 6, padding: "0.55rem 1.1rem", textDecoration: "none", whiteSpace: "nowrap" }}>
+              Voir les actualités →
+            </a>
+            <button onClick={close} aria-label="Fermer"
+              style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.55)", fontSize: 22, lineHeight: 1, padding: "0 4px", marginLeft: isMobile ? "auto" : 0 }}>×</button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export default function App() {
   useEffect(() => {
     const link = document.createElement("link");
@@ -1243,6 +1318,7 @@ export default function App() {
       <Contact />
       <Partenaires />
       <Footer />
+      <NewsBanner />
     </div>
   );
 }
