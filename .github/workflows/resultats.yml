@@ -2,10 +2,12 @@ name: Resultats FFBB
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "17 */2 * * *"
   push:
     branches: [main]
     paths:
-      - "scripts/**"
+      - "scripts/ffbb_resultats.py"
       - ".github/workflows/resultats.yml"
 
 permissions:
@@ -27,21 +29,26 @@ jobs:
           python-version: "3.12"
 
       - name: Installer la bibliotheque FFBB
-        run: pip install ffbb-api-client-v3
+        run: pip install "git+https://github.com/nickdesi/FFBBApiClientV3@034305d9edeafa49aea6e89a704bc1e5b4fe5a90"
 
-      - name: Exploration de l'API FFBB (etape 1)
-        run: python scripts/ffbb_discovery.py
+      - name: Recuperer scores et classements
+        id: maj
+        run: python scripts/ffbb_resultats.py
         continue-on-error: true
 
-      - name: Enregistrer le resultat dans le depot
+      - name: Enregistrer dans le depot
         run: |
           git config user.name "cansa-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add ffbb-debug || true
+          git add public/resultats.json ffbb-debug
           if git diff --cached --quiet; then
             echo "Rien de nouveau"
           else
-            git commit -m "Exploration API FFBB [skip ci]"
+            git commit -m "Mise a jour automatique des resultats FFBB"
             git pull --rebase
             git push
           fi
+
+      - name: Signaler un echec
+        if: steps.maj.outcome == 'failure'
+        run: exit 1
