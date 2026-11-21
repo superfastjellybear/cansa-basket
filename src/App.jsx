@@ -131,6 +131,7 @@ function Nav() {
     { label: "Le club",        href: "#club" },
     { label: "Catégories",     href: "#categories" },
     { label: "Actualités",     href: "#actu" },
+    { label: "Résultats",      href: "#resultats" },
     { label: "Inscriptions",   href: "#inscriptions" },
     { label: "Boutique",       href: "#boutique" },
     { label: "Nous contacter", href: "#contact" },
@@ -628,6 +629,113 @@ function Categories() {
             </div>
           </div>
         </Anim>
+      </div>
+    </section>
+  );
+}
+
+
+// ─── RÉSULTATS (données générées automatiquement dans /resultats.json) ─────
+const RESULTS_SEEN_KEY = "cansa_results_seen";
+let _resultsCache = null;
+function useResults() {
+  const [data, setData] = useState(_resultsCache);
+  useEffect(() => {
+    if (_resultsCache) return;
+    let alive = true;
+    fetch("/resultats.json?ts=" + Date.now())
+      .then(r => (r.ok ? r.json() : null))
+      .then(j => { if (j && Array.isArray(j.teams)) { _resultsCache = j; if (alive) setData(j); } })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, []);
+  return data;
+}
+const isCansaName = (n) => /cansa|ch[aâ]teauneuf/i.test(n || "");
+function fmtMatchDate(iso, withTime) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return "";
+  let out = d.toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" });
+  if (withTime && String(iso).includes("T")) out += " · " + d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }).replace(":", "h");
+  return out;
+}
+// Résultat d'un match du point de vue de CANSA
+function matchView(m) {
+  if (!m) return null;
+  const cansaHome = typeof m.cansaHome === "boolean" ? m.cansaHome : isCansaName(m.home);
+  const mine = cansaHome ? m.scoreHome : m.scoreAway;
+  const theirs = cansaHome ? m.scoreAway : m.scoreHome;
+  const opp = cansaHome ? m.away : m.home;
+  const played = typeof mine === "number" && typeof theirs === "number";
+  const outcome = !played ? null : mine > theirs ? "V" : mine < theirs ? "D" : "N";
+  return { cansaHome, mine, theirs, opp, played, outcome, date: m.date };
+}
+const OUTCOME_COLOR = { V: "#2FB36B", D: "#E5484D", N: "#8A94A8" };
+function ordinalRank(r) { return r === 1 ? "1er" : r + "e"; }
+function latestResultDate(data) {
+  if (!data) return null;
+  let max = null;
+  data.teams.forEach(t => { if (t.last && t.last.date && (!max || t.last.date > max)) max = t.last.date; });
+  return max;
+}
+
+function Results() {
+  const data = useResults();
+  const isMobile = useWindowWidth() < 768;
+  if (!data || !data.teams.length) return null;
+  const upd = data.updated ? new Date(data.updated) : null;
+  return (
+    <section id="resultats" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "linear-gradient(160deg, #0D1E3A 0%, #0D1A4A 60%)" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+        <Anim>
+          <Label>Compétitions</Label>
+          <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "#5E9BD4", marginBottom: "0.5rem" }}>Résultats</h2>
+          <p style={{ fontFamily: F2, fontSize: 15, color: "rgba(255,255,255,0.5)", maxWidth: 520, marginBottom: "2.5rem" }}>Scores et classements de nos équipes dans leur poule, mis à jour automatiquement.</p>
+        </Anim>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(340px, 1fr))", gap: "1rem" }}>
+          {data.teams.map((t, i) => {
+            const last = matchView(t.last);
+            const next = matchView(t.next);
+            return (
+              <Anim key={t.cat + t.competition} delay={Math.min(i, 5) * 0.06}>
+                <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "1.25rem", height: "100%", boxSizing: "border-box" }}>
+                  <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem" }}>
+                    <div style={{ minWidth: 0 }}>
+                      <span style={{ fontFamily: F1, fontWeight: 900, fontSize: 22, color: "white", letterSpacing: "0.04em" }}>{t.cat}</span>
+                      <p style={{ fontFamily: F2, fontSize: 12, color: "rgba(255,255,255,0.45)", marginTop: 4, lineHeight: 1.4 }}>{t.competition}</p>
+                    </div>
+                    {t.rank ? (
+                      <div style={{ textAlign: "right", flexShrink: 0 }}>
+                        <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 34, lineHeight: 1, color: "#F07030" }}>{ordinalRank(t.rank)}</div>
+                        <div style={{ fontFamily: F2, fontSize: 11, color: "rgba(255,255,255,0.45)", marginTop: 4 }}>{t.poule}</div>
+                      </div>
+                    ) : null}
+                  </div>
+                  {last && last.played && (
+                    <div style={{ marginTop: "1rem", paddingTop: "0.9rem", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                      <div style={{ fontFamily: F2, fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: 6 }}>Dernier match · {fmtMatchDate(last.date)}</div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                        <span style={{ fontFamily: F1, fontWeight: 800, fontSize: 13, color: "white", background: OUTCOME_COLOR[last.outcome], borderRadius: 4, padding: "1px 8px" }}>{last.outcome}</span>
+                        <span style={{ fontFamily: F1, fontWeight: 700, fontSize: 18, color: "white" }}>CANSA {last.mine} – {last.theirs} {last.opp}</span>
+                      </div>
+                    </div>
+                  )}
+                  {next && (
+                    <div style={{ marginTop: last && last.played ? "0.8rem" : "1rem", paddingTop: last && last.played ? 0 : "0.9rem", borderTop: last && last.played ? "none" : "1px solid rgba(255,255,255,0.08)" }}>
+                      <div style={{ fontFamily: F2, fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: 6 }}>Prochain match · {fmtMatchDate(next.date, true)}</div>
+                      <div style={{ fontFamily: F1, fontWeight: 700, fontSize: 16, color: "rgba(255,255,255,0.85)" }}>{next.cansaHome ? "CANSA" : next.opp}{" – "}{next.cansaHome ? next.opp : "CANSA"}</div>
+                    </div>
+                  )}
+                </div>
+              </Anim>
+            );
+          })}
+        </div>
+        <p style={{ fontFamily: F2, fontSize: 12, color: "rgba(255,255,255,0.3)", marginTop: "1.5rem" }}>
+          Source : FFBB{upd && !isNaN(upd.getTime()) ? " · mis à jour le " + upd.toLocaleDateString("fr-FR", { day: "numeric", month: "long" }) : ""}.{" "}
+          {data.clubUrl && <a href={data.clubUrl} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255,255,255,0.45)" }}>Voir sur le site de la FFBB</a>}
+        </p>
       </div>
     </section>
   );
@@ -1327,76 +1435,142 @@ function isRecent(item, days) {
 }
 
 function NewsBanner() {
-  // Toutes les news publiées depuis moins de 30 jours, de la plus récente à la plus ancienne
+  // News publiées récemment (de la plus récente à la plus ancienne) + résultats FFBB
   const items = NEWS.filter(n => isRecent(n, 30));
   const latest = items[0];
+  const results = useResults();
+  const resDate = latestResultDate(results);
   const [show, setShow] = useState(false);
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [tab, setTab] = useState("news");
+  const [resCat, setResCat] = useState("all");
+  const [resIdx, setResIdx] = useState(0);
   const isMobile = useWindowWidth() < 768;
 
+  const read = (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+  const unseenNews = !!latest && read(NEWS_SEEN_KEY) !== latest.title;
+  // Résultats : nouveau si un match joué depuis moins de 10 jours n'a pas été vu
+  const recentRes = !!resDate && (Date.now() - new Date(resDate).getTime()) / 86400000 <= 10;
+  const unseenRes = recentRes && read(RESULTS_SEEN_KEY) !== resDate;
+  const hasResTab = !!results && results.teams.length > 0;
+  const hasNewsTab = items.length > 0;
+
   useEffect(() => {
-    if (!latest) return;
-    let seen = null;
-    try { seen = localStorage.getItem(NEWS_SEEN_KEY); } catch (e) { /* stockage indisponible */ }
-    if (seen === latest.title) return;
+    if (!(unseenNews || unseenRes)) return;
+    setTab(unseenNews || !hasResTab ? "news" : "results");
     const t = setTimeout(() => setShow(true), 2500);
     return () => clearTimeout(t);
-  }, []);
+  }, [unseenNews, unseenRes, hasResTab]);
 
-  // Défilement automatique (5 s), en pause au survol
+  // Défilement automatique des news (5 s), en pause au survol
   useEffect(() => {
-    if (!show || paused || items.length < 2) return;
+    if (!show || paused || tab !== "news" || items.length < 2) return;
     const t = setInterval(() => setIdx(i => (i + 1) % items.length), 5000);
     return () => clearInterval(t);
-  }, [show, paused, items.length]);
+  }, [show, paused, tab, items.length]);
+
+  // Résultats : une ligne à la fois, qui défile entre les équipes (sauf si une catégorie est choisie)
+  const nRes = results ? results.teams.length : 0;
+  useEffect(() => {
+    if (!show || paused || tab !== "results" || resCat !== "all" || nRes < 2) return;
+    const t = setInterval(() => setResIdx(i => (i + 1) % nRes), 4000);
+    return () => clearInterval(t);
+  }, [show, paused, tab, resCat, nRes]);
 
   const close = () => {
     setShow(false);
-    try { if (latest) localStorage.setItem(NEWS_SEEN_KEY, latest.title); } catch (e) { /* stockage indisponible */ }
+    try {
+      if (latest) localStorage.setItem(NEWS_SEEN_KEY, latest.title);
+      if (resDate) localStorage.setItem(RESULTS_SEEN_KEY, resDate);
+    } catch (e) { /* stockage indisponible */ }
   };
   const current = items[idx] || latest;
+  const activeTab = tab === "results" && hasResTab ? "results" : "news";
+  const dot = <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#F07030", marginLeft: 6, verticalAlign: "middle" }} />;
+  const tabBtn = (key, label, flag) => (
+    <button key={key} onClick={() => setTab(key)}
+      style={{ fontFamily: F1, fontWeight: 800, fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", border: "none", borderRadius: 4, padding: "4px 10px",
+        color: activeTab === key ? "white" : "rgba(255,255,255,0.6)", background: activeTab === key ? "#F07030" : "rgba(255,255,255,0.08)" }}>
+      {label}{flag && activeTab !== key && dot}
+    </button>
+  );
+  const cta = activeTab === "results" ? { href: "#resultats", label: "Voir les résultats →" } : { href: "#actu", label: "Voir les actualités →" };
+  const linkStyle = { fontFamily: F1, fontWeight: 800, fontSize: isMobile ? 13 : 14, letterSpacing: "0.04em", color: "white", background: "#F07030", borderRadius: 6, padding: isMobile ? "0.4rem 0.9rem" : "0.55rem 1.1rem", textDecoration: "none", whiteSpace: "nowrap", alignSelf: isMobile ? "flex-start" : "center" };
 
   return (
-    <div style={{ position: "fixed", left: 0, right: 0, ...(isMobile ? { top: 66 } : { bottom: 82 }), zIndex: 45, display: "flex", justifyContent: "center", padding: "0 1rem", pointerEvents: "none" }}>
+    <div style={{ position: "fixed", left: 0, right: 0, ...(isMobile ? { top: 66 } : { bottom: 82 }), zIndex: 45, display: "flex", justifyContent: "center", padding: "0 1rem", boxSizing: "border-box", pointerEvents: "none" }}>
       <AnimatePresence>
-        {show && current && (
+        {show && (hasNewsTab || hasResTab) && (
           <motion.div
             role="status"
             onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
             initial={{ opacity: 0, y: isMobile ? -24 : 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: isMobile ? -24 : 24 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            style={{ pointerEvents: "auto", width: "100%", maxWidth: 680, background: "#07102E", border: "1px solid rgba(240,112,48,0.6)", borderLeft: "5px solid #F07030", borderRadius: 10, boxShadow: "0 12px 40px rgba(0,0,0,0.35)", padding: isMobile ? "0.75rem 0.75rem 0.75rem 1rem" : "0.9rem 1rem 0.9rem 1.25rem", display: "flex", alignItems: "center", gap: isMobile ? "0.4rem" : "0.9rem", flexWrap: isMobile ? "wrap" : "nowrap" }}>
-            <div style={{ flex: isMobile ? "1 1 100%" : 1, minWidth: 0 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontFamily: F1, fontWeight: 800, fontSize: 11, letterSpacing: "0.12em", color: "white", background: "#F07030", borderRadius: 4, padding: "2px 8px" }}>NOUVEAU</span>
-                {items.length > 1 && (
-                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    {items.map((n, k) => (
-                      <button key={n.title} onClick={() => setIdx(k)} aria-label={`News ${k + 1} sur ${items.length}`}
-                        style={{ width: k === idx ? 18 : 8, height: 8, borderRadius: 99, border: "none", padding: 0, cursor: "pointer", background: k === idx ? "#F07030" : "rgba(255,255,255,0.3)", transition: "all 0.25s" }} />
-                    ))}
-                  </div>
-                )}
-                {isMobile && (
-                  <button onClick={close} aria-label="Fermer"
-                    style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.6)", fontSize: 22, lineHeight: 1, padding: "0 4px", marginLeft: "auto" }}>×</button>
-                )}
-              </div>
-              <div style={{ minHeight: isMobile ? 0 : 48, marginTop: isMobile ? 4 : 6 }}>
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.p key={current.title} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}
-                    style={{ fontFamily: F1, fontWeight: 700, fontSize: isMobile ? 16 : 19, color: "white", lineHeight: 1.25, margin: 0 }}>{current.title}</motion.p>
-                </AnimatePresence>
-              </div>
-            </div>
-            <a href="#actu" onClick={close}
-              style={{ fontFamily: F1, fontWeight: 800, fontSize: isMobile ? 13 : 14, letterSpacing: "0.04em", color: "white", background: "#F07030", borderRadius: 6, padding: isMobile ? "0.4rem 0.9rem" : "0.55rem 1.1rem", textDecoration: "none", whiteSpace: "nowrap" }}>
-              Voir les actualités →
-            </a>
-            {!isMobile && (
+            style={{ pointerEvents: "auto", boxSizing: "border-box", width: "100%", maxWidth: 680, background: "#07102E", border: "1px solid rgba(240,112,48,0.6)", borderLeft: "5px solid #F07030", borderRadius: 10, boxShadow: "0 12px 40px rgba(0,0,0,0.35)", padding: isMobile ? "0.7rem 0.75rem 0.75rem 1rem" : "0.8rem 1rem 0.9rem 1.25rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              {hasNewsTab && tabBtn("news", "Actualités", unseenNews)}
+              {hasResTab && tabBtn("results", "Résultats", unseenRes)}
+              {activeTab === "news" && items.length > 1 && (
+                <div style={{ display: "flex", alignItems: "center", gap: 6, marginLeft: 4 }}>
+                  {items.map((n, k) => (
+                    <button key={n.title} onClick={() => setIdx(k)} aria-label={`News ${k + 1} sur ${items.length}`}
+                      style={{ width: k === idx ? 18 : 8, height: 8, borderRadius: 99, border: "none", padding: 0, cursor: "pointer", background: k === idx ? "#F07030" : "rgba(255,255,255,0.3)", transition: "all 0.3s" }} />
+                  ))}
+                </div>
+              )}
               <button onClick={close} aria-label="Fermer"
-                style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.55)", fontSize: 22, lineHeight: 1, padding: "0 4px" }}>×</button>
+                style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.6)", fontSize: 22, lineHeight: 1, padding: "0 4px", marginLeft: "auto" }}>×</button>
+            </div>
+            {activeTab === "news" && current ? (
+              <div style={{ display: "flex", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", gap: isMobile ? "0.4rem" : "0.9rem", marginTop: 6 }}>
+                <div style={{ flex: 1, minWidth: 0, minHeight: isMobile ? 0 : 48, display: "flex", alignItems: "center" }}>
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.p key={current.title} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}
+                      style={{ fontFamily: F1, fontWeight: 700, fontSize: isMobile ? 16 : 19, color: "white", lineHeight: 1.25, margin: 0 }}>{current.title}</motion.p>
+                  </AnimatePresence>
+                </div>
+                <a href={cta.href} onClick={close} style={linkStyle}>{cta.label}</a>
+              </div>
+            ) : (
+              <div style={{ marginTop: 8 }}>
+                <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 6, WebkitOverflowScrolling: "touch" }}>
+                  {["all", ...results.teams.map(t => t.cat)].map(c => (
+                    <button key={c} onClick={() => setResCat(c)}
+                      style={{ flexShrink: 0, fontFamily: F1, fontWeight: 800, fontSize: 12, letterSpacing: "0.06em", cursor: "pointer", borderRadius: 99, padding: "3px 10px",
+                        border: "1px solid " + (resCat === c ? "#F07030" : "rgba(255,255,255,0.2)"), color: resCat === c ? "white" : "rgba(255,255,255,0.65)", background: resCat === c ? "rgba(240,112,48,0.35)" : "transparent" }}>
+                      {c === "all" ? "Toutes" : c}
+                    </button>
+                  ))}
+                </div>
+                {(() => {
+                  const team = resCat === "all" ? results.teams[resIdx % nRes] : results.teams.find(t => t.cat === resCat);
+                  if (!team) return null;
+                  const lv = matchView(team.last);
+                  const nv = matchView(team.next);
+                  return (
+                    <AnimatePresence mode="wait" initial={false}>
+                      <motion.div key={team.cat + resCat} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}
+                        style={{ display: "flex", alignItems: "center", gap: 8, minHeight: 28 }}>
+                        <span style={{ fontFamily: F1, fontWeight: 800, fontSize: 15, color: "#F07030", flexShrink: 0 }}>{team.cat}</span>
+                        {lv && lv.played ? (
+                          <>
+                            <span style={{ fontFamily: F1, fontWeight: 800, fontSize: 11, color: "white", background: OUTCOME_COLOR[lv.outcome], borderRadius: 3, padding: "0 6px", flexShrink: 0 }}>{lv.outcome}</span>
+                            <span style={{ fontFamily: F1, fontWeight: 700, fontSize: isMobile ? 15 : 16, color: "white", flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{lv.mine}–{lv.theirs} {lv.opp}</span>
+                          </>
+                        ) : <span style={{ fontFamily: F2, fontSize: 13, color: "rgba(255,255,255,0.6)", flex: 1, minWidth: 0 }}>{team.poule}</span>}
+                        {team.rank ? <span style={{ fontFamily: F1, fontWeight: 700, fontSize: 14, color: "rgba(255,255,255,0.75)", flexShrink: 0 }}>{ordinalRank(team.rank)}</span> : null}
+                      </motion.div>
+                    </AnimatePresence>
+                  );
+                })()}
+                {resCat !== "all" && (() => {
+                  const team = results.teams.find(t => t.cat === resCat);
+                  const nv = team && matchView(team.next);
+                  return nv ? <p style={{ fontFamily: F2, fontSize: 12, color: "rgba(255,255,255,0.5)", margin: "2px 0 0" }}>Prochain match : {fmtMatchDate(nv.date, true)} · {nv.cansaHome ? "à domicile" : "chez " + nv.opp}</p> : null;
+                })()}
+                <a href={cta.href} onClick={close} style={{ ...linkStyle, display: "inline-block", marginTop: 8 }}>{cta.label}</a>
+              </div>
             )}
           </motion.div>
         )}
@@ -1411,6 +1585,9 @@ export default function App() {
     link.rel = "stylesheet";
     link.href = "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600;700&display=swap";
     document.head.appendChild(link);
+    // Empêche tout défilement horizontal (éléments animés qui débordent sur mobile)
+    document.documentElement.style.overflowX = "clip";
+    document.body.style.overflowX = "clip";
   }, []);
   return (
     <div style={{ background: "white", minHeight: "100vh", paddingBottom: 60 }}>
@@ -1420,6 +1597,7 @@ export default function App() {
       <About />
       <Categories />
       <News />
+      <Results />
       <Inscriptions />
       <Boutique />
       <Contact />

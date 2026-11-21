@@ -1,0 +1,14 @@
+{
+  "updated": "2026-11-21T18:00:00+01:00",
+  "source": "FFBB",
+  "clubUrl": "https://competitions.ffbb.com/ligues/sud/comites/0006/clubs/sud0006049",
+  "teams": [
+    { "cat": "U11",     "competition": "Départementale masculine U11 - Division 3",  "poule": "Poule C", "rank": 1, "last": null, "next": null },
+    { "cat": "U11-2",   "competition": "Départementale U11-2 - Phase 2",             "poule": "Poule C", "rank": 5, "last": null, "next": null },
+    { "cat": "U13",     "competition": "Pré-régionale masculine U13 - Phase 2",      "poule": "Poule B", "rank": 3, "last": null, "next": null },
+    { "cat": "U15",     "competition": "Départementale masculine U15 - Phase 2",     "poule": "Poule C", "rank": 5, "last": null, "next": null },
+    { "cat": "U18",     "competition": "Pré-régionale masculine U18 - Phase 2",      "poule": "Poule B", "rank": 5, "last": null, "next": null },
+    { "cat": "Séniors", "competition": "Départementale masculine Séniors - Division 3", "poule": "Poule C", "rank": 3, "last": null, "next": null },
+    { "cat": "Loisirs", "competition": "Départementale masculine Loisir",            "poule": "Poule A", "rank": 5, "last": null, "next": null }
+  ]
+}
