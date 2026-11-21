@@ -55,6 +55,38 @@ def to_int(x):
         return None
 
 
+PARTICULES = {"de", "du", "des", "la", "le", "les", "d", "l", "sur", "et", "en", "a"}
+
+
+def joli_nom(nom):
+    """'US GRASSOISE - 2' -> 'US Grassoise 2', '... (SPCOC BASKET)' -> 'SPCOC Basket'."""
+    nom = str(nom or "").strip()
+    m = re.search(r"\(([^)]+)\)", nom)
+    if m:
+        nom = m.group(1)
+    num = ""
+    m = re.search(r"\s*-\s*(\d+)\s*$", nom)
+    if m:
+        nom = nom[: m.start()]
+        num = "" if m.group(1) == "1" else " " + m.group(1)
+    if not nom.isupper():
+        return nom + num
+    mots = []
+    for i, w in enumerate(nom.split()):
+        lw = w.lower()
+        if i > 0 and lw in PARTICULES:
+            mots.append(lw)
+        elif lw in PARTICULES:
+            mots.append(w.capitalize())
+        elif len(w) <= 2 or (len(w) <= 5 and not re.search(r"[AEIOUY]", w)) or w.isdigit():
+            mots.append(w)
+        elif w in ("CANSA", "SPCOC", "CDA", "ASPTT", "ESBNB"):
+            mots.append(w)
+        else:
+            mots.append("-".join(x.capitalize() for x in w.split("-")))
+    return " ".join(mots) + num
+
+
 def main():
     from ffbb_data_client import FFBBDataClient
 
@@ -102,11 +134,23 @@ def main():
         # Classement de notre equipe dans la poule
         rank = None
         my_names = set()
+        standings = []
         for r in g(poule, "classements", "classement", default=[]) or []:
-            if str(g(r, "organisme_id", default="")) == str(club_id):
+            us = str(g(r, "organisme_id", default="")) == str(club_id)
+            if us and rank is None:
                 rank = r
                 my_names.add(norm(g(r, "organisme_nom", default="")))
-                break
+            standings.append({
+                "pos": to_int(g(r, "position")),
+                "team": joli_nom(g(r, "organisme_nom", default="")),
+                "played": to_int(g(r, "match_joues")),
+                "won": to_int(g(r, "gagnes")),
+                "lost": to_int(g(r, "perdus")),
+                "points": to_int(g(r, "points")),
+                "diff": to_int(g(r, "difference")),
+                "us": us,
+            })
+        standings.sort(key=lambda x: (x["pos"] is None, x["pos"] or 0))
 
         def is_us(name):
             n = norm(name)
@@ -117,6 +161,7 @@ def main():
             return "cansa" in n or "chateauneuf" in n
 
         last, nxt = None, None
+        matches = []
         for m in g(poule, "rencontres", default=[]) or []:
             n1, n2 = g(m, "nomEquipe1", default=""), g(m, "nomEquipe2", default="")
             home, away = is_us(n1), is_us(n2)
@@ -125,9 +170,11 @@ def main():
             d = g(m, "date_rencontre")
             s1, s2 = to_int(g(m, "resultatEquipe1")), to_int(g(m, "resultatEquipe2"))
             played = bool(to_int(g(m, "joue"))) and s1 is not None and s2 is not None
-            item = {"date": iso(d), "home": n1, "away": n2, "cansaHome": bool(home)}
+            item = {"date": iso(d), "home": joli_nom(n1), "away": joli_nom(n2), "cansaHome": bool(home)}
             if played:
                 item.update(scoreHome=s1, scoreAway=s2)
+            matches.append(dict(item, day=to_int(g(m, "numeroJournee"))))
+            if played:
                 if last is None or str(item["date"]) > str(last["date"]):
                     last = item
             else:
@@ -152,6 +199,8 @@ def main():
             "lost": to_int(g(rank, "perdus")) if rank else None,
             "last": last,
             "next": nxt,
+            "standings": standings,
+            "matches": sorted(matches, key=lambda x: str(x["date"] or "")),
         }
         # Pour une meme equipe (phase 1 puis phase 2), on garde la phase en cours
         activity = (nxt["date"] if nxt else "") or (last["date"] if last else "") or ""

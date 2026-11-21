@@ -680,8 +680,124 @@ function latestResultDate(data) {
   return max;
 }
 
+function ResultsModal({ team, onClose }) {
+  const isMobile = useWindowWidth() < 768;
+  const [view, setView] = useState("classement");
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = prevOverflow; };
+  }, [onClose]);
+  const standings = team.standings || [];
+  const matches = (team.matches || []).map(m => ({ ...m, v: matchView(m) }));
+  const upcoming = matches.filter(m => !m.v.played);
+  const played = matches.filter(m => m.v.played).reverse();
+  const hasDetails = standings.length > 0 || matches.length > 0;
+  const subTab = (key, label) => (
+    <button onClick={() => setView(key)}
+      style={{ flex: 1, fontFamily: F1, fontWeight: 800, fontSize: 14, letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", border: "none", padding: "0.6rem", borderRadius: 6,
+        color: view === key ? "white" : "rgba(255,255,255,0.55)", background: view === key ? "#F07030" : "rgba(255,255,255,0.06)" }}>{label}</button>
+  );
+  const th = { fontFamily: F2, fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", padding: "0 0 8px", textAlign: "center" };
+  const td = { fontFamily: F2, fontSize: isMobile ? 13 : 14, color: "rgba(255,255,255,0.85)", padding: "9px 4px", textAlign: "center", borderTop: "1px solid rgba(255,255,255,0.07)" };
+  const matchRow = (m, i) => {
+    const v = m.v;
+    return (
+      <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 0", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+        <div style={{ width: isMobile ? 64 : 92, flexShrink: 0, fontFamily: F2, fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.35 }}>
+          {fmtMatchDate(m.date)}{!v.played && String(m.date || "").includes("T") && <><br />{new Date(m.date).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }).replace(":", "h")}</>}
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontFamily: F1, fontWeight: 700, fontSize: isMobile ? 15 : 17, color: "white", lineHeight: 1.25 }}>{v.opp}</div>
+          <span style={{ display: "inline-block", marginTop: 3, fontFamily: F2, fontSize: 10, fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: v.cansaHome ? "#5E9BD4" : "rgba(255,255,255,0.45)", border: "1px solid " + (v.cansaHome ? "rgba(94,155,212,0.5)" : "rgba(255,255,255,0.2)"), borderRadius: 4, padding: "0 5px" }}>{v.cansaHome ? "Domicile" : "Extérieur"}</span>
+        </div>
+        {v.played && (
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+            <span style={{ fontFamily: F1, fontWeight: 800, fontSize: isMobile ? 15 : 17, color: "white" }}>{v.mine}–{v.theirs}</span>
+            <span style={{ fontFamily: F1, fontWeight: 800, fontSize: 12, color: "white", background: OUTCOME_COLOR[v.outcome], borderRadius: 4, padding: "1px 7px" }}>{v.outcome}</span>
+          </div>
+        )}
+      </div>
+    );
+  };
+  const groupTitle = (t) => <div style={{ fontFamily: F2, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#F07030", margin: "1rem 0 2px" }}>{t}</div>;
+  return (
+    <motion.div role="dialog" aria-label={`Résultats ${team.cat}`}
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
+      style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(4,8,20,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: isMobile ? "0.75rem" : "1.5rem" }}
+      onClick={onClose}>
+      <motion.div initial={{ scale: 0.95, opacity: 0, y: 12 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 12 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        onClick={e => e.stopPropagation()}
+        style={{ position: "relative", boxSizing: "border-box", background: "#0D1A4A", border: "1px solid rgba(240,112,48,0.4)", borderTop: "4px solid #F07030", borderRadius: 14, width: "100%", maxWidth: 720, maxHeight: "92vh", display: "flex", flexDirection: "column", boxShadow: "0 24px 80px rgba(0,0,0,0.6)", overflow: "hidden" }}>
+        <div style={{ padding: isMobile ? "1.1rem 1.1rem 0.9rem" : "1.6rem 1.75rem 1rem", flexShrink: 0 }}>
+          <div style={{ display: "flex", alignItems: "flex-end", gap: "1rem", paddingRight: 44 }}>
+            <div style={{ minWidth: 0, flex: 1 }}>
+              <div style={{ fontFamily: F1, fontWeight: 900, fontSize: isMobile ? 34 : 42, color: "white", lineHeight: 1 }}>{team.cat}</div>
+              <div style={{ fontFamily: F2, fontSize: 13, color: "rgba(255,255,255,0.5)", marginTop: 6 }}>{team.competition} · {team.poule}</div>
+            </div>
+            {team.rank ? (
+              <div style={{ textAlign: "right", flexShrink: 0 }}>
+                <div style={{ fontFamily: F1, fontWeight: 900, fontSize: isMobile ? 30 : 36, lineHeight: 1, color: "#F07030" }}>{ordinalRank(team.rank)}</div>
+                {typeof team.won === "number" && <div style={{ fontFamily: F2, fontSize: 11, color: "rgba(255,255,255,0.55)", marginTop: 3 }}>{team.won} V · {team.lost} D</div>}
+              </div>
+            ) : null}
+          </div>
+          {hasDetails && <div style={{ display: "flex", gap: 8, marginTop: "1rem" }}>{subTab("classement", "Classement")}{subTab("matchs", "Matchs")}</div>}
+        </div>
+        <div style={{ overflowY: "auto", padding: isMobile ? "0 1.1rem 1.2rem" : "0 1.75rem 1.6rem", WebkitOverflowScrolling: "touch" }}>
+          {!hasDetails && <p style={{ fontFamily: F2, fontSize: 14, color: "rgba(255,255,255,0.6)", padding: "1rem 0" }}>Le détail du classement et des matchs sera disponible à la prochaine mise à jour automatique.</p>}
+          {hasDetails && view === "classement" && (
+            standings.length ? (
+              <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed" }}>
+                <thead><tr>
+                  <th style={{ ...th, width: 34 }}>#</th>
+                  <th style={{ ...th, textAlign: "left" }}>Équipe</th>
+                  <th style={{ ...th, width: isMobile ? 26 : 40 }}>J</th>
+                  <th style={{ ...th, width: isMobile ? 26 : 40 }}>V</th>
+                  <th style={{ ...th, width: isMobile ? 26 : 40 }}>D</th>
+                  {!isMobile && <th style={{ ...th, width: 52 }}>Diff</th>}
+                  <th style={{ ...th, width: isMobile ? 36 : 48 }}>Pts</th>
+                </tr></thead>
+                <tbody>
+                  {standings.map((r, i) => {
+                    const hl = r.us ? { background: "rgba(240,112,48,0.18)", color: "white", fontWeight: 700 } : {};
+                    return (
+                      <tr key={i}>
+                        <td style={{ ...td, ...hl, fontFamily: F1, fontWeight: 800, color: r.us ? "#F07030" : "rgba(255,255,255,0.6)" }}>{r.pos}</td>
+                        <td style={{ ...td, ...hl, textAlign: "left", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.team}</td>
+                        <td style={{ ...td, ...hl }}>{r.played ?? "–"}</td>
+                        <td style={{ ...td, ...hl }}>{r.won ?? "–"}</td>
+                        <td style={{ ...td, ...hl }}>{r.lost ?? "–"}</td>
+                        {!isMobile && <td style={{ ...td, ...hl }}>{typeof r.diff === "number" ? (r.diff > 0 ? "+" : "") + r.diff : "–"}</td>}
+                        <td style={{ ...td, ...hl, fontFamily: F1, fontWeight: 800, color: "white" }}>{r.points ?? "–"}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : <p style={{ fontFamily: F2, fontSize: 14, color: "rgba(255,255,255,0.6)", padding: "1rem 0" }}>Classement pas encore publié par la FFBB.</p>
+          )}
+          {hasDetails && view === "matchs" && (
+            <>
+              {upcoming.length > 0 && <>{groupTitle("À venir")}{upcoming.map(matchRow)}</>}
+              {played.length > 0 && <>{groupTitle("Matchs joués")}{played.map(matchRow)}</>}
+              {!matches.length && <p style={{ fontFamily: F2, fontSize: 14, color: "rgba(255,255,255,0.6)", padding: "1rem 0" }}>Aucun match publié pour le moment.</p>}
+            </>
+          )}
+        </div>
+        <button onClick={onClose} aria-label="Fermer"
+          style={{ position: "absolute", top: 12, right: 12, background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: 99, width: 38, height: 38, cursor: "pointer", color: "white", fontSize: 16 }}>✕</button>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 function Results() {
   const data = useResults();
+  const [open, setOpen] = useState(null);
   const isMobile = useWindowWidth() < 768;
   if (!data || !data.teams.length) return null;
   const upd = data.updated ? new Date(data.updated) : null;
@@ -691,7 +807,7 @@ function Results() {
         <Anim>
           <Label>Compétitions</Label>
           <h2 style={{ fontFamily: F1, fontWeight: 900, fontSize: 56, color: "#5E9BD4", marginBottom: "0.5rem" }}>Résultats</h2>
-          <p style={{ fontFamily: F2, fontSize: 15, color: "rgba(255,255,255,0.5)", maxWidth: 520, marginBottom: "2.5rem" }}>Scores et classements de nos équipes dans leur poule, mis à jour automatiquement.</p>
+          <p style={{ fontFamily: F2, fontSize: 15, color: "rgba(255,255,255,0.5)", maxWidth: 520, marginBottom: "2.5rem" }}>Scores et classements de nos équipes, mis à jour automatiquement. Cliquez sur une équipe pour voir tout le classement de sa poule et ses matchs.</p>
         </Anim>
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(340px, 1fr))", gap: "1rem" }}>
           {data.teams.map((t, i) => {
@@ -699,7 +815,9 @@ function Results() {
             const next = matchView(t.next);
             return (
               <Anim key={t.cat + t.competition} delay={Math.min(i, 5) * 0.06}>
-                <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "1.25rem", height: "100%", boxSizing: "border-box" }}>
+                <motion.div role="button" tabIndex={0} onClick={() => setOpen(i)} onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setOpen(i); } }}
+                  whileHover={{ y: -3, borderColor: "rgba(240,112,48,0.55)" }} transition={{ duration: 0.2 }}
+                  style={{ cursor: "pointer", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "1.25rem", height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column" }}>
                   <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem" }}>
                     <div style={{ minWidth: 0 }}>
                       <span style={{ fontFamily: F1, fontWeight: 900, fontSize: 22, color: "white", letterSpacing: "0.04em" }}>{t.cat}</span>
@@ -709,6 +827,9 @@ function Results() {
                       <div style={{ textAlign: "right", flexShrink: 0 }}>
                         <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 34, lineHeight: 1, color: "#F07030" }}>{ordinalRank(t.rank)}</div>
                         <div style={{ fontFamily: F2, fontSize: 11, color: "rgba(255,255,255,0.45)", marginTop: 4 }}>{t.poule}</div>
+                        {typeof t.won === "number" && typeof t.lost === "number" && (
+                          <div style={{ fontFamily: F2, fontSize: 11, color: "rgba(255,255,255,0.6)", marginTop: 2 }}>{t.won} V · {t.lost} D{typeof t.points === "number" ? " · " + t.points + " pts" : ""}</div>
+                        )}
                       </div>
                     ) : null}
                   </div>
@@ -727,11 +848,15 @@ function Results() {
                       <div style={{ fontFamily: F1, fontWeight: 700, fontSize: 16, color: "rgba(255,255,255,0.85)" }}>{next.cansaHome ? "CANSA" : next.opp}{" – "}{next.cansaHome ? next.opp : "CANSA"}</div>
                     </div>
                   )}
-                </div>
+                  <div style={{ marginTop: "auto", paddingTop: "0.9rem", fontFamily: F2, fontSize: 12, fontWeight: 600, color: "#F07030" }}>Classement et calendrier →</div>
+                </motion.div>
               </Anim>
             );
           })}
         </div>
+        <AnimatePresence>
+          {open !== null && data.teams[open] && <ResultsModal key="res-modal" team={data.teams[open]} onClose={() => setOpen(null)} />}
+        </AnimatePresence>
         <p style={{ fontFamily: F2, fontSize: 12, color: "rgba(255,255,255,0.3)", marginTop: "1.5rem" }}>
           Source : FFBB{upd && !isNaN(upd.getTime()) ? " · mis à jour le " + upd.toLocaleDateString("fr-FR", { day: "numeric", month: "long" }) : ""}.{" "}
           {data.clubUrl && <a href={data.clubUrl} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255,255,255,0.45)" }}>Voir sur le site de la FFBB</a>}
@@ -1446,7 +1571,10 @@ function NewsBanner() {
   const [tab, setTab] = useState("news");
   const [resCat, setResCat] = useState("all");
   const [resIdx, setResIdx] = useState(0);
-  const isMobile = useWindowWidth() < 768;
+  const winW = useWindowWidth();
+  const isMobile = winW < 768;
+  // Agrandissement sur ordinateur, plus marqué sur les grands écrans
+  const zoomK = isMobile ? 1 : winW >= 1800 ? 1.45 : winW >= 1280 ? 1.25 : 1.1;
 
   const read = (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } };
   const unseenNews = !!latest && read(NEWS_SEEN_KEY) !== latest.title;
@@ -1503,7 +1631,7 @@ function NewsBanner() {
     <>
     {!show && (hasResTab || hasNewsTab) && (
       <button onClick={reopen} aria-label="Ouvrir les actualités et résultats"
-        style={{ position: "fixed", right: 12, bottom: isMobile ? 76 : 84, zIndex: 45, cursor: "pointer", border: "1px solid rgba(240,112,48,0.7)", background: "#07102E", color: "white", borderRadius: 99, padding: "7px 14px", fontFamily: F1, fontWeight: 800, fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", boxShadow: "0 6px 20px rgba(0,0,0,0.35)" }}>
+        style={{ position: "fixed", right: 12, bottom: isMobile ? 76 : 84, zIndex: 45, zoom: zoomK, cursor: "pointer", border: "1px solid rgba(240,112,48,0.7)", background: "#07102E", color: "white", borderRadius: 99, padding: "7px 14px", fontFamily: F1, fontWeight: 800, fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", boxShadow: "0 6px 20px rgba(0,0,0,0.35)" }}>
         <span style={{ color: "#F07030" }}>●</span> {hasNewsTab && hasResTab ? "Actus · Résultats" : hasResTab ? "Résultats" : "Actus"}
       </button>
     )}
@@ -1515,7 +1643,7 @@ function NewsBanner() {
             onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
             initial={{ opacity: 0, y: isMobile ? -24 : 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: isMobile ? -24 : 24 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            style={{ pointerEvents: "auto", boxSizing: "border-box", width: "100%", maxWidth: 680, background: "#07102E", border: "1px solid rgba(240,112,48,0.6)", borderLeft: "5px solid #F07030", borderRadius: 10, boxShadow: "0 12px 40px rgba(0,0,0,0.35)", padding: isMobile ? "0.7rem 0.75rem 0.75rem 1rem" : "0.8rem 1rem 0.9rem 1.25rem" }}>
+            style={{ pointerEvents: "auto", boxSizing: "border-box", width: "100%", maxWidth: 680, zoom: zoomK, background: "#07102E", border: "1px solid rgba(240,112,48,0.6)", borderLeft: "5px solid #F07030", borderRadius: 10, boxShadow: "0 12px 40px rgba(0,0,0,0.35)", padding: isMobile ? "0.7rem 0.75rem 0.75rem 1rem" : "0.8rem 1rem 0.9rem 1.25rem" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               {hasNewsTab && tabBtn("news", "Actualités", unseenNews)}
               {hasResTab && tabBtn("results", "Résultats", unseenRes)}
