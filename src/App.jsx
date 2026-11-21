@@ -509,17 +509,11 @@ function About() {
 // ─── CATEGORY CARD ─────────────────────────────────────────────────────────
 function CategoryCard({ cat, index, active, setActive }) {
   const isOpen = active === index;
-  const infoRows = [
-    { icon: "👤", label: "Coach",          value: cat.coach },
-    cat.assistants && { icon: "👥", label: "Assistant", value: cat.assistants },
-    { icon: "🕐", label: "Entraînements", value: cat.horaire },
-    { icon: "🏆", label: "Niveau",         value: cat.niveau },
-  ].filter(Boolean);
 
   return (
     <Anim delay={index * 0.06}>
       <motion.div style={{ borderRadius: 8, overflow: "hidden", cursor: "pointer", background: isOpen ? "rgba(91,155,213,0.10)" : "rgba(255,255,255,0.04)", border: `1px solid ${isOpen ? cat.color : "rgba(255,255,255,0.07)"}`, transition: "border-color 0.2s, background 0.2s" }}
-        whileTap={{ scale: 0.98 }} onClick={() => setActive(isOpen ? null : index)}>
+        whileTap={{ scale: 0.98 }} onClick={() => setActive(index)}>
         <motion.div style={{ height: 3, background: cat.color, originX: 0 }} initial={{ scaleX: 0 }} animate={{ scaleX: isOpen ? 1 : 0 }} whileHover={{ scaleX: 1 }} transition={{ duration: 0.25 }} />
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", padding: "1rem", gap: 8, minHeight: 88 }}>
           <div>
@@ -527,42 +521,71 @@ function CategoryCard({ cat, index, active, setActive }) {
             <div style={{ fontFamily: F1, fontWeight: 700, fontSize: 15, color: cat.sub ? cat.color : "transparent", marginTop: 2 }}>{cat.sub || "·"}</div>
             <div style={{ fontFamily: F2, fontSize: 13, color: "rgba(91,155,213,0.65)", marginTop: 6 }}>{cat.age}</div>
           </div>
-          <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.25 }} style={{ marginTop: 4, flexShrink: 0 }}>
+          <motion.div animate={{ rotate: -90 }} transition={{ duration: 0.25 }} style={{ marginTop: 4, flexShrink: 0 }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={isOpen ? cat.color : "rgba(255,255,255,0.3)"} strokeWidth="2.5"><polyline points="6 9 12 15 18 9"/></svg>
           </motion.div>
         </div>
 
-        <AnimatePresence initial={false}>
-          {!isOpen && (
-            <motion.div style={{ padding: "0 1rem 0.75rem" }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
-              <span style={{ fontFamily: F2, fontSize: 11, color: cat.color, letterSpacing: "0.06em" }}>Coach · Horaires · Niveau →</span>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <AnimatePresence initial={false}>
-          {isOpen && (
-            <motion.div key="detail" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }} style={{ overflow: "hidden" }}>
-              <div style={{ padding: "0.75rem 1rem 1rem", borderTop: "1px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                {cat.photo && (
-                  <img src={cat.photo} alt={`Équipe ${cat.name} CANSA Basket`} loading="lazy"
-                    style={{ width: "100%", height: "auto", display: "block", borderRadius: 6, border: `1px solid ${cat.color}55` }} />
-                )}
-                {infoRows.map((row) => (
-                  <div key={row.label} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
-                    <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>{row.icon}</span>
-                    <div>
-                      <div style={{ fontFamily: F2, fontSize: 10, color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 2 }}>{row.label}</div>
-                      <div style={{ fontFamily: F2, fontSize: 13, color: "white", fontWeight: 500, lineHeight: 1.4 }}>{row.value}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div style={{ padding: "0 1rem 0.75rem" }}>
+          <span style={{ fontFamily: F2, fontSize: 11, color: cat.color, letterSpacing: "0.06em" }}>{cat.photo ? "Photo · Coach · Horaires →" : "Coach · Horaires · Niveau →"}</span>
+        </div>
       </motion.div>
     </Anim>
+  );
+}
+
+// ─── CATEGORY MODAL ────────────────────────────────────────────────────────
+function CategoryModal({ cat, onClose }) {
+  const isMobile = useWindowWidth() < 768;
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = prevOverflow; };
+  }, [onClose]);
+  const infoRows = [
+    { icon: "👤", label: "Coach",          value: cat.coach },
+    cat.assistants && { icon: "👥", label: "Assistant", value: cat.assistants },
+    { icon: "🕐", label: "Entraînements", value: cat.horaire },
+    { icon: "🏆", label: "Niveau",         value: cat.niveau },
+  ].filter(Boolean);
+  return (
+    <motion.div role="dialog" aria-label={`Catégorie ${cat.name}`}
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
+      style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(4,8,20,0.92)", display: "flex", alignItems: "center", justifyContent: "center", padding: isMobile ? "0.75rem" : "1.5rem", overflowY: "auto" }}
+      onClick={onClose}>
+      <motion.div initial={{ scale: 0.95, opacity: 0, y: 12 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 12 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        onClick={e => e.stopPropagation()}
+        style={{ position: "relative", background: "#0D1A4A", border: `1px solid ${cat.color}66`, borderTop: `4px solid ${cat.color}`, borderRadius: 14, width: "100%", maxWidth: cat.photo ? 1120 : 520, maxHeight: "94vh", overflow: "auto", display: "flex", flexDirection: isMobile ? "column" : "row", boxShadow: "0 24px 80px rgba(0,0,0,0.55)" }}>
+        {cat.photo && (
+          <div style={{ flex: isMobile ? "none" : "1.9 1 0", minWidth: 0, background: "#07102E", display: "flex" }}>
+            <img src={cat.photo} alt={`Équipe ${cat.name} CANSA Basket`}
+              style={{ width: "100%", height: isMobile ? "auto" : "100%", minHeight: isMobile ? 0 : 420, objectFit: "cover", display: "block" }} />
+          </div>
+        )}
+        <div style={{ flex: "1 1 0", minWidth: isMobile ? 0 : 300, padding: isMobile ? "1.25rem" : "2rem", display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+          <div>
+            <div style={{ fontFamily: F1, fontWeight: 900, fontSize: 44, color: "white", lineHeight: 1 }}>{cat.name}</div>
+            {cat.sub && <div style={{ fontFamily: F1, fontWeight: 700, fontSize: 20, color: cat.color, marginTop: 4 }}>{cat.sub}</div>}
+            <div style={{ fontFamily: F2, fontSize: 14, color: "rgba(91,155,213,0.75)", marginTop: 6 }}>{cat.age}</div>
+          </div>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.1)" }} />
+          {infoRows.map((row) => (
+            <div key={row.label} style={{ display: "flex", alignItems: "flex-start", gap: "0.85rem" }}>
+              <span style={{ fontSize: 18, flexShrink: 0, marginTop: 1 }}>{row.icon}</span>
+              <div>
+                <div style={{ fontFamily: F2, fontSize: 11, color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 3 }}>{row.label}</div>
+                <div style={{ fontFamily: F2, fontSize: 16, color: "white", fontWeight: 500, lineHeight: 1.4 }}>{row.value}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <button onClick={onClose} aria-label="Fermer"
+          style={{ position: "absolute", top: 12, right: 12, background: "rgba(0,0,0,0.6)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: 99, width: 38, height: 38, cursor: "pointer", color: "white", fontSize: 16 }}>✕</button>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -593,6 +616,9 @@ function Categories() {
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)", gap: "0.75rem" }}>
           {CATEGORIES.map((cat, i) => <CategoryCard key={cat.name} cat={cat} index={i} active={active} setActive={setActive} />)}
         </div>
+        <AnimatePresence>
+          {active !== null && <CategoryModal key="cat-modal" cat={CATEGORIES[active]} onClose={() => setActive(null)} />}
+        </AnimatePresence>
         <Anim delay={0.3}>
           <div style={{ marginTop: "2.5rem", borderRadius: 8, padding: "1.5rem", display: "flex", alignItems: "center", gap: "1.25rem", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
             <span style={{ fontSize: 22, color: "#F07030" }}>📍</span>
@@ -620,6 +646,20 @@ function News() {
   };
   const isMobile = useWindowWidth() < 768;
   const VISIBLE = 3;
+  const [zoom, setZoom] = useState(null);
+  const zoomOpen = zoom !== null;
+  useEffect(() => {
+    if (!zoomOpen) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") setZoom(null);
+      if (e.key === "ArrowLeft") setZoom(z => z && ({ ...z, i: (z.i - 1 + z.photos.length) % z.photos.length }));
+      if (e.key === "ArrowRight") setZoom(z => z && ({ ...z, i: (z.i + 1) % z.photos.length }));
+    };
+    window.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = prevOverflow; };
+  }, [zoomOpen]);
   const visibleNews = showAll ? NEWS : NEWS.slice(0, VISIBLE);
   return (
     <section id="actu" style={{ padding: isMobile ? "4rem 1.5rem" : "6rem 4rem", background: "white" }}>
@@ -670,7 +710,10 @@ function News() {
                             const total = item.photos.length;
                             return (
                               <div style={{ position: "relative", marginTop: "1rem" }}>
-                                <img src={item.photos[idx]} alt="" style={{ width: "100%", borderRadius: 8, objectFit: "contain", maxHeight: 420, display: "block" }} />
+                                <img src={item.photos[idx]} alt={item.title} title="Cliquer pour agrandir"
+                                  onClick={e => { e.stopPropagation(); setZoom({ photos: item.photos, i: idx, title: item.title }); }}
+                                  style={{ width: "100%", borderRadius: 8, objectFit: "contain", maxHeight: 420, display: "block", cursor: "zoom-in" }} />
+                                <span aria-hidden="true" style={{ position: "absolute", right: 8, bottom: total > 1 ? 34 : 8, background: "rgba(0,0,0,0.55)", color: "white", borderRadius: 99, width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, pointerEvents: "none" }}>🔍</span>
                                 {total > 1 && (
                                   <>
                                     <button onClick={e => { e.stopPropagation(); goPhoto(i, -1, total); }}
@@ -706,6 +749,30 @@ function News() {
           </div>
         )}
       </div>
+
+      {/* Affiche en plein écran */}
+      <AnimatePresence>
+        {zoom && (
+          <motion.div key="news-zoom" role="dialog" aria-label={zoom.title}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
+            style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(4,8,20,0.96)", display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem", cursor: "zoom-out" }}
+            onClick={() => setZoom(null)}>
+            <img src={zoom.photos[zoom.i]} alt={zoom.title}
+              style={{ maxWidth: "100%", maxHeight: "calc(100vh - 2rem)", width: "auto", height: "auto", objectFit: "contain", borderRadius: 8, boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }} />
+            <button onClick={() => setZoom(null)} aria-label="Fermer"
+              style={{ position: "absolute", top: 16, right: 16, background: "rgba(0,0,0,0.6)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: 99, width: 42, height: 42, cursor: "pointer", color: "white", fontSize: 18 }}>✕</button>
+            {zoom.photos.length > 1 && (
+              <>
+                <button onClick={e => { e.stopPropagation(); setZoom(z => ({ ...z, i: (z.i - 1 + z.photos.length) % z.photos.length })); }} aria-label="Précédente"
+                  style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: 99, width: 46, height: 46, cursor: "pointer", color: "white", fontSize: 26 }}>‹</button>
+                <button onClick={e => { e.stopPropagation(); setZoom(z => ({ ...z, i: (z.i + 1) % z.photos.length })); }} aria-label="Suivante"
+                  style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: 99, width: 46, height: 46, cursor: "pointer", color: "white", fontSize: 26 }}>›</button>
+                <div style={{ position: "absolute", bottom: 14, left: 0, right: 0, textAlign: "center", fontFamily: F2, fontSize: 13, color: "rgba(255,255,255,0.7)" }}>{zoom.i + 1} / {zoom.photos.length}</div>
+              </>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
@@ -1254,12 +1321,16 @@ function isRecent(item, days) {
 }
 
 function NewsBanner() {
-  const latest = NEWS[0];
+  // Toutes les news publiées depuis moins de 30 jours, de la plus récente à la plus ancienne
+  const items = NEWS.filter(n => isRecent(n, 30));
+  const latest = items[0];
   const [show, setShow] = useState(false);
+  const [idx, setIdx] = useState(0);
+  const [paused, setPaused] = useState(false);
   const isMobile = useWindowWidth() < 768;
 
   useEffect(() => {
-    if (!isRecent(latest, 30)) return;
+    if (!latest) return;
     let seen = null;
     try { seen = localStorage.getItem(NEWS_SEEN_KEY); } catch (e) { /* stockage indisponible */ }
     if (seen === latest.title) return;
@@ -1267,23 +1338,47 @@ function NewsBanner() {
     return () => clearTimeout(t);
   }, []);
 
+  // Défilement automatique (5 s), en pause au survol
+  useEffect(() => {
+    if (!show || paused || items.length < 2) return;
+    const t = setInterval(() => setIdx(i => (i + 1) % items.length), 5000);
+    return () => clearInterval(t);
+  }, [show, paused, items.length]);
+
   const close = () => {
     setShow(false);
-    try { localStorage.setItem(NEWS_SEEN_KEY, latest.title); } catch (e) { /* stockage indisponible */ }
+    try { if (latest) localStorage.setItem(NEWS_SEEN_KEY, latest.title); } catch (e) { /* stockage indisponible */ }
   };
+  const current = items[idx] || latest;
 
   return (
     <div style={{ position: "fixed", left: 0, right: 0, ...(isMobile ? { top: 66 } : { bottom: 82 }), zIndex: 45, display: "flex", justifyContent: "center", padding: "0 1rem", pointerEvents: "none" }}>
       <AnimatePresence>
-        {show && (
+        {show && current && (
           <motion.div
             role="status"
+            onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
             initial={{ opacity: 0, y: isMobile ? -24 : 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: isMobile ? -24 : 24 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             style={{ pointerEvents: "auto", width: "100%", maxWidth: 680, background: "#07102E", border: "1px solid rgba(240,112,48,0.6)", borderLeft: "5px solid #F07030", borderRadius: 10, boxShadow: "0 12px 40px rgba(0,0,0,0.35)", padding: isMobile ? "0.75rem 0.75rem 0.75rem 1rem" : "0.9rem 1rem 0.9rem 1.25rem", display: "flex", alignItems: "center", gap: "0.9rem", flexWrap: isMobile ? "wrap" : "nowrap" }}>
             <div style={{ flex: isMobile ? "1 1 100%" : 1, minWidth: 0 }}>
-              <span style={{ fontFamily: F1, fontWeight: 800, fontSize: 11, letterSpacing: "0.12em", color: "white", background: "#F07030", borderRadius: 4, padding: "2px 8px" }}>NOUVEAU</span>
-              <p style={{ fontFamily: F1, fontWeight: 700, fontSize: isMobile ? 17 : 19, color: "white", lineHeight: 1.25, marginTop: 6 }}>{latest.title}</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontFamily: F1, fontWeight: 800, fontSize: 11, letterSpacing: "0.12em", color: "white", background: "#F07030", borderRadius: 4, padding: "2px 8px" }}>NOUVEAU</span>
+                {items.length > 1 && (
+                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    {items.map((n, k) => (
+                      <button key={n.title} onClick={() => setIdx(k)} aria-label={`News ${k + 1} sur ${items.length}`}
+                        style={{ width: k === idx ? 18 : 8, height: 8, borderRadius: 99, border: "none", padding: 0, cursor: "pointer", background: k === idx ? "#F07030" : "rgba(255,255,255,0.3)", transition: "all 0.25s" }} />
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div style={{ minHeight: isMobile ? 44 : 48, marginTop: 6 }}>
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.p key={current.title} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}
+                    style={{ fontFamily: F1, fontWeight: 700, fontSize: isMobile ? 17 : 19, color: "white", lineHeight: 1.25 }}>{current.title}</motion.p>
+                </AnimatePresence>
+              </div>
             </div>
             <a href="#actu" onClick={close}
               style={{ fontFamily: F1, fontWeight: 800, fontSize: 14, letterSpacing: "0.04em", color: "white", background: "#F07030", borderRadius: 6, padding: "0.55rem 1.1rem", textDecoration: "none", whiteSpace: "nowrap" }}>
