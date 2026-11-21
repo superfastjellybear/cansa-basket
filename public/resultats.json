@@ -1,14 +1,145 @@
 {
-  "updated": "2026-11-21T18:00:00+01:00",
-  "source": "FFBB",
-  "clubUrl": "https://competitions.ffbb.com/ligues/sud/comites/0006/clubs/sud0006049",
-  "teams": [
-    { "cat": "U11",     "competition": "Départementale masculine U11 - Division 3",  "poule": "Poule C", "rank": 1, "last": null, "next": null },
-    { "cat": "U11-2",   "competition": "Départementale U11-2 - Phase 2",             "poule": "Poule C", "rank": 5, "last": null, "next": null },
-    { "cat": "U13",     "competition": "Pré-régionale masculine U13 - Phase 2",      "poule": "Poule B", "rank": 3, "last": null, "next": null },
-    { "cat": "U15",     "competition": "Départementale masculine U15 - Phase 2",     "poule": "Poule C", "rank": 5, "last": null, "next": null },
-    { "cat": "U18",     "competition": "Pré-régionale masculine U18 - Phase 2",      "poule": "Poule B", "rank": 5, "last": null, "next": null },
-    { "cat": "Séniors", "competition": "Départementale masculine Séniors - Division 3", "poule": "Poule C", "rank": 3, "last": null, "next": null },
-    { "cat": "Loisirs", "competition": "Départementale masculine Loisir",            "poule": "Poule A", "rank": 5, "last": null, "next": null }
-  ]
+ "updated": "2026-11-21T17:54:05+00:00",
+ "source": "FFBB",
+ "clubUrl": "https://competitions.ffbb.com/ligues/sud/comites/0006/clubs/sud0006049",
+ "teams": [
+  {
+   "cat": "U11",
+   "competition": "Départementale masculine U11 - 2 phase 2",
+   "poule": "Poule C",
+   "rank": 5,
+   "points": 1,
+   "won": 0,
+   "lost": 1,
+   "last": {
+    "date": "2026-11-07T11:00:00",
+    "home": "VENCE BASKET CLUB - 1",
+    "away": "CANSA BASKET",
+    "cansaHome": false,
+    "scoreHome": 42,
+    "scoreAway": 20
+   },
+   "next": {
+    "date": "2026-11-28T12:30:00",
+    "home": "US GRASSOISE - 2",
+    "away": "CANSA BASKET",
+    "cansaHome": false
+   }
+  },
+  {
+   "cat": "U13",
+   "competition": "Pré régional masculine U13 phase 2",
+   "poule": "Poule B",
+   "rank": 3,
+   "points": 2,
+   "won": 0,
+   "lost": 2,
+   "last": {
+    "date": "2026-11-21T14:00:00",
+    "home": "AS MONACO BASKET",
+    "away": "CANSA BASKET",
+    "cansaHome": false,
+    "scoreHome": 34,
+    "scoreAway": 90
+   },
+   "next": {
+    "date": "2026-11-28T15:45:00",
+    "home": "CANSA BASKET",
+    "away": "OLYMPIQUE CARROS BASKET BALL - 1",
+    "cansaHome": true
+   }
+  },
+  {
+   "cat": "U15",
+   "competition": "Départementale Masculine U15-2 Phase 2",
+   "poule": "Poule C",
+   "rank": 5,
+   "points": 1,
+   "won": 0,
+   "lost": 1,
+   "last": {
+    "date": "2026-11-07T14:15:00",
+    "home": "SPORTING CLUB OLYMPIQUE COLLOIS BASKET (SPCOC BASKET)",
+    "away": "CANSA BASKET",
+    "cansaHome": false,
+    "scoreHome": 68,
+    "scoreAway": 63
+   },
+   "next": {
+    "date": "2026-11-28T14:00:00",
+    "home": "CANSA BASKET",
+    "away": "ETOILE SAINT BARTHELEMY NICE BASKET",
+    "cansaHome": true
+   }
+  },
+  {
+   "cat": "U18",
+   "competition": "Pré régionale masculine U18 phase 2",
+   "poule": "Poule B",
+   "rank": 5,
+   "points": 2,
+   "won": 1,
+   "lost": 0,
+   "last": {
+    "date": "2026-11-15T13:00:00",
+    "home": "CAVIGAL NICE BASKET 06",
+    "away": "CANSA BASKET",
+    "cansaHome": false,
+    "scoreHome": 57,
+    "scoreAway": 58
+   },
+   "next": {
+    "date": "2026-11-29T10:00:00",
+    "home": "CANSA BASKET",
+    "away": "UNION SPORTIVE SOPHIA BASKET",
+    "cansaHome": true
+   }
+  },
+  {
+   "cat": "Séniors",
+   "competition": "Départementale masculine seniors - Division 3",
+   "poule": "Poule C",
+   "rank": 3,
+   "points": 9,
+   "won": 4,
+   "lost": 1,
+   "last": {
+    "date": "2026-11-13T20:50:00",
+    "home": "US GRASSOISE",
+    "away": "CANSA BASKET",
+    "cansaHome": false,
+    "scoreHome": 102,
+    "scoreAway": 61
+   },
+   "next": {
+    "date": "2026-11-27T21:00:00",
+    "home": "BASKET CLUB DU PAYS DE FAYENCE",
+    "away": "CANSA BASKET",
+    "cansaHome": false
+   }
+  },
+  {
+   "cat": "Loisirs",
+   "competition": "Départementale masculine loisir",
+   "poule": "Poule A",
+   "rank": 5,
+   "points": 3,
+   "won": 1,
+   "lost": 1,
+   "last": {
+    "date": "2026-11-17T20:45:00",
+    "home": "CAVIGAL NICE BASKET 06",
+    "away": "CANSA BASKET",
+    "cansaHome": false,
+    "scoreHome": 78,
+    "scoreAway": 20
+   },
+   "next": {
+    "date": "2026-11-23T20:45:00",
+    "home": "OLYMPIQUE CARROS BASKET BALL - 1",
+    "away": "CANSA BASKET",
+    "cansaHome": false
+   }
+  }
+ ]
 }
