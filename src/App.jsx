@@ -1498,7 +1498,15 @@ function NewsBanner() {
   const cta = activeTab === "results" ? { href: "#resultats", label: "Voir les résultats →" } : { href: "#actu", label: "Voir les actualités →" };
   const linkStyle = { fontFamily: F1, fontWeight: 800, fontSize: isMobile ? 13 : 14, letterSpacing: "0.04em", color: "white", background: "#F07030", borderRadius: 6, padding: isMobile ? "0.4rem 0.9rem" : "0.55rem 1.1rem", textDecoration: "none", whiteSpace: "nowrap", alignSelf: isMobile ? "flex-start" : "center" };
 
+  const reopen = () => setShow(true);
   return (
+    <>
+    {!show && (hasResTab || hasNewsTab) && (
+      <button onClick={reopen} aria-label="Ouvrir les actualités et résultats"
+        style={{ position: "fixed", right: 12, bottom: isMobile ? 76 : 84, zIndex: 45, cursor: "pointer", border: "1px solid rgba(240,112,48,0.7)", background: "#07102E", color: "white", borderRadius: 99, padding: "7px 14px", fontFamily: F1, fontWeight: 800, fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", boxShadow: "0 6px 20px rgba(0,0,0,0.35)" }}>
+        <span style={{ color: "#F07030" }}>●</span> {hasNewsTab && hasResTab ? "Actus · Résultats" : hasResTab ? "Résultats" : "Actus"}
+      </button>
+    )}
     <div style={{ position: "fixed", left: 0, right: 0, ...(isMobile ? { top: 66 } : { bottom: 82 }), zIndex: 45, display: "flex", justifyContent: "center", padding: "0 1rem", boxSizing: "border-box", pointerEvents: "none" }}>
       <AnimatePresence>
         {show && (hasNewsTab || hasResTab) && (
@@ -1576,6 +1584,7 @@ function NewsBanner() {
         )}
       </AnimatePresence>
     </div>
+    </>
   );
 }
 
