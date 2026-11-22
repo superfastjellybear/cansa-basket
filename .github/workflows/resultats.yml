@@ -1,5 +1,9 @@
 name: Resultats FFBB
 
+# Les resultats sont ecrits dans la branche "donnees", que Netlify ne publie pas :
+# aucune republication du site (donc aucun credit Netlify) a chaque nouveau score.
+# Le site lit directement le fichier sur GitHub.
+
 on:
   workflow_dispatch:
   schedule:
@@ -31,22 +35,36 @@ jobs:
       - name: Installer la bibliotheque FFBB
         run: pip install "git+https://github.com/nickdesi/FFBBApiClientV3@034305d9edeafa49aea6e89a704bc1e5b4fe5a90"
 
-      - name: Recuperer scores et classements
-        id: maj
-        run: python scripts/ffbb_resultats.py
-        continue-on-error: true
-
-      - name: Enregistrer dans le depot
+      - name: Preparer la branche donnees
         run: |
           git config user.name "cansa-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add public/resultats.json ffbb-debug
+          if git ls-remote --exit-code --heads origin donnees >/dev/null; then
+            git fetch --depth 1 origin donnees
+            git worktree add data FETCH_HEAD
+            git -C data switch -c donnees
+          else
+            git worktree add --orphan -b donnees data
+            cp public/resultats.json data/resultats.json
+          fi
+
+      - name: Recuperer scores et classements
+        id: maj
+        env:
+          RESULTS_OUT: data/resultats.json
+          RESULTS_DEBUG_DIR: data/ffbb-debug
+        run: python scripts/ffbb_resultats.py
+        continue-on-error: true
+
+      - name: Enregistrer dans la branche donnees
+        working-directory: data
+        run: |
+          git add -A
           if git diff --cached --quiet; then
             echo "Rien de nouveau"
           else
-            git commit -m "Mise a jour automatique des resultats FFBB"
-            git pull --rebase
-            git push
+            git commit -m "Resultats FFBB"
+            git push origin donnees
           fi
 
       - name: Signaler un echec

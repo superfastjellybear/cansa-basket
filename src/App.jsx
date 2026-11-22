@@ -637,15 +637,23 @@ function Categories() {
 
 // ─── RÉSULTATS (données générées automatiquement dans /resultats.json) ─────
 const RESULTS_SEEN_KEY = "cansa_results_seen";
+const RESULTS_URL = "https://raw.githubusercontent.com/superfastjellybear/cansa-basket/donnees/resultats.json";
 let _resultsCache = null;
+let _resultsPromise = null;
 function useResults() {
   const [data, setData] = useState(_resultsCache);
   useEffect(() => {
     if (_resultsCache) return;
     let alive = true;
-    fetch("/resultats.json?ts=" + Date.now())
-      .then(r => (r.ok ? r.json() : null))
-      .then(j => { if (j && Array.isArray(j.teams)) { _resultsCache = j; if (alive) setData(j); } })
+    // Résultats lus directement sur GitHub (branche "donnees", mise à jour automatiquement,
+    // sans republier le site sur Netlify). Repli sur la copie du site si GitHub ne répond pas.
+    const load = (url) => fetch(url + "?ts=" + Date.now()).then(r => (r.ok ? r.json() : Promise.reject())).then(j => {
+      if (!j || !Array.isArray(j.teams)) return Promise.reject();
+      return j;
+    });
+    if (!_resultsPromise) _resultsPromise = load(RESULTS_URL).catch(() => load("/resultats.json"));
+    _resultsPromise
+      .then(j => { _resultsCache = j; if (alive) setData(j); })
       .catch(() => {});
     return () => { alive = false; };
   }, []);

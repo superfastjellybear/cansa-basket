@@ -12,8 +12,8 @@ from datetime import datetime, timezone
 
 CLUB_CODE = "sud0006049"
 CLUB_URL = "https://competitions.ffbb.com/ligues/sud/comites/0006/clubs/sud0006049"
-OUT = "public/resultats.json"
-DEBUG_DIR = "ffbb-debug"
+OUT = os.environ.get("RESULTS_OUT", "public/resultats.json")
+DEBUG_DIR = os.environ.get("RESULTS_DEBUG_DIR", "ffbb-debug")
 os.makedirs(DEBUG_DIR, exist_ok=True)
 debug = {"steps": []}
 
