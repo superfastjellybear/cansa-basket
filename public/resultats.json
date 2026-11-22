@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-21T18:20:44+00:00",
+ "updated": "2026-11-22T06:49:12+00:00",
  "source": "FFBB",
  "clubUrl": "https://competitions.ffbb.com/ligues/sud/comites/0006/clubs/sud0006049",
  "teams": [
@@ -132,8 +132,8 @@
    "competition": "Pré régional masculine U13 phase 2",
    "poule": "Poule B",
    "rank": 3,
-   "points": 2,
-   "won": 0,
+   "points": 4,
+   "won": 1,
    "lost": 2,
    "last": {
     "date": "2026-11-21T14:00:00",
@@ -173,21 +173,21 @@
     {
      "pos": 3,
      "team": "CANSA Basket",
-     "played": 2,
-     "won": 0,
+     "played": 3,
+     "won": 1,
      "lost": 2,
-     "points": 2,
-     "diff": -47,
+     "points": 4,
+     "diff": 9,
      "us": true
     },
     {
      "pos": 4,
      "team": "AS Monaco Basket",
-     "played": 2,
+     "played": 3,
      "won": 0,
-     "lost": 2,
-     "points": 2,
-     "diff": -78,
+     "lost": 3,
+     "points": 3,
+     "diff": -134,
      "us": false
     }
    ],
