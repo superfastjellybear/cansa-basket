@@ -1,0 +1,28 @@
+{
+ "steps": [
+  "recherche CANSA -> [('CANSA BASKET', 'SUD0006049', '1865000011452')]",
+  "club 1865000011452 CANSA BASKET",
+  "engagements 10",
+  "engagement Départementale masculine seniors - Division 3 | cat SE | equipe 1 | poule 200000003061356",
+  "  -> Séniors rang 3 dernier True prochain True",
+  "engagement Phase 1 - Départementale masculine U18 - Division 2 | cat U18 | equipe 1 | poule 200000003061805",
+  "  -> U18 rang 1 dernier True prochain False",
+  "engagement Départementale masculine U11 - Division 3 | cat U11 | equipe 1 | poule 200000003061831",
+  "  -> U11 rang 1 dernier True prochain False",
+  "engagement Phase 1 - Départementale masculine U15 - 2 | cat U15 | equipe 1 | poule 200000003061836",
+  "  -> U15 rang 4 dernier True prochain False",
+  "engagement Phase 1 - Départementale masculine U13 - 2 | cat U13 | equipe 1 | poule 200000003061864",
+  "  -> U13 rang 1 dernier True prochain False",
+  "engagement Départementale masculine loisir | cat SE | equipe 1 | poule 200000003066566",
+  "  -> Loisirs rang 5 dernier True prochain True",
+  "engagement Départementale Masculine U15-2 Phase 2 | cat U15 | equipe 1 | poule 200000003066652",
+  "  -> U15 rang 5 dernier True prochain True",
+  "engagement Pré régional masculine U13 phase 2  | cat U13 | equipe 1 | poule 200000003066684",
+  "  -> U13 rang 3 dernier True prochain True",
+  "engagement Pré régionale masculine U18 phase 2  | cat U18 | equipe 1 | poule 200000003066747",
+  "  -> U18 rang 5 dernier True prochain True",
+  "engagement Départementale masculine U11 - 2 phase 2 | cat U11 | equipe 1 | poule 200000003066753",
+  "  -> U11 rang 5 dernier True prochain True",
+  "Aucun changement"
+ ]
+}

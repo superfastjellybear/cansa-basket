@@ -1,0 +1,1049 @@
+{
+ "updated": "2026-11-22T06:49:12+00:00",
+ "source": "FFBB",
+ "clubUrl": "https://competitions.ffbb.com/ligues/sud/comites/0006/clubs/sud0006049",
+ "teams": [
+  {
+   "cat": "U11",
+   "competition": "Départementale masculine U11 - 2 phase 2",
+   "poule": "Poule C",
+   "rank": 5,
+   "points": 1,
+   "won": 0,
+   "lost": 1,
+   "last": {
+    "date": "2026-11-07T11:00:00",
+    "home": "Vence Basket Club",
+    "away": "CANSA Basket",
+    "cansaHome": false,
+    "scoreHome": 42,
+    "scoreAway": 20
+   },
+   "next": {
+    "date": "2026-11-28T12:30:00",
+    "home": "US Grassoise 2",
+    "away": "CANSA Basket",
+    "cansaHome": false
+   },
+   "standings": [
+    {
+     "pos": 1,
+     "team": "Vence Basket Club",
+     "played": 2,
+     "won": 2,
+     "lost": 0,
+     "points": 4,
+     "diff": 36,
+     "us": false
+    },
+    {
+     "pos": 2,
+     "team": "Cannes Basket Olympique",
+     "played": 2,
+     "won": 2,
+     "lost": 0,
+     "points": 4,
+     "diff": 16,
+     "us": false
+    },
+    {
+     "pos": 3,
+     "team": "AS Monaco Basket",
+     "played": 2,
+     "won": 0,
+     "lost": 2,
+     "points": 2,
+     "diff": -21,
+     "us": false
+    },
+    {
+     "pos": 4,
+     "team": "US Grassoise",
+     "played": 1,
+     "won": 0,
+     "lost": 1,
+     "points": 1,
+     "diff": -9,
+     "us": false
+    },
+    {
+     "pos": 5,
+     "team": "CANSA Basket",
+     "played": 1,
+     "won": 0,
+     "lost": 1,
+     "points": 1,
+     "diff": -22,
+     "us": true
+    },
+    {
+     "pos": 6,
+     "team": "",
+     "played": 0,
+     "won": 0,
+     "lost": 0,
+     "points": 0,
+     "diff": 0,
+     "us": false
+    }
+   ],
+   "matches": [
+    {
+     "date": "2026-11-07T11:00:00",
+     "home": "Vence Basket Club",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "scoreHome": 42,
+     "scoreAway": 20,
+     "day": 1
+    },
+    {
+     "date": "2026-11-14T00:00:00",
+     "home": "CANSA Basket",
+     "away": "",
+     "cansaHome": true,
+     "day": 2
+    },
+    {
+     "date": "2026-11-28T12:30:00",
+     "home": "US Grassoise 2",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 3
+    },
+    {
+     "date": "2026-12-05T12:30:00",
+     "home": "AS Monaco Basket 2",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 4
+    },
+    {
+     "date": "2026-12-12T00:00:00",
+     "home": "CANSA Basket",
+     "away": "Cannes Basket Olympique",
+     "cansaHome": true,
+     "day": 5
+    }
+   ]
+  },
+  {
+   "cat": "U13",
+   "competition": "Pré régional masculine U13 phase 2",
+   "poule": "Poule B",
+   "rank": 3,
+   "points": 4,
+   "won": 1,
+   "lost": 2,
+   "last": {
+    "date": "2026-11-21T14:00:00",
+    "home": "AS Monaco Basket",
+    "away": "CANSA Basket",
+    "cansaHome": false,
+    "scoreHome": 34,
+    "scoreAway": 90
+   },
+   "next": {
+    "date": "2026-11-28T15:45:00",
+    "home": "CANSA Basket",
+    "away": "Olympique Carros Basket Ball",
+    "cansaHome": true
+   },
+   "standings": [
+    {
+     "pos": 1,
+     "team": "Ol. Antibes Basket Ama",
+     "played": 3,
+     "won": 3,
+     "lost": 0,
+     "points": 6,
+     "diff": 123,
+     "us": false
+    },
+    {
+     "pos": 2,
+     "team": "Olympique Carros Basket Ball",
+     "played": 3,
+     "won": 2,
+     "lost": 1,
+     "points": 5,
+     "diff": 2,
+     "us": false
+    },
+    {
+     "pos": 3,
+     "team": "CANSA Basket",
+     "played": 3,
+     "won": 1,
+     "lost": 2,
+     "points": 4,
+     "diff": 9,
+     "us": true
+    },
+    {
+     "pos": 4,
+     "team": "AS Monaco Basket",
+     "played": 3,
+     "won": 0,
+     "lost": 3,
+     "points": 3,
+     "diff": -134,
+     "us": false
+    }
+   ],
+   "matches": [
+    {
+     "date": "2026-11-07T13:00:00",
+     "home": "Olympique Carros Basket Ball",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "scoreHome": 58,
+     "scoreAway": 48,
+     "day": 1
+    },
+    {
+     "date": "2026-11-14T00:00:00",
+     "home": "Ol. Antibes Basket Ama",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "scoreHome": 74,
+     "scoreAway": 37,
+     "day": 2
+    },
+    {
+     "date": "2026-11-21T14:00:00",
+     "home": "AS Monaco Basket",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "scoreHome": 34,
+     "scoreAway": 90,
+     "day": 3
+    },
+    {
+     "date": "2026-11-28T15:45:00",
+     "home": "CANSA Basket",
+     "away": "Olympique Carros Basket Ball",
+     "cansaHome": true,
+     "day": 4
+    },
+    {
+     "date": "2026-12-05T14:00:00",
+     "home": "CANSA Basket",
+     "away": "Ol. Antibes Basket Ama",
+     "cansaHome": true,
+     "day": 5
+    },
+    {
+     "date": "2026-12-12T00:00:00",
+     "home": "CANSA Basket",
+     "away": "AS Monaco Basket",
+     "cansaHome": true,
+     "day": 6
+    }
+   ]
+  },
+  {
+   "cat": "U15",
+   "competition": "Départementale Masculine U15-2 Phase 2",
+   "poule": "Poule C",
+   "rank": 5,
+   "points": 1,
+   "won": 0,
+   "lost": 1,
+   "last": {
+    "date": "2026-11-07T14:15:00",
+    "home": "SPCOC Basket",
+    "away": "CANSA Basket",
+    "cansaHome": false,
+    "scoreHome": 68,
+    "scoreAway": 63
+   },
+   "next": {
+    "date": "2026-11-28T14:00:00",
+    "home": "CANSA Basket",
+    "away": "Etoile Saint Barthelemy Nice Basket",
+    "cansaHome": true
+   },
+   "standings": [
+    {
+     "pos": 1,
+     "team": "Trinite Sports Paillon",
+     "played": 2,
+     "won": 2,
+     "lost": 0,
+     "points": 4,
+     "diff": 13,
+     "us": false
+    },
+    {
+     "pos": 2,
+     "team": "SPCOC Basket",
+     "played": 2,
+     "won": 1,
+     "lost": 1,
+     "points": 3,
+     "diff": -4,
+     "us": false
+    },
+    {
+     "pos": 3,
+     "team": "Etoile Saint Barthelemy Nice Basket",
+     "played": 1,
+     "won": 1,
+     "lost": 0,
+     "points": 2,
+     "diff": 30,
+     "us": false
+    },
+    {
+     "pos": 4,
+     "team": "Saint Martin Basket Club",
+     "played": 2,
+     "won": 0,
+     "lost": 2,
+     "points": 2,
+     "diff": -34,
+     "us": false
+    },
+    {
+     "pos": 5,
+     "team": "CANSA Basket",
+     "played": 1,
+     "won": 0,
+     "lost": 1,
+     "points": 1,
+     "diff": -5,
+     "us": true
+    },
+    {
+     "pos": 6,
+     "team": "",
+     "played": 0,
+     "won": 0,
+     "lost": 0,
+     "points": 0,
+     "diff": 0,
+     "us": false
+    }
+   ],
+   "matches": [
+    {
+     "date": "2026-11-07T14:15:00",
+     "home": "SPCOC Basket",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "scoreHome": 68,
+     "scoreAway": 63,
+     "day": 1
+    },
+    {
+     "date": "2026-11-14T00:00:00",
+     "home": "CANSA Basket",
+     "away": "",
+     "cansaHome": true,
+     "day": 2
+    },
+    {
+     "date": "2026-11-28T14:00:00",
+     "home": "CANSA Basket",
+     "away": "Etoile Saint Barthelemy Nice Basket",
+     "cansaHome": true,
+     "day": 3
+    },
+    {
+     "date": "2026-12-05T00:00:00",
+     "home": "Trinite Sports Paillon",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 4
+    },
+    {
+     "date": "2026-12-19T17:45:00",
+     "home": "CANSA Basket",
+     "away": "Saint Martin Basket Club",
+     "cansaHome": true,
+     "day": 5
+    }
+   ]
+  },
+  {
+   "cat": "U18",
+   "competition": "Pré régionale masculine U18 phase 2",
+   "poule": "Poule B",
+   "rank": 5,
+   "points": 2,
+   "won": 1,
+   "lost": 0,
+   "last": {
+    "date": "2026-11-15T13:00:00",
+    "home": "Cavigal Nice Basket 06",
+    "away": "CANSA Basket",
+    "cansaHome": false,
+    "scoreHome": 57,
+    "scoreAway": 58
+   },
+   "next": {
+    "date": "2026-11-29T10:00:00",
+    "home": "CANSA Basket",
+    "away": "Union Sportive Sophia Basket",
+    "cansaHome": true
+   },
+   "standings": [
+    {
+     "pos": 1,
+     "team": "Menton Basket Club",
+     "played": 2,
+     "won": 2,
+     "lost": 0,
+     "points": 4,
+     "diff": 26,
+     "us": false
+    },
+    {
+     "pos": 2,
+     "team": "AC Golfe Juan Vallauris",
+     "played": 2,
+     "won": 2,
+     "lost": 0,
+     "points": 4,
+     "diff": 19,
+     "us": false
+    },
+    {
+     "pos": 3,
+     "team": "Cavigal Nice Basket 06",
+     "played": 2,
+     "won": 1,
+     "lost": 1,
+     "points": 3,
+     "diff": 38,
+     "us": false
+    },
+    {
+     "pos": 4,
+     "team": "ES Villeneuve Loubet Basket",
+     "played": 1,
+     "won": 1,
+     "lost": 0,
+     "points": 2,
+     "diff": 27,
+     "us": false
+    },
+    {
+     "pos": 5,
+     "team": "CANSA Basket",
+     "played": 1,
+     "won": 1,
+     "lost": 0,
+     "points": 2,
+     "diff": 1,
+     "us": true
+    },
+    {
+     "pos": 6,
+     "team": "US Cagnes sur Mer",
+     "played": 2,
+     "won": 0,
+     "lost": 2,
+     "points": 2,
+     "diff": -21,
+     "us": false
+    },
+    {
+     "pos": 7,
+     "team": "Olympique Carros Basket Ball",
+     "played": 2,
+     "won": 0,
+     "lost": 2,
+     "points": 2,
+     "diff": -24,
+     "us": false
+    },
+    {
+     "pos": 8,
+     "team": "Union Sportive Sophia Basket",
+     "played": 2,
+     "won": 0,
+     "lost": 2,
+     "points": 2,
+     "diff": -66,
+     "us": false
+    }
+   ],
+   "matches": [
+    {
+     "date": "2026-11-08T00:00:00",
+     "home": "ES Villeneuve Loubet Basket",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 1
+    },
+    {
+     "date": "2026-11-15T13:00:00",
+     "home": "Cavigal Nice Basket 06",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "scoreHome": 57,
+     "scoreAway": 58,
+     "day": 2
+    },
+    {
+     "date": "2026-11-29T10:00:00",
+     "home": "CANSA Basket",
+     "away": "Union Sportive Sophia Basket",
+     "cansaHome": true,
+     "day": 3
+    },
+    {
+     "date": "2026-12-06T10:00:00",
+     "home": "CANSA Basket",
+     "away": "US Cagnes sur Mer",
+     "cansaHome": true,
+     "day": 4
+    },
+    {
+     "date": "2026-12-13T13:00:00",
+     "home": "Olympique Carros Basket Ball",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 5
+    },
+    {
+     "date": "2027-01-10T00:00:00",
+     "home": "Menton Basket Club",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 6
+    },
+    {
+     "date": "2027-01-17T00:00:00",
+     "home": "AC Golfe Juan Vallauris",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 7
+    },
+    {
+     "date": "2027-01-24T10:00:00",
+     "home": "CANSA Basket",
+     "away": "ES Villeneuve Loubet Basket",
+     "cansaHome": true,
+     "day": 8
+    },
+    {
+     "date": "2027-01-31T10:00:00",
+     "home": "CANSA Basket",
+     "away": "Cavigal Nice Basket 06",
+     "cansaHome": true,
+     "day": 9
+    },
+    {
+     "date": "2027-02-14T00:00:00",
+     "home": "Union Sportive Sophia Basket",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 10
+    },
+    {
+     "date": "2027-03-14T00:00:00",
+     "home": "US Cagnes sur Mer",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 11
+    },
+    {
+     "date": "2027-03-21T10:00:00",
+     "home": "CANSA Basket",
+     "away": "Olympique Carros Basket Ball",
+     "cansaHome": true,
+     "day": 12
+    },
+    {
+     "date": "2027-03-28T10:00:00",
+     "home": "CANSA Basket",
+     "away": "Menton Basket Club",
+     "cansaHome": true,
+     "day": 13
+    },
+    {
+     "date": "2027-04-04T10:00:00",
+     "home": "CANSA Basket",
+     "away": "AC Golfe Juan Vallauris",
+     "cansaHome": true,
+     "day": 14
+    }
+   ]
+  },
+  {
+   "cat": "Séniors",
+   "competition": "Départementale masculine seniors - Division 3",
+   "poule": "Poule C",
+   "rank": 3,
+   "points": 9,
+   "won": 4,
+   "lost": 1,
+   "last": {
+    "date": "2026-11-13T20:50:00",
+    "home": "US Grassoise",
+    "away": "CANSA Basket",
+    "cansaHome": false,
+    "scoreHome": 102,
+    "scoreAway": 61
+   },
+   "next": {
+    "date": "2026-11-27T21:00:00",
+    "home": "Basket Club du Pays de Fayence",
+    "away": "CANSA Basket",
+    "cansaHome": false
+   },
+   "standings": [
+    {
+     "pos": 1,
+     "team": "Basket Club du Pays de Fayence",
+     "played": 5,
+     "won": 5,
+     "lost": 0,
+     "points": 10,
+     "diff": 202,
+     "us": false
+    },
+    {
+     "pos": 2,
+     "team": "US Grassoise",
+     "played": 5,
+     "won": 4,
+     "lost": 1,
+     "points": 9,
+     "diff": 93,
+     "us": false
+    },
+    {
+     "pos": 3,
+     "team": "CANSA Basket",
+     "played": 5,
+     "won": 4,
+     "lost": 1,
+     "points": 9,
+     "diff": 18,
+     "us": true
+    },
+    {
+     "pos": 4,
+     "team": "Ol. Antibes Basket Ama",
+     "played": 5,
+     "won": 3,
+     "lost": 2,
+     "points": 8,
+     "diff": 56,
+     "us": false
+    },
+    {
+     "pos": 5,
+     "team": "Gse Metropolitains de Nice",
+     "played": 5,
+     "won": 2,
+     "lost": 3,
+     "points": 7,
+     "diff": 18,
+     "us": false
+    },
+    {
+     "pos": 6,
+     "team": "SC Mouans Sartoux Basket Ball",
+     "played": 5,
+     "won": 2,
+     "lost": 3,
+     "points": 7,
+     "diff": -123,
+     "us": false
+    },
+    {
+     "pos": 7,
+     "team": "Etoile Saint Barthelemy Nice Basket",
+     "played": 5,
+     "won": 0,
+     "lost": 5,
+     "points": 5,
+     "diff": -126,
+     "us": false
+    },
+    {
+     "pos": 8,
+     "team": "Union Sportive Sophia Basket",
+     "played": 5,
+     "won": 0,
+     "lost": 5,
+     "points": 5,
+     "diff": -138,
+     "us": false
+    }
+   ],
+   "matches": [
+    {
+     "date": "2026-10-05T21:00:00",
+     "home": "CANSA Basket",
+     "away": "Etoile Saint Barthelemy Nice Basket",
+     "cansaHome": true,
+     "scoreHome": 72,
+     "scoreAway": 51,
+     "day": 1
+    },
+    {
+     "date": "2026-10-12T21:00:00",
+     "home": "CANSA Basket",
+     "away": "SC Mouans Sartoux Basket Ball",
+     "cansaHome": true,
+     "scoreHome": 87,
+     "scoreAway": 53,
+     "day": 2
+    },
+    {
+     "date": "2026-10-22T21:00:00",
+     "home": "Gse Metropolitains de Nice",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "scoreHome": 55,
+     "scoreAway": 58,
+     "day": 3
+    },
+    {
+     "date": "2026-11-09T21:00:00",
+     "home": "CANSA Basket",
+     "away": "Ol. Antibes Basket Ama",
+     "cansaHome": true,
+     "scoreHome": 68,
+     "scoreAway": 67,
+     "day": 4
+    },
+    {
+     "date": "2026-11-13T20:50:00",
+     "home": "US Grassoise",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "scoreHome": 102,
+     "scoreAway": 61,
+     "day": 5
+    },
+    {
+     "date": "2026-11-27T21:00:00",
+     "home": "Basket Club du Pays de Fayence",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 6
+    },
+    {
+     "date": "2026-12-07T21:00:00",
+     "home": "CANSA Basket",
+     "away": "Union Sportive Sophia Basket",
+     "cansaHome": true,
+     "day": 7
+    },
+    {
+     "date": "2026-12-14T21:00:00",
+     "home": "Etoile Saint Barthelemy Nice Basket",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 8
+    },
+    {
+     "date": "2027-01-10T10:00:00",
+     "home": "SC Mouans Sartoux Basket Ball",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 9
+    },
+    {
+     "date": "2027-01-18T21:00:00",
+     "home": "CANSA Basket",
+     "away": "Gse Metropolitains de Nice",
+     "cansaHome": true,
+     "day": 10
+    },
+    {
+     "date": "2027-02-02T21:00:00",
+     "home": "Ol. Antibes Basket Ama",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 11
+    },
+    {
+     "date": "2027-02-08T21:00:00",
+     "home": "CANSA Basket",
+     "away": "US Grassoise",
+     "cansaHome": true,
+     "day": 12
+    },
+    {
+     "date": "2027-02-15T21:00:00",
+     "home": "CANSA Basket",
+     "away": "Basket Club du Pays de Fayence",
+     "cansaHome": true,
+     "day": 13
+    },
+    {
+     "date": "2027-03-07T09:00:00",
+     "home": "Union Sportive Sophia Basket",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 14
+    }
+   ]
+  },
+  {
+   "cat": "Loisirs",
+   "competition": "Départementale masculine loisir",
+   "poule": "Poule A",
+   "rank": 5,
+   "points": 3,
+   "won": 1,
+   "lost": 1,
+   "last": {
+    "date": "2026-11-17T20:45:00",
+    "home": "Cavigal Nice Basket 06",
+    "away": "CANSA Basket",
+    "cansaHome": false,
+    "scoreHome": 78,
+    "scoreAway": 20
+   },
+   "next": {
+    "date": "2026-11-23T20:45:00",
+    "home": "Olympique Carros Basket Ball",
+    "away": "CANSA Basket",
+    "cansaHome": false
+   },
+   "standings": [
+    {
+     "pos": 1,
+     "team": "Cavigal Nice Basket 06",
+     "played": 3,
+     "won": 3,
+     "lost": 0,
+     "points": 6,
+     "diff": 90,
+     "us": false
+    },
+    {
+     "pos": 2,
+     "team": "Basket Club du Pays de Fayence",
+     "played": 3,
+     "won": 3,
+     "lost": 0,
+     "points": 6,
+     "diff": 63,
+     "us": false
+    },
+    {
+     "pos": 3,
+     "team": "Union Sportive Armenienne",
+     "played": 2,
+     "won": 2,
+     "lost": 0,
+     "points": 4,
+     "diff": 73,
+     "us": false
+    },
+    {
+     "pos": 4,
+     "team": "Olympique Carros Basket Ball",
+     "played": 2,
+     "won": 1,
+     "lost": 1,
+     "points": 3,
+     "diff": 15,
+     "us": false
+    },
+    {
+     "pos": 5,
+     "team": "CANSA Basket",
+     "played": 2,
+     "won": 1,
+     "lost": 1,
+     "points": 3,
+     "diff": -5,
+     "us": true
+    },
+    {
+     "pos": 6,
+     "team": "ES Villeneuve Loubet Basket",
+     "played": 3,
+     "won": 0,
+     "lost": 3,
+     "points": 3,
+     "diff": -61,
+     "us": false
+    },
+    {
+     "pos": 7,
+     "team": "US Cagnes sur Mer",
+     "played": 3,
+     "won": 0,
+     "lost": 3,
+     "points": 3,
+     "diff": -119,
+     "us": false
+    },
+    {
+     "pos": 8,
+     "team": "US Grassoise",
+     "played": 1,
+     "won": 1,
+     "lost": 0,
+     "points": 2,
+     "diff": 17,
+     "us": false
+    },
+    {
+     "pos": 9,
+     "team": "Le Cannet Cote D'azur Basket",
+     "played": 2,
+     "won": 0,
+     "lost": 2,
+     "points": 2,
+     "diff": -66,
+     "us": false
+    },
+    {
+     "pos": 10,
+     "team": "Olympique Carros Basket Ball",
+     "played": 1,
+     "won": 0,
+     "lost": 1,
+     "points": 1,
+     "diff": -7,
+     "us": false
+    }
+   ],
+   "matches": [
+    {
+     "date": "2026-10-29T21:00:00",
+     "home": "CANSA Basket",
+     "away": "US Cagnes sur Mer",
+     "cansaHome": true,
+     "scoreHome": 74,
+     "scoreAway": 21,
+     "day": 1
+    },
+    {
+     "date": "2026-11-17T20:45:00",
+     "home": "Cavigal Nice Basket 06",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "scoreHome": 78,
+     "scoreAway": 20,
+     "day": 3
+    },
+    {
+     "date": "2026-11-23T20:45:00",
+     "home": "Olympique Carros Basket Ball",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 2
+    },
+    {
+     "date": "2026-12-02T20:00:00",
+     "home": "Le Cannet Cote D'azur Basket",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 4
+    },
+    {
+     "date": "2026-12-06T10:00:00",
+     "home": "Basket Club du Pays de Fayence",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 5
+    },
+    {
+     "date": "2026-12-17T21:00:00",
+     "home": "CANSA Basket",
+     "away": "Union Sportive Armenienne",
+     "cansaHome": true,
+     "day": 6
+    },
+    {
+     "date": "2027-01-14T21:00:00",
+     "home": "CANSA Basket",
+     "away": "US Grassoise",
+     "cansaHome": true,
+     "day": 7
+    },
+    {
+     "date": "2027-01-21T21:00:00",
+     "home": "CANSA Basket",
+     "away": "ES Villeneuve Loubet Basket",
+     "cansaHome": true,
+     "day": 8
+    },
+    {
+     "date": "2027-01-28T21:00:00",
+     "home": "CANSA Basket",
+     "away": "Olympique Carros Basket Ball 2",
+     "cansaHome": true,
+     "day": 9
+    },
+    {
+     "date": "2027-02-05T21:00:00",
+     "home": "US Cagnes sur Mer",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 10
+    },
+    {
+     "date": "2027-02-18T21:00:00",
+     "home": "CANSA Basket",
+     "away": "Olympique Carros Basket Ball",
+     "cansaHome": true,
+     "day": 11
+    },
+    {
+     "date": "2027-02-25T21:00:00",
+     "home": "CANSA Basket",
+     "away": "Cavigal Nice Basket 06",
+     "cansaHome": true,
+     "day": 12
+    },
+    {
+     "date": "2027-03-11T21:00:00",
+     "home": "CANSA Basket",
+     "away": "Le Cannet Cote D'azur Basket",
+     "cansaHome": true,
+     "day": 13
+    },
+    {
+     "date": "2027-03-18T21:00:00",
+     "home": "CANSA Basket",
+     "away": "Basket Club du Pays de Fayence",
+     "cansaHome": true,
+     "day": 14
+    },
+    {
+     "date": "2027-03-31T20:00:00",
+     "home": "Union Sportive Armenienne",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 15
+    },
+    {
+     "date": "2027-04-07T20:50:00",
+     "home": "US Grassoise",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 16
+    },
+    {
+     "date": "2027-04-09T21:00:00",
+     "home": "ES Villeneuve Loubet Basket",
+     "away": "CANSA Basket",
+     "cansaHome": false,
+     "day": 17
+    },
+    {
+     "date": "2027-04-22T21:00:00",
+     "home": "CANSA Basket",
+     "away": "Olympique Carros Basket Ball 2",
+     "cansaHome": true,
+     "day": 18
+    }
+   ]
+  }
+ ]
+}
