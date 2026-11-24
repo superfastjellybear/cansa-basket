@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-22T06:49:12+00:00",
+ "updated": "2026-11-24T04:50:09+00:00",
  "source": "FFBB",
  "clubUrl": "https://competitions.ffbb.com/ligues/sud/comites/0006/clubs/sud0006049",
  "teams": [
@@ -805,8 +805,8 @@
     "scoreAway": 20
    },
    "next": {
-    "date": "2026-11-23T20:45:00",
-    "home": "Olympique Carros Basket Ball",
+    "date": "2026-12-02T20:00:00",
+    "home": "Le Cannet Cote D'azur Basket",
     "away": "CANSA Basket",
     "cansaHome": false
    },
