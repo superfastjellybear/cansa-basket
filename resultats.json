@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T04:50:09+00:00",
+ "updated": "2026-11-24T17:45:55+00:00",
  "source": "FFBB",
  "clubUrl": "https://competitions.ffbb.com/ligues/sud/comites/0006/clubs/sud0006049",
  "teams": [
@@ -793,16 +793,16 @@
    "competition": "Départementale masculine loisir",
    "poule": "Poule A",
    "rank": 5,
-   "points": 3,
+   "points": 4,
    "won": 1,
-   "lost": 1,
+   "lost": 2,
    "last": {
-    "date": "2026-11-17T20:45:00",
-    "home": "Cavigal Nice Basket 06",
+    "date": "2026-11-23T20:45:00",
+    "home": "Olympique Carros Basket Ball",
     "away": "CANSA Basket",
     "cansaHome": false,
-    "scoreHome": 78,
-    "scoreAway": 20
+    "scoreHome": 59,
+    "scoreAway": 41
    },
    "next": {
     "date": "2026-12-02T20:00:00",
@@ -833,6 +833,16 @@
     },
     {
      "pos": 3,
+     "team": "Olympique Carros Basket Ball",
+     "played": 3,
+     "won": 2,
+     "lost": 1,
+     "points": 5,
+     "diff": 33,
+     "us": false
+    },
+    {
+     "pos": 4,
      "team": "Union Sportive Armenienne",
      "played": 2,
      "won": 2,
@@ -842,23 +852,13 @@
      "us": false
     },
     {
-     "pos": 4,
-     "team": "Olympique Carros Basket Ball",
-     "played": 2,
-     "won": 1,
-     "lost": 1,
-     "points": 3,
-     "diff": 15,
-     "us": false
-    },
-    {
      "pos": 5,
      "team": "CANSA Basket",
-     "played": 2,
+     "played": 3,
      "won": 1,
-     "lost": 1,
-     "points": 3,
-     "diff": -5,
+     "lost": 2,
+     "points": 4,
+     "diff": -23,
      "us": true
     },
     {
@@ -936,6 +936,8 @@
      "home": "Olympique Carros Basket Ball",
      "away": "CANSA Basket",
      "cansaHome": false,
+     "scoreHome": 59,
+     "scoreAway": 41,
      "day": 2
     },
     {
