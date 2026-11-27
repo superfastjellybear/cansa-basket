@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-27T13:58:33+00:00",
+ "updated": "2026-11-27T22:44:14+00:00",
  "source": "FFBB",
  "clubUrl": "https://competitions.ffbb.com/ligues/sud/comites/0006/clubs/sud0006049",
  "teams": [
@@ -577,64 +577,64 @@
    "cat": "Séniors",
    "competition": "Départementale masculine seniors - Division 3",
    "poule": "Poule C",
-   "rank": 3,
-   "points": 9,
+   "rank": 4,
+   "points": 10,
    "won": 4,
-   "lost": 1,
+   "lost": 2,
    "last": {
-    "date": "2026-11-13T20:50:00",
-    "home": "US Grassoise",
-    "away": "CANSA Basket",
-    "cansaHome": false,
-    "scoreHome": 102,
-    "scoreAway": 61
-   },
-   "next": {
     "date": "2026-11-27T21:00:00",
     "home": "Basket Club du Pays de Fayence",
     "away": "CANSA Basket",
-    "cansaHome": false
+    "cansaHome": false,
+    "scoreHome": 79,
+    "scoreAway": 64
+   },
+   "next": {
+    "date": "2026-12-07T21:00:00",
+    "home": "CANSA Basket",
+    "away": "Union Sportive Sophia Basket",
+    "cansaHome": true
    },
    "standings": [
     {
      "pos": 1,
      "team": "Basket Club du Pays de Fayence",
-     "played": 5,
-     "won": 5,
+     "played": 6,
+     "won": 6,
      "lost": 0,
-     "points": 10,
-     "diff": 202,
+     "points": 12,
+     "diff": 217,
      "us": false
     },
     {
      "pos": 2,
      "team": "US Grassoise",
-     "played": 5,
+     "played": 6,
      "won": 4,
-     "lost": 1,
-     "points": 9,
-     "diff": 93,
+     "lost": 2,
+     "points": 10,
+     "diff": 90,
      "us": false
     },
     {
      "pos": 3,
-     "team": "CANSA Basket",
-     "played": 5,
+     "team": "Ol. Antibes Basket Ama",
+     "played": 6,
      "won": 4,
-     "lost": 1,
-     "points": 9,
-     "diff": 18,
-     "us": true
+     "lost": 2,
+     "points": 10,
+     "diff": 59,
+     "us": false
     },
     {
      "pos": 4,
-     "team": "Ol. Antibes Basket Ama",
-     "played": 5,
-     "won": 3,
+     "team": "CANSA Basket",
+     "played": 6,
+     "won": 4,
      "lost": 2,
-     "points": 8,
-     "diff": 56,
-     "us": false
+     "points": 10,
+     "diff": 3,
+     "us": true
     },
     {
      "pos": 5,
@@ -728,6 +728,8 @@
      "home": "Basket Club du Pays de Fayence",
      "away": "CANSA Basket",
      "cansaHome": false,
+     "scoreHome": 79,
+     "scoreAway": 64,
      "day": 6
     },
     {
